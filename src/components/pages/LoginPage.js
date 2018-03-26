@@ -7,7 +7,7 @@ import { login } from "../../actions/auth";
 export class LoginPage extends Component {
   // History is provided by router, and login is available to us when we connect this component to redux
   submit = data =>
-    this.props.login(data).then(() => this.props.history.push("/"));
+    this.props.login(data).then(() => this.props.history.push("/dashboard"));
 
   render() {
     return (
