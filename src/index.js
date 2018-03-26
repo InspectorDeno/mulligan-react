@@ -9,11 +9,20 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import App from "./App";
 import registerServiceWorker from "./registerServiceWorker";
 import rootReducer from "./rootReducer";
+import { userLoggedIn } from "./actions/auth";
 
 const store = createStore(
   rootReducer,
   composeWithDevTools(applyMiddleware(thunk))
 );
+
+// Dispatches USER_LOGGED_IN action if we have a local webstorage (for refresh)
+if (localStorage.putterToken) {
+  const user = {
+    token: localStorage.putterToken
+  };
+  store.dispatch(userLoggedIn(user));
+}
 
 ReactDOM.render(
   <BrowserRouter>
