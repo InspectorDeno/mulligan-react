@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "axios": "^0.18.0",
+    "jwt-decode": "^2.2.0",
     "prop-types": "^15.6.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
@@ -35,5 +36,5 @@
     "eslint-plugin-react": "^7.7.0",
     "prettier": "^1.11.1"
   },
-  "proxy": "http://localhost:8181"
+  "proxy": "http://localhost:8080"
 }
