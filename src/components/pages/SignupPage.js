@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { Segment, Grid, Header, Divider } from "semantic-ui-react";
 import SignupForm from "../forms/SignupForm";
 import { signup } from "../../actions/users";
 
@@ -10,9 +11,19 @@ class SignupPage extends Component {
 
   render() {
     return (
-      <div>
-        <SignupForm submit={this.submit} />
-      </div>
+      // TODO: Hey let's make a css for this shite
+      <Grid columns={2} relaxed style={{ height: "100vh" }}>
+        <Grid.Column style={{ background: "#3d3d3d" }} />
+        <Grid.Column style={{ verticalAlign: "middle", background: "#1b1c1d" }}>
+          <Segment raised style={{ maxWidth: "450px" }}>
+            <Header as="h2" textAlign="center" color="orange">
+              Sign Up
+            </Header>
+            <Divider />
+            <SignupForm submit={this.submit} />
+          </Segment>
+        </Grid.Column>
+      </Grid>
     );
   }
 }

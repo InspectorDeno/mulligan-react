@@ -1,21 +1,15 @@
 import React from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { Menu, MenuItem, Card } from "semantic-ui-react";
+import { Segment } from "semantic-ui-react";
 import ConfirmEmailMessage from "../messages/ConfirmEmailMessage";
-import * as actions from "../../actions/auth";
 
-const DashboardPage = ({ isConfirmed, logout }) => (
+const DashboardPage = ({ isConfirmed }) => (
   <div>
-    <Menu size="small">
-      <MenuItem position="right" onClick={() => logout()}>
-        Logout
-      </MenuItem>
-    </Menu>
     <div>{!isConfirmed && <ConfirmEmailMessage />}</div>
-    <div className="ui container">
-      <Card className="right floated"> Hehe </Card>
-    </div>
+    <Segment>
+      <div color="red">Eyy</div>
+    </Segment>
   </div>
 );
 
@@ -26,10 +20,7 @@ function mapStateToProps(state) {
 }
 
 DashboardPage.propTypes = {
-  isConfirmed: PropTypes.bool.isRequired,
-  logout: PropTypes.func.isRequired
+  isConfirmed: PropTypes.bool.isRequired
 };
 
-export default connect(mapStateToProps, { logout: actions.logout })(
-  DashboardPage
-);
+export default connect(mapStateToProps, {})(DashboardPage);

@@ -49,19 +49,22 @@ class ForgotPasswordForm extends Component {
     return (
       <Form onSubmit={this.onSubmit} loading={loading}>
         {!!errors.global && <Message negative>{errors.global}</Message>}
+        <label htmlFor="email" style={{ float: "left" }}>
+          Email
+        </label>
+        {errors.email && <InlineError text={errors.email} />}
         <Form.Field error={!!errors.email}>
-          <label htmlFor="email">Email</label>
-          <input
+          <Form.Input
             type="email"
             name="email"
-            id="email"
             placeholder="oi@oi.oi"
             value={data.email}
             onChange={this.onChange}
           />
-          {errors.email && <InlineError text={errors.email} />}
         </Form.Field>
-        <Button primary>Change Password</Button>
+        <Button fluid primary>
+          Restore password
+        </Button>
       </Form>
     );
   }

@@ -17,6 +17,7 @@ class LoginForm extends Component {
   //   Universal onChange event handler for text fields (y)
   onChange = e =>
     this.setState({
+      ...this.state,
       data: { ...this.state.data, [e.target.name]: e.target.value }
     });
 
@@ -54,35 +55,51 @@ class LoginForm extends Component {
       <Form onSubmit={this.onSubmit} loading={loading}>
         {errors.global && (
           <Message negative>
-            <Message.Header>Something went wrong</Message.Header>
+            <Message.Header>Failed to log in</Message.Header>
             <p>{errors.global}</p>
           </Message>
         )}
+
+        <label htmlFor="email" style={{ float: "left" }}>
+          Email
+        </label>
+        {errors.email && <InlineError text={errors.email} />}
         <Form.Field error={!!errors.email}>
-          <label htmlFor="email">Email</label>
-          <input
+          <Form.Input
+            fluid
             type="email"
             name="email"
-            id="email"
+            icon="user"
+            iconPosition="left"
             placeholder="oi@oi.oi"
             value={data.email}
             onChange={this.onChange}
           />
-          {errors.email && <InlineError text={errors.email} />}
         </Form.Field>
+
+        <label htmlFor="password" style={{ float: "left" }}>
+          Password
+        </label>
+        {errors.password && <InlineError text={errors.password} />}
         <Form.Field error={!!errors.password}>
-          <label htmlFor="password">Password</label>
-          <input
+          <Form.Input
+            fluid
             type="password"
             name="password"
-            id="password"
-            placeholder="abc123"
+            icon="lock"
+            iconPosition="left"
+            placeholder="Password"
             value={data.password}
             onChange={this.onChange}
           />
-          {errors.password && <InlineError text={errors.password} />}
         </Form.Field>
-        <Button primary>Login</Button>
+        <Button color="orange" fluid>
+          Login
+        </Button>
+        {/* <Divider horizontal> OR </Divider>
+        <Button color="black" fluid>
+          Sign up
+        </Button> */}
       </Form>
     );
   }

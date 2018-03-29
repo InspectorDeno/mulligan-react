@@ -1,19 +1,22 @@
 import React from "react";
+import { Grid } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import * as actions from "../../actions/auth";
 
 const HomePage = ({ isAutenticated, logout }) => (
-  <div>
-    <h1>Home Page</h1>
-    {isAutenticated ? (
-      <button onClick={() => logout()}>Logout</button>
-    ) : (
-      <div>
-        <Link to="/login">Login</Link> or <Link to="/signup">Sign up</Link>
-      </div>
-    )}
+  <div className="middle aligned center aligned grid">
+    <Grid.Column>
+      <h1>Home Page</h1>
+      {isAutenticated ? (
+        <button onClick={() => logout()}>Logout</button>
+      ) : (
+        <div>
+          <Link to="/login">Login</Link> or <Link to="/signup">Sign up</Link>
+        </div>
+      )}
+    </Grid.Column>
   </div>
 );
 

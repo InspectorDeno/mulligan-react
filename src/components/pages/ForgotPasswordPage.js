@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Message } from "semantic-ui-react";
+import { Message, Grid, Header, Divider, Segment } from "semantic-ui-react";
 import { connect } from "react-redux";
 import ForgotPasswordForm from "../forms/ForgotPasswordForm";
 import { resetPasswordRequest } from "../../actions/auth";
@@ -25,7 +25,25 @@ class ForgotPasswordPage extends Component {
             password.
           </Message>
         ) : (
-          <ForgotPasswordForm submit={this.submit} />
+          <Grid columns={2} relaxed middle aligned style={{ height: "100vh" }}>
+            <Grid.Column style={{ background: "#3d3d3d" }} />
+            <Grid.Column
+              style={{ verticalAlign: "middle", background: "#1b1c1d" }}
+            >
+              <Segment raised style={{ maxWidth: "450px" }}>
+                <Header as="h2" textAlign="center" color="orange">
+                  Restore password
+                </Header>
+                <Divider />
+                <Message>
+                  <li>Fill in your email address below</li>
+                  <li>You will get an email with a temporary code</li>
+                  <li>Follow the link in the email to restore your password</li>
+                </Message>
+                <ForgotPasswordForm submit={this.submit} />
+              </Segment>
+            </Grid.Column>
+          </Grid>
         )}
       </div>
     );
