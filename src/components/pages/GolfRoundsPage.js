@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Header, Segment, Grid, Card, Divider } from "semantic-ui-react";
+import { Header, Segment, Grid, Card } from "semantic-ui-react";
 
 import ConfirmEmailMessage from "../messages/ConfirmEmailMessage";
 import CreateGolfRoundModal from "../modals/CreateGolfRoundModal";
@@ -17,8 +17,6 @@ class GolfRoundsPage extends PureComponent {
           <Grid.Column width={6}>
             <Card centered raised>
               <Card.Content textAlign="center">
-                <Card.Header>Add new golf round</Card.Header>
-                <Divider />
                 <CreateGolfRoundModal />
               </Card.Content>
             </Card>
