@@ -8,7 +8,7 @@ const DashboardPage = ({ isConfirmed }) => (
   <div>
     <div>{!isConfirmed && <ConfirmEmailMessage />}</div>
     <Segment>
-      <div color="red">Eyy</div>
+      <div>Dash Smash</div>
     </Segment>
   </div>
 );

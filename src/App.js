@@ -13,6 +13,7 @@ import ConfirmationPage from "./components/pages/ConfirmationPage";
 import ForgotPasswordPage from "./components/pages/ForgotPasswordPage";
 import ResetPasswordPage from "./components/pages/ResetPasswordPage";
 import DashboardPage from "./components/pages/DashboardPage";
+import GolfRoundsPage from "./components/pages/GolfRoundsPage";
 
 import GuestRoute from "./components/routes/GuestRoute";
 import UserRoute from "./components/routes/UserRoute";
@@ -21,9 +22,7 @@ const App = ({ location, isAuthenticated }) => (
   <div>
     {isAuthenticated ? <TopNavigation /> : <DefaultMenu />}
     <div className="ui container" style={{ height: "100%" }}>
-      {isAuthenticated && (
-        <div className="ui fluid" style={{ height: "4em" }} />
-      )}
+      <div className="ui fluid" style={{ height: "55px" }} />
       <Route location={location} path="/" exact component={HomePage} />
       <Route
         location={location}
@@ -61,6 +60,13 @@ const App = ({ location, isAuthenticated }) => (
         path="/dashboard"
         exact
         component={DashboardPage}
+      />
+      {/* temp, will be /user/my-rounds eller nåt later*/}
+      <UserRoute
+        location={location}
+        path="/my-rounds"
+        exact
+        component={GolfRoundsPage}
       />
     </div>
   </div>

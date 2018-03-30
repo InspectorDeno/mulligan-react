@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 // Should just be visibile for authenticated users
 
 const DefaultMenu = () => (
-  <Menu fluid borderless inverted size="large">
+  <Menu fluid borderless fixed="top" inverted size="large">
     <Container>
       <Menu.Item header name="Home" as={Link} to="/dashboard">
         Mulligan
@@ -19,15 +19,12 @@ const DefaultMenu = () => (
 
       <Menu.Menu position="right">
         <Menu.Item>
-          <Button
-            as={Link}
-            to="/login"
-            style={{ background: "orange", color: "white" }}
-          >
+          <Button as={Link} to="/login" color="orange">
             Log in
           </Button>
           <Button
-            secondary
+            basic
+            color="orange"
             inverted
             as={Link}
             to="/signup"

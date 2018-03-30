@@ -9,16 +9,19 @@ import * as actions from "../../actions/auth";
 // Should just be visibile for authenticated users
 
 const TopNavigation = ({ user, logout }) => (
-  <Menu fixed="top" inverted pointing size="large">
+  <Menu fixed="top" inverted borderless size="large">
     <Container>
       <Menu.Item header name="Home" as={Link} to="/dashboard">
         Mulligan
       </Menu.Item>
-      <Menu.Item name="Golfkarta" as={Link} to="/dashboard">
+      <Menu.Item name="golfkarta" as={Link} to="/dashboard">
         Golfkarta
       </Menu.Item>
-      <Menu.Item name="Spela golf" as={Link} to="/dashboard">
+      <Menu.Item name="spelagolf" as={Link} to="/dashboard">
         Spela golf
+      </Menu.Item>
+      <Menu.Item name="golfrounds" as={Link} to="/my-rounds">
+        My golf rounds
       </Menu.Item>
 
       <Menu.Menu position="right">
