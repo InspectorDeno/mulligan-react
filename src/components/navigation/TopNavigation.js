@@ -11,11 +11,11 @@ import * as actions from "../../actions/auth";
 const TopNavigation = ({ user, logout }) => (
   <Menu fixed="top" inverted borderless size="large">
     <Container>
-      <Menu.Item header name="Home" as={Link} to="/dashboard">
+      <Menu.Item header name="menuIcon" as={Link} to="/dashboard">
         Mulligan
       </Menu.Item>
-      <Menu.Item name="golfkarta" as={Link} to="/dashboard">
-        Golfkarta
+      <Menu.Item name="home" as={Link} to="/dashboard">
+        Home
       </Menu.Item>
       <Menu.Item name="spelagolf" as={Link} to="/dashboard">
         Spela golf

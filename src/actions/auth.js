@@ -15,18 +15,18 @@ export const userLoggedOut = () => ({
 // This template is used for almost all api requests throughout this application
 export const login = credentials => dispatch =>
   api.user.login(credentials).then(user => {
-    localStorage.putterToken = user.token;
+    localStorage.mulliganJWT = user.token;
     dispatch(userLoggedIn(user));
   });
 
 export const logout = () => dispatch => {
-  localStorage.removeItem("putterToken");
+  localStorage.removeItem("mulliganJWT");
   dispatch(userLoggedOut());
 };
 
 export const confirm = token => dispatch =>
   api.user.confirm(token).then(user => {
-    localStorage.putterToken = user.token;
+    localStorage.mulliganJWT = user.token;
     dispatch(userLoggedIn(user));
   });
 

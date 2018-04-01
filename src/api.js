@@ -13,6 +13,9 @@ export default {
     resetPasswordRequest: email =>
       axios.post("/api/auth/reset_password_request", { email }),
     validateToken: token => axios.post("/api/auth/validate_token", { token }),
-    resetPassword: data => axios.post("/api/auth/reset_password", { data })
+    resetPassword: data => axios.post("/api/auth/reset_password", { data }),
+
+    getWeather: () =>
+      axios.get("/api/weather/search").then(res => res.data.weatherData) // For now or maybe done
   }
 };

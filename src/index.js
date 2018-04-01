@@ -11,6 +11,7 @@ import App from "./App";
 import registerServiceWorker from "./registerServiceWorker";
 import rootReducer from "./rootReducer";
 import { userLoggedIn } from "./actions/auth";
+import setAuthorizationHeader from "./utils/setAuthorizationHeader";
 
 const store = createStore(
   rootReducer,
@@ -18,13 +19,14 @@ const store = createStore(
 );
 
 // Dispatches USER_LOGGED_IN action if we have a local webstorage (for refresh)
-if (localStorage.putterToken) {
-  const payload = decode(localStorage.putterToken);
+if (localStorage.mulliganJWT) {
+  const payload = decode(localStorage.mulliganJWT);
   const user = {
-    token: localStorage.putterToken,
+    token: localStorage.mulliganJWT,
     email: payload.email,
     confirmed: payload.confirmed
   };
+  setAuthorizationHeader(localStorage.mulliganJWT);
   store.dispatch(userLoggedIn(user));
 }
 

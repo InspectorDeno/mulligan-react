@@ -5,9 +5,14 @@ import { connect } from "react-redux";
 import StepOne from "./StepOne";
 import StepTwo from "./StepTwo";
 import StepThree from "./StepThree";
-import StepFour from "./StepFour";
+import ScorecardForm from "./ScorecardForm";
 
-export const pages = [<StepOne />, <StepTwo />, <StepThree />, <StepFour />];
+export const pages = [
+  <StepOne />,
+  <StepTwo />,
+  <StepThree />,
+  <ScorecardForm />
+];
 
 const MultiFormGolfRoundComponent = ({ page }) => <div>{pages[page - 1]}</div>;
 
