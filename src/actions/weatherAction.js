@@ -31,7 +31,7 @@ function handleErrors(response) {
 export function getWeather() {
   return dispatch => {
     dispatch(getWeatherBegin());
-    return fetch("/api/weather/search")
+    return fetch("/api/weather/")
       .then(handleErrors)
       .then(res => res.json())
       .then(json => {

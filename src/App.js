@@ -22,7 +22,7 @@ const App = ({ location, isAuthenticated }) => (
   <div>
     {isAuthenticated ? <TopNavigation /> : <DefaultMenu />}
     <div className="ui container" style={{ height: "100%" }}>
-      <div className="ui fluid" style={{ height: "55px" }} />
+      <div className="ui fluid" style={{ height: "81px" }} />
       <Route location={location} path="/" exact component={HomePage} />
       <Route
         location={location}
@@ -61,7 +61,6 @@ const App = ({ location, isAuthenticated }) => (
         exact
         component={DashboardPage}
       />
-      {/* temp, will be /user/my-rounds eller nåt later*/}
       <UserRoute
         location={location}
         path="/my-rounds"
@@ -80,7 +79,9 @@ App.propTypes = {
 };
 
 function mapStateToProps(state) {
-  return { isAuthenticated: !!state.user.email };
+  return {
+    isAuthenticated: !!state.user.email
+  };
 }
 
 export default connect(mapStateToProps)(App);

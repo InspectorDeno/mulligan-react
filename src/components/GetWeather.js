@@ -1,8 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { Button, Segment } from "semantic-ui-react";
+import { Segment, Item } from "semantic-ui-react";
+import Moment from "react-moment";
+import "weather-icons/css/weather-icons.css";
+import "weather-icons/css/weather-icons-wind.css";
 import { getWeather } from "../actions/weatherAction";
+import { setWeatherIcon } from "./mapWeatherToSymbol";
 
 class GetWeather extends Component {
   state = {
@@ -11,22 +15,99 @@ class GetWeather extends Component {
     error: ""
   };
 
-  onGetWeather = () => {
-    this.props.dispatch(getWeather());
+  componentWillMount() {
+    this.props
+      .dispatch(getWeather())
+      .then(res => this.setState({ weatherData: res.items }));
+  }
+
+  renderData = props => {
+    const data = props.weatherData;
+    if (!data.length) {
+      return <span>Loading data ... </span>;
+    }
+
+    const date = data[0].validTime;
+    const temp = Math.round(data[0].degrees);
+    const symbol = setWeatherIcon(data[0].symbol);
+    const windDir = `wi wi-wind from-${data[0].windDir}-deg`;
+    const windSpeed = data[0].windSpeed;
+    const precepAmount = data[0].precMean;
+    // const date = data.filter(entry => entry.validTime);
+    return (
+      // Icon
+
+      <Item.Group divided>
+        <h3>
+          <Moment
+            format="dddd, HH:mm"
+            date={date}
+            style={{ fontSize: "25px" }}
+          />
+        </h3>
+        <Item>
+          <div
+            className={this.props.error ? "wi wi-refresh" : symbol}
+            style={{
+              color: "#1471a9",
+              fontSize: "120px",
+              margin: "20px"
+            }}
+          />
+          <Item.Content>
+            <Item.Extra style={{ padding: "15px 0" }}>
+              <span
+                style={{
+                  float: "left",
+                  fontSize: "80px",
+                  margin: "10px 0 25px 0",
+                  color: "#1471a9"
+                }}
+              >
+                {temp}
+              </span>
+              <div
+                style={{
+                  float: "left",
+                  margin: "0",
+                  fontSize: "30px",
+                  color: "#1471a9"
+                }}
+              >
+                &deg;C
+              </div>
+            </Item.Extra>
+            <Item.Extra style={{ margin: "0" }}>
+              <div
+                className={windDir}
+                style={{ fontSize: "25px", margin: "auto" }}
+              />
+              <span style={{ marginLeft: "10px" }}>{windSpeed} m/s</span>
+            </Item.Extra>
+            <Item.Extra style={{ margin: "0" }}>
+              <div
+                className="wi wi-raindrops"
+                style={{ fontSize: "25px", margin: "auto" }}
+              />
+              <span style={{ marginLeft: "10px" }}>{precepAmount} mm</span>
+            </Item.Extra>
+          </Item.Content>
+        </Item>
+      </Item.Group>
+    );
   };
 
   render() {
     const { error, weatherData } = this.props;
-    if (weatherData[0] !== undefined) {
-      console.log(weatherData[0]);
-    }
 
     if (error) {
       return <div>Error{error.error}</div>;
     }
     return (
       <div>
-        <Button onClick={() => this.onGetWeather()} />
+        <Segment>
+          <this.renderData weatherData={weatherData} />
+        </Segment>
         <Segment>
           <div style={{ display: "flex", justifyContent: "space-evenly" }}>
             <div style={{ display: "flex", flexDirection: "column" }}>
@@ -73,6 +154,15 @@ class GetWeather extends Component {
               <li>{weatherData[3] && weatherData[3].precMean}</li>
               <li>{weatherData[4] && weatherData[4].precMean}</li>
               <li>{weatherData[5] && weatherData[5].precMean}</li>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column" }}>
+              <h3>Symbol</h3>
+              <li>{weatherData[0] && weatherData[0].symbol}</li>
+              <li>{weatherData[1] && weatherData[1].symbol}</li>
+              <li>{weatherData[2] && weatherData[2].symbol}</li>
+              <li>{weatherData[3] && weatherData[3].symbol}</li>
+              <li>{weatherData[4] && weatherData[4].symbol}</li>
+              <li>{weatherData[5] && weatherData[5].symbol}</li>
             </div>
           </div>
         </Segment>

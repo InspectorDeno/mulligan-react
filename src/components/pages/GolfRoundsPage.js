@@ -1,42 +1,26 @@
-import React, { PureComponent } from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
+import React from "react";
 import { Header, Segment, Grid, Card } from "semantic-ui-react";
 
-import ConfirmEmailMessage from "../messages/ConfirmEmailMessage";
 import CreateGolfRoundModal from "../modals/CreateGolfRoundModal";
 
-class GolfRoundsPage extends PureComponent {
-  render() {
-    const { isConfirmed } = this.props;
-    return (
-      <div>
-        <div>{!isConfirmed && <ConfirmEmailMessage />}</div>
-        <Header>Golf rounds</Header>
-        <Grid centered>
-          <Grid.Column width={6}>
-            <Card centered raised>
-              <Card.Content textAlign="center">
-                <CreateGolfRoundModal />
-              </Card.Content>
-            </Card>
-          </Grid.Column>
-          <Grid.Column width={10}>
-            <Segment raised>Old rounds here</Segment>
-          </Grid.Column>
-        </Grid>
-      </div>
-    );
-  }
-}
+const GolfRoundsPage = () => (
+  <div>
+    <Header>Golf rounds</Header>
+    <Grid centered>
+      <Grid.Column width={6}>
+        <Card centered raised>
+          <Card.Content textAlign="center">
+            <CreateGolfRoundModal />
+          </Card.Content>
+        </Card>
+      </Grid.Column>
+      <Grid.Column width={10}>
+        <Segment raised>Old rounds here</Segment>
+      </Grid.Column>
+    </Grid>
+  </div>
+);
 
-GolfRoundsPage.propTypes = {
-  isConfirmed: PropTypes.bool.isRequired
-};
-function mapStateToProps(state) {
-  return {
-    isConfirmed: !!state.user.confirmed
-  };
-}
+GolfRoundsPage.propTypes = {};
 
-export default connect(mapStateToProps, {})(GolfRoundsPage);
+export default GolfRoundsPage;

@@ -31,12 +31,18 @@ class CreateGolfRoundModal extends Component {
 
     return (
       <Modal
-        style={{ marginTop: "50px", marginLeft: "auto", marginRight: "auto" }}
+        style={{
+          marginTop: "50px",
+          marginLeft: "auto",
+          marginRight: "auto"
+        }}
+        size="large"
         open={open}
         closeOnEscape={closeOnEscape}
         closeOnRootNodeClick={closeOnRootNodeClick}
         onClose={this.close}
         closeIcon
+        dimmer="blurring"
         trigger={
           <Button onClick={this.closeConfigShow(true, false)}>
             Create Golf Round
@@ -44,7 +50,7 @@ class CreateGolfRoundModal extends Component {
         }
       >
         <Modal.Header>Golf Round</Modal.Header>
-        <Modal.Content>
+        <Modal.Content scrolling>
           <Modal.Description>
             <CreateGolfRound />
           </Modal.Description>

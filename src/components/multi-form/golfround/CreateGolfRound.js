@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import StepOne from "./StepOne";
 import StepTwo from "./StepTwo";
 import StepThree from "./StepThree";
-import ScorecardForm from "./ScorecardForm";
+import ScorecardForm from "./scorecard/ScorecardForm";
 
 export const pages = [
   <StepOne />,

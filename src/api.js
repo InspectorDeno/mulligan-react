@@ -16,6 +16,6 @@ export default {
     resetPassword: data => axios.post("/api/auth/reset_password", { data }),
 
     getWeather: () =>
-      axios.get("/api/weather/search").then(res => res.data.weatherData) // For now or maybe done
+      axios.get("/api/weather/").then(res => res.data.weatherData) // For now or maybe done
   }
 };
