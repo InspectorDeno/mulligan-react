@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { Segment, Item } from "semantic-ui-react";
 import Moment from "react-moment";
 import "weather-icons/css/weather-icons.css";
-import "weather-icons/css/weather-icons-wind.css";
+//import "weather-icons/css/weather-icons-wind.css";
 import { getWeather } from "../actions/weatherAction";
 import { setWeatherIcon } from "./mapWeatherToSymbol";
 
