@@ -17,6 +17,7 @@ import GolfRoundsPage from "./components/pages/GolfRoundsPage";
 
 import GuestRoute from "./components/routes/GuestRoute";
 import UserRoute from "./components/routes/UserRoute";
+import FriendsPage from "./components/pages/FriendsPage";
 
 const App = ({ location, isAuthenticated }) => (
   <div>
@@ -66,6 +67,12 @@ const App = ({ location, isAuthenticated }) => (
         path="/my-rounds"
         exact
         component={GolfRoundsPage}
+      />
+      <UserRoute
+      location={location}
+      path="/friends"
+      exact
+      component={FriendsPage}
       />
     </div>
   </div>
