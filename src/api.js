@@ -14,7 +14,8 @@ export default {
       axios.post("/api/auth/reset_password_request", { email }),
     validateToken: token => axios.post("/api/auth/validate_token", { token }),
     resetPassword: data => axios.post("/api/auth/reset_password", { data }),
-    //finduser: email =>
+    getFriends: user =>
+      axios.post("/api/friends", { user }).then(res => res.data.friends),
     //  axios.post("/api/findUser")
     getWeather: () =>
       axios.get("/api/weather/").then(res => res.data.weatherData) // For now or maybe done

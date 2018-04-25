@@ -26,7 +26,7 @@ export const logout = () => dispatch => {
 
 //Lägg i en funktion här
 //export const users = () => dispatch => {
- // api.user.
+// api.user.
 //}
 
 export const confirm = token => dispatch =>
