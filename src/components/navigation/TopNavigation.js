@@ -15,6 +15,7 @@ const TopNavigation = ({ user, logout }) => (
       fixed="top"
       inverted
       borderless
+      stackable
       size="large"
       style={{ display: "block" }}
     >
