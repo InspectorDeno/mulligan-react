@@ -14,6 +14,7 @@ import ForgotPasswordPage from "./components/pages/ForgotPasswordPage";
 import ResetPasswordPage from "./components/pages/ResetPasswordPage";
 import DashboardPage from "./components/pages/DashboardPage";
 import GolfRoundsPage from "./components/pages/GolfRoundsPage";
+import GolfClubsPage from "./components/pages/GolfClubsPage";
 
 import GuestRoute from "./components/routes/GuestRoute";
 import UserRoute from "./components/routes/UserRoute";
@@ -69,10 +70,16 @@ const App = ({ location, isAuthenticated }) => (
         component={GolfRoundsPage}
       />
       <UserRoute
-      location={location}
-      path="/friends"
-      exact
-      component={FriendsPage}
+        location={location}
+        path="/friends"
+        exact
+        component={FriendsPage}
+      />
+      <UserRoute
+        location={location}
+        path="/golfclubs"
+        exact
+        component={GolfClubsPage}
       />
     </div>
   </div>

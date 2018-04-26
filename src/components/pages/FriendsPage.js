@@ -21,8 +21,6 @@ class FriendsPage extends Component {
   }
 
   componentDidMount() {
-    console.log("HJEHEHEHE");
-    console.log(this.props.user);
     this.props
       .dispatch(getFriends(this.props.user))
       .then(res => this.setState({ friendData: res.friendData }));

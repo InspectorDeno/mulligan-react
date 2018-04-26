@@ -3,11 +3,13 @@ import { combineReducers } from "redux";
 import user from "./reducers/user";
 import counter from "./reducers/counter";
 import weather from "./reducers/weather";
-import friends from "./reducers/friends"
+import friends from "./reducers/friends";
+import golfclub from "./reducers/golfclub";
 
 export default combineReducers({
   user,
   counter,
   weather,
-  friends
+  friends,
+  golfclub
 });

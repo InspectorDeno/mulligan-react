@@ -18,6 +18,12 @@ export default {
       axios.post("/api/friends", { user }).then(res => res.data.friends),
     //  axios.post("/api/findUser")
     getWeather: () =>
-      axios.get("/api/weather/").then(res => res.data.weatherData) // For now or maybe done
+      axios.get("/api/weather").then(res => res.data.weatherData) // For now or maybe done
+  },
+  golfclub: {
+    findClub: clubName =>
+      axios
+        .post("/api/golfclub", { clubName })
+        .then(res => res.data.golfClubData)
   }
 };

@@ -1,22 +1,22 @@
 import api from "../api";
 import {
-  FRIEND_DATA_REQUESTED,
-  FRIEND_DATA_RETRIEVED,
-  FRIEND_DATA_FAILED
+  GOLFCLUB_DATA_REQUESTED,
+  GOLFCLUB_DATA_RETRIEVED,
+  GOLFCLUB_DATA_FAILED
 } from "../types";
 
 // Thunk
-export const getFriendsBegin = () => ({
-  type: FRIEND_DATA_REQUESTED
+export const getGolfClubBegin = () => ({
+  type: GOLFCLUB_DATA_REQUESTED
 });
 
-export const getFriendsSuccess = friendsData => ({
-  type: FRIEND_DATA_RETRIEVED,
-  payload: friendsData
+export const getGolfClubSucces = golfClubData => ({
+  type: GOLFCLUB_DATA_RETRIEVED,
+  payload: golfClubData
 });
 
-export const geFriendError = error => ({
-  type: FRIEND_DATA_FAILED,
+export const getGolfClubError = error => ({
+  type: GOLFCLUB_DATA_FAILED,
   payload: error
 });
 
@@ -28,12 +28,12 @@ function handleErrors(response) {
   return response;
 }
 
-export function getFriends(user) {
+export function getGolfClub(clubName) {
   return dispatch => {
-    dispatch(getFriendsBegin());
-    return api.user
-      .getFriends(user)
-      .then(data => dispatch(getFriendsSuccess(data)));
+    dispatch(getGolfClubBegin());
+    return api.golfclub
+      .findClub(clubName)
+      .then(data => dispatch(getGolfClubSucces(data)));
   };
 }
 
