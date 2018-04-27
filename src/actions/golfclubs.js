@@ -17,23 +17,18 @@ export const getGolfClubSucces = golfClubData => ({
 
 export const getGolfClubError = error => ({
   type: GOLFCLUB_DATA_FAILED,
-  payload: error
+  payload: error.response.data.error
 });
-
-// Handle HTTP errors since fetch won't.
-function handleErrors(response) {
-  if (!response.ok) {
-    throw Error(response.statusText);
-  }
-  return response;
-}
 
 export function getGolfClub(clubName) {
   return dispatch => {
     dispatch(getGolfClubBegin());
     return api.golfclub
       .findClub(clubName)
-      .then(data => dispatch(getGolfClubSucces(data)));
+      .then(data => dispatch(getGolfClubSucces(data)))
+      .catch(err => {
+        dispatch(getGolfClubError(err));
+      });
   };
 }
 

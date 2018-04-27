@@ -24,20 +24,32 @@ class GolfClubsPage extends Component {
   }
 
   render() {
-    return <Segment>Finding Linköpings Golfklubb</Segment>;
+    const { error, golfClubData } = this.props;
+
+    return (
+      <Segment>
+        <div>Finding Linköpings Golfklubb</div>
+        <span>{error}</span>
+        <span>{golfClubData.length > 0 && golfClubData[0].club}</span>
+      </Segment>
+    );
   }
 }
 
 GolfClubsPage.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  golfClubData: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
+  golfClubData: PropTypes.arrayOf(PropTypes.object),
   loading: PropTypes.bool.isRequired,
   error: PropTypes.string.isRequired
 };
 
+GolfClubsPage.defaultProps = {
+  golfClubData: []
+};
+
 function mapStateToProps(state) {
   return {
-    golfClubData: state.golfclub.golfClubData,
+    golfClubData: state.golfclub.items,
     loading: state.golfclub.loading,
     error: state.golfclub.error
   };

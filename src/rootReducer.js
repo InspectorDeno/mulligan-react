@@ -1,4 +1,5 @@
 import { combineReducers } from "redux";
+import { reducer as reduxFormReducer } from "redux-form";
 
 import user from "./reducers/user";
 import counter from "./reducers/counter";
@@ -11,5 +12,6 @@ export default combineReducers({
   counter,
   weather,
   friends,
-  golfclub
+  golfclub,
+  form: reduxFormReducer
 });

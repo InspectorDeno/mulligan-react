@@ -22,13 +22,13 @@ export default function golfclub(state = initialState, action = {}) {
       return {
         ...state,
         loading: false,
-        items: action.payload.golfClubData
+        items: action.payload
       };
     case GOLFCLUB_DATA_FAILED:
       return {
         ...state,
         loading: false,
-        error: action.payload.error,
+        error: action.payload,
         items: []
       };
     default:

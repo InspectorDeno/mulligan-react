@@ -17,7 +17,10 @@ class CreateGolfRoundModal extends Component {
     this.setState({ page: newProps.step });
   }
 
-  onIncrement = () => this.props.increment();
+  onIncrement = () => {
+    // First check what page we're on
+    this.props.increment();
+  };
   onDecrement = () => this.props.decrement();
 
   closeConfigShow = (closeOnEscape, closeOnRootNodeClick) => () => {
@@ -50,7 +53,7 @@ class CreateGolfRoundModal extends Component {
         }
       >
         <Modal.Header>Golf Round</Modal.Header>
-        <Modal.Content scrolling>
+        <Modal.Content scrolling style={{ height: "500px" }}>
           <Modal.Description>
             <CreateGolfRound />
           </Modal.Description>
