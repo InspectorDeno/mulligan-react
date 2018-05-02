@@ -24,7 +24,7 @@ class StepTwo extends Component {
 
   DateTimePicker = ({ input, meta }) => (
     <div>
-      {/* <span>{JSON.stringify(meta, 0, 2)}</span> */}
+      <span>{JSON.stringify(meta, 0, 2)}</span>
       {meta.error && <span>{meta.error}</span>}
       <Datetime
         name={input.name}

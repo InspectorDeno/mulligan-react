@@ -96,10 +96,6 @@ class LoginForm extends Component {
         <Button color="orange" fluid>
           Login
         </Button>
-        {/* <Divider horizontal> OR </Divider>
-        <Button color="black" fluid>
-          Sign up
-        </Button> */}
       </Form>
     );
   }

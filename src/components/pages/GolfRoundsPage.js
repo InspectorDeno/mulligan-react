@@ -1,10 +1,11 @@
 import React from "react";
 import { Header, Segment, Grid, Card } from "semantic-ui-react";
+import { connect } from "react-redux";
 
 import CreateGolfRoundModal from "../modals/CreateGolfRoundModal";
 import GolfRoundForm from "../multi-form/golfround/GolfRoundForm";
 
-const GolfRoundsPage = () => (
+const GolfRoundsPage = values => (
   <div>
     <Header>Golf rounds</Header>
     <Grid>
@@ -19,6 +20,7 @@ const GolfRoundsPage = () => (
         <Segment raised>Old rounds here</Segment>
       </Grid.Column>
     </Grid>
+    {/* <Segment>{values && JSON.stringify(values)}</Segment> */}
     <Segment>
       <GolfRoundForm />
     </Segment>
@@ -27,4 +29,10 @@ const GolfRoundsPage = () => (
 
 GolfRoundsPage.propTypes = {};
 
-export default GolfRoundsPage;
+function mapStateToProps(state) {
+  return {
+    values: state.form.golfroundwizard
+  };
+}
+
+export default connect(mapStateToProps)(GolfRoundsPage);
