@@ -1,15 +1,19 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
 import StepOne from "./pages/StepOne";
 import StepTwo from "./pages/StepTwo";
 import StepThree from "./pages/StepThree";
+import ScorecardForm from "./scorecard/ScorecardForm";
 
 class GolfRoundForm extends Component {
   constructor(props) {
     super(props);
     this.nextPage = this.nextPage.bind(this);
     this.previousPage = this.previousPage.bind(this);
-    this.state = { page: 1 };
+    this.state = {
+      page: 1
+    };
   }
 
   nextPage() {
@@ -30,15 +34,17 @@ class GolfRoundForm extends Component {
           <StepTwo previousPage={this.previousPage} onSubmit={this.nextPage} />
         )}
         {page === 3 && (
-          <StepThree previousPage={this.previousPage} onSubmit={onSubmit} />
+          <StepThree
+            previousPage={this.previousPage}
+            onSubmit={this.nextPage}
+          />
+        )}
+        {page === 4 && (
+          <ScorecardForm previousPage={this.previousPage} onSubmit={onSubmit} />
         )}
       </div>
     );
   }
 }
-
-GolfRoundForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired
-};
 
 export default GolfRoundForm;

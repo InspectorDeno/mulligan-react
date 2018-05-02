@@ -6,6 +6,7 @@ import CreateGolfRound, {
   pages
 } from "../multi-form/golfround/CreateGolfRound";
 import { increment, decrement } from "../../actions/counter";
+import GolfRoundForm from "../multi-form/golfround/GolfRoundForm";
 
 class CreateGolfRoundModal extends Component {
   state = {
@@ -55,7 +56,7 @@ class CreateGolfRoundModal extends Component {
         <Modal.Header>Golf Round</Modal.Header>
         <Modal.Content scrolling style={{ height: "500px" }}>
           <Modal.Description>
-            <CreateGolfRound />
+            <GolfRoundForm />
           </Modal.Description>
         </Modal.Content>
         <Modal.Actions>
