@@ -2,7 +2,10 @@ import api from "../api";
 import {
   FRIEND_DATA_REQUESTED,
   FRIEND_DATA_RETRIEVED,
-  FRIEND_DATA_FAILED
+  FRIEND_DATA_FAILED,
+  FRIEND_REQUEST_SENT,
+  FRIEND_REQUEST_SUCCESS,
+  FRIEND_REQUEST_FAILED
 } from "../types";
 
 // Thunk
@@ -15,9 +18,24 @@ export const getFriendsSuccess = friendsData => ({
   payload: friendsData
 });
 
-export const geFriendError = error => ({
+export const getFriendsError = error => ({
   type: FRIEND_DATA_FAILED,
-  payload: error
+  payload: error.response.data.errors
+});
+
+// Thunk
+export const getAddFriendBegin = () => ({
+  type: FRIEND_REQUEST_SENT
+});
+
+export const getAddFriendSuccess = userData => ({
+  type: FRIEND_REQUEST_SUCCESS,
+  payload: userData
+});
+
+export const getAddFriendError = error => ({
+  type: FRIEND_REQUEST_FAILED,
+  payload: error.response.data.errors
 });
 
 // Handle HTTP errors since fetch won't.
@@ -33,15 +51,17 @@ export function getFriends(user) {
     dispatch(getFriendsBegin());
     return api.user
       .getFriends(user)
-      .then(data => dispatch(getFriendsSuccess(data)));
+      .then(data => dispatch(getFriendsSuccess(data)))
+      .catch(error => dispatch(getFriendsError(error)));
   };
 }
 
-// export const getFriends = user => dispatch => {
-//   api.user
-//     .getFriends(user)
-//     .then(friendsData => {
-//       dispatch(getFriendsSuccess(friendsData));
-//     })
-//     .catch(err => dispatch(handleErrors(err)));
-// };
+export function addFriend(user, friend) {
+  return dispatch => {
+    dispatch(getAddFriendBegin());
+    return api.user
+      .addFriend(user, friend)
+      .then(userData => dispatch(getAddFriendSuccess(userData)))
+      .catch(error => dispatch(getAddFriendError(error)));
+  };
+}

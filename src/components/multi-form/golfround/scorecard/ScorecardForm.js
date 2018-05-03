@@ -1,5 +1,7 @@
 import React, { Component } from "react";
-import { Grid, Input, Segment } from "semantic-ui-react";
+import { Divider, Button } from "semantic-ui-react";
+import { reduxForm } from "redux-form";
+import PropTypes from "prop-types";
 import StrokeInput from "./StrokeInput";
 import ScoreOutput from "./ScoreOutput";
 
@@ -20,12 +22,37 @@ class ScorecardForm extends Component {
   };
 
   render() {
+    const {
+      handleSubmit,
+      previousPage,
+      invalid,
+      submitting,
+      loading
+    } = this.props;
     return (
       <div>
-        <Segment />
+        <Divider />
+        <Button onClick={previousPage}>Previous</Button>
+        <Button
+          onClick={handleSubmit}
+          disabled={invalid || submitting || loading}
+        >
+          Next
+        </Button>
       </div>
     );
   }
 }
 
-export default ScorecardForm;
+ScorecardForm.propTypes = {
+  handleSubmit: PropTypes.func.isRequired,
+  previousPage: PropTypes.func.isRequired,
+  invalid: PropTypes.bool.isRequired,
+  submitting: PropTypes.bool.isRequired
+};
+
+export default reduxForm({
+  form: "golfroundwizard", //        <------ same form name
+  destroyOnUnmount: false, //        <------ preserve form data
+  forceUnregisterOnUnmount: true // <------ unregister fields on unmount
+})(ScorecardForm);

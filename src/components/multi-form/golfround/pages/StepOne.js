@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
-import { Button, Dropdown, Divider } from "semantic-ui-react";
+import { Button, Dropdown, Divider, Message, Header } from "semantic-ui-react";
 import { getGolfClub } from "../../../../actions/golfclubs";
 
 const golfClubs = [
@@ -59,12 +59,11 @@ class StepOne extends Component {
     const { handleSubmit, loading, error, submitting, pristine } = this.props;
     return (
       <div>
-        <h1>Step One</h1>
-        <p>Please Select Golf Club</p>
+        <Header>Select Golf Club</Header>
         <Field
           name="selectedClub"
           component={this.ReduxFormDropDown}
-          placeholder="Select Golf Club"
+          placeholder="Select"
           loading={loading}
           options={golfClubs.map(val => ({
             value: val,
@@ -72,13 +71,12 @@ class StepOne extends Component {
             text: val
           }))}
         />
-        {/* Here for now */}
-        {error && <span>{error}</span>}
+        {error && <Message error>{error}</Message>}
         <div>
           <Divider />
           <Button
             onClick={handleSubmit}
-            disabled={pristine || submitting || error}
+            disabled={pristine || submitting || !!error || loading}
           >
             Next
           </Button>

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import moment from "moment";
 import Datetime from "react-datetime";
-import { Button, Divider } from "semantic-ui-react";
+import { Button, Divider, Form, Message, Header } from "semantic-ui-react";
 import { Field, reduxForm } from "redux-form";
 import "./dateTime.css";
 
@@ -22,22 +22,20 @@ class StepTwo extends Component {
     return undefined;
   };
 
-  DateTimePicker = ({ input, meta }) => (
+  DateTimePicker = ({ input: { onChange, value, name }, meta }) => (
     <div>
-      <span>{JSON.stringify(meta, 0, 2)}</span>
-      {meta.error && <span>{meta.error}</span>}
+      {meta.error && <Message error>{meta.error}</Message>}
       <Datetime
-        name={input.name}
+        name={name}
         dateFormat="ddd D/M"
         timeFormat="HH:mm"
-        defaultValue={
-          input.value.length === 0 ? new Date().setMinutes(0) : input.value
-        }
+        value={value}
         timeConstraints={{ minutes: { step: 5 } }}
         onChange={param => {
-          input.onChange(param);
+          onChange(param);
         }}
       />
+      {/* <span>{JSON.stringify(meta, 0, 2)}</span> */}
     </div>
   );
   render() {
@@ -45,7 +43,8 @@ class StepTwo extends Component {
 
     return (
       <div>
-        <form onSubmit={handleSubmit}>
+        <Header>Enter a date</Header>
+        <Form error onSubmit={handleSubmit}>
           <Field
             name="selectedDate"
             component={this.DateTimePicker}
@@ -58,7 +57,7 @@ class StepTwo extends Component {
               Next
             </Button>
           </div>
-        </form>
+        </Form>
       </div>
     );
   }

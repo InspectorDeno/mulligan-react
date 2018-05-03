@@ -6,6 +6,7 @@ import counter from "./reducers/counter";
 import weather from "./reducers/weather";
 import friends from "./reducers/friends";
 import golfclub from "./reducers/golfclub";
+import players from "./reducers/players";
 
 export default combineReducers({
   user,
@@ -13,5 +14,6 @@ export default combineReducers({
   weather,
   friends,
   golfclub,
+  players,
   form: reduxFormReducer
 });

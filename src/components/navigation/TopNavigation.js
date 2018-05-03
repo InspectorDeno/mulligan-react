@@ -28,17 +28,14 @@ const TopNavigation = ({ user, logout }) => (
         <Menu.Item name="home" as={Link} to="/dashboard">
           Home
         </Menu.Item>
-        <Menu.Item name="spelagolf" as={Link} to="/dashboard">
-          Spela golf
-        </Menu.Item>
         <Menu.Item name="golfrounds" as={Link} to="/my-rounds">
-          My golf rounds
-        </Menu.Item>
-        <Menu.Item name="friends" as={Link} to="/friends">
-          Find friends
+          Golf rounds
         </Menu.Item>
         <Menu.Item name="friends" as={Link} to="/golfclubs">
           Golf Clubs
+        </Menu.Item>
+        <Menu.Item name="friends" as={Link} to="/friends">
+          Find Friends
         </Menu.Item>
 
         <Menu.Menu position="right">

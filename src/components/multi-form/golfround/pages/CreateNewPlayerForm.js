@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
 import { Button, Form, Dropdown } from "semantic-ui-react";
 import InlineError from "../../../messages/InlineError";
 import validate from "./validate";
+import { addPlayer } from "../../../../actions/players";
 
 class CreateNewPlayerForm extends Component {
   constructor(props) {
@@ -51,25 +53,33 @@ class CreateNewPlayerForm extends Component {
       { key: "f", text: "Female", value: "female" }
     ];
     return (
-      <Dropdown
-        {...input}
-        placeholder={label}
-        options={options}
-        selection
-        onChange={(param, data) => {
-          input.onChange(data.value);
-        }}
-      />
+      <div>
+        <Dropdown
+          {...input}
+          placeholder={label}
+          options={options}
+          selection
+          onChange={(param, data) => {
+            input.onChange(data.value);
+          }}
+          style={{ width: "100%" }}
+        />
+      </div>
     );
   });
 
+  CreateNewPlayer = data => {
+    this.props.dispatch(addPlayer(data));
+    this.cancelNewPlayer();
+  };
+
   render() {
-    const { loading, invalid } = this.props;
+    const { loading, invalid, handleSubmit } = this.props;
     return (
       <div>
         {this.state.showCreatePlayer ? (
           <div style={{ display: "inline-block" }}>
-            <Form onSubmit={this.onSubmit} loading={loading}>
+            <Form loading={loading}>
               <Field
                 name="playerName"
                 label="Name"
@@ -86,7 +96,11 @@ class CreateNewPlayerForm extends Component {
                 component={this.RenderNumberInput}
               />
               <Button onClick={this.cancelNewPlayer}>Cancel</Button>
-              <Button color="blue" disabled={invalid}>
+              <Button
+                onClick={handleSubmit(this.CreateNewPlayer)}
+                color="blue"
+                disabled={invalid}
+              >
                 Save
               </Button>
             </Form>
@@ -102,12 +116,19 @@ class CreateNewPlayerForm extends Component {
 CreateNewPlayerForm.propTypes = {
   submit: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
-  invalid: PropTypes.bool.isRequired
+  invalid: PropTypes.bool.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  addPlayer: PropTypes.func.isRequired,
+  dispatch: PropTypes.func.isRequired
 };
 
-export default reduxForm({
+CreateNewPlayerForm = reduxForm({
   form: "addNewPlayer", //       <------ same form name
   destroyOnUnmount: true, //       <------ preserve form data
   forceUnregisterOnUnmount: true, // <------ unregister fields on unmount
   validate
 })(CreateNewPlayerForm);
+
+CreateNewPlayerForm = connect(null, { addPlayer })(CreateNewPlayerForm);
+
+export default CreateNewPlayerForm;

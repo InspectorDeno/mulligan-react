@@ -112,7 +112,7 @@ class SignupForm extends Component {
             fluid
             type="double"
             name="hcp"
-            label="hcp"
+            label="Hcp"
             icon="write"
             iconPosition="left"
           />

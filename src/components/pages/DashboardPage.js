@@ -4,8 +4,6 @@ import GetWeather from "../GetWeather";
 const DashboardPage = () => (
   <div>
     <GetWeather />
-    <GetWeather />
-    <GetWeather />
   </div>
 );
 

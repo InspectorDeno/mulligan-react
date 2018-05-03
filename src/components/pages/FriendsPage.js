@@ -1,11 +1,18 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { Segment, Header } from "semantic-ui-react";
+import {
+  Segment,
+  Header,
+  Card,
+  Button,
+  Message,
+  Divider
+} from "semantic-ui-react";
 import FindUserForm from "../forms/FindUserForm";
-import Pending from "../FriendComponent/Pending";
-import Friends from "../FriendComponent/Friends";
-import { getFriends } from "../../actions/friends";
+import FriendList from "../FriendComponent/FriendList";
+import { addFriend } from "../../actions/friends";
+import { findUser } from "../../actions/users";
 
 // if pending friend request load pending cards
 // if friends, load friend cards
@@ -13,32 +20,63 @@ import { getFriends } from "../../actions/friends";
 class FriendsPage extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      friendData: [],
-      loading: false,
-      error: ""
-    };
+    this.state = {};
   }
 
-  componentDidMount() {
-    this.props
-      .dispatch(getFriends(this.props.user))
-      .then(res => this.setState({ friendData: res.friendData }));
-  }
+  submit = data =>
+    this.props.dispatch(findUser(data)).catch(err => {
+      console.log(err);
+    });
+
+  addFriend = email => {
+    this.props.dispatch(addFriend(this.props.user, email)).catch(err => {
+      const errors = {};
+      errors.add_friend = err;
+      this.setState({ errors });
+    });
+  };
 
   render() {
-    const { friendData } = this.props;
+    const { errors, userData } = this.props;
     return (
       <div>
         <div>
-          <Segment>
-            <Header>Find other users</Header>
+          <Segment raised>
+            <h1>Find Mulligan Users</h1>
+            <Divider />
+            {errors && errors.find_user ? (
+              <Message error>{errors.find_user}</Message>
+            ) : (
+              ""
+            )}
             <FindUserForm submit={this.submit} />
           </Segment>
         </div>
-        {friendData}
         <div>
-          <Friends />
+          {userData && userData.email ? (
+            <Card style={{ marginTop: "30px" }}>
+              <Card.Content>
+                <Card.Header>{userData.email}</Card.Header>
+                <Card.Meta>Hcp: {userData.hcp}</Card.Meta>
+              </Card.Content>
+              <Card.Content extra>
+                <Button
+                  basic
+                  fluid
+                  color="green"
+                  onClick={() => this.addFriend(userData.email)}
+                >
+                  {/* ONCKLICK, ADD FREIDN */}
+                  Add Friend
+                </Button>
+              </Card.Content>
+            </Card>
+          ) : (
+            ""
+          )}
+          <Segment style={{ marginTop: "30px" }}>
+            <FriendList />
+          </Segment>
         </div>
       </div>
     );
@@ -46,21 +84,20 @@ class FriendsPage extends Component {
 }
 
 FriendsPage.propTypes = {
-  user: PropTypes.shape({
-    email: PropTypes.string.isRequired
-  }).isRequired,
   dispatch: PropTypes.func.isRequired,
-  friendData: PropTypes.arrayOf(PropTypes.object).isRequired,
-  loading: PropTypes.bool.isRequired,
-  error: PropTypes.string.isRequired
+  userData: PropTypes.arrayOf(PropTypes.object).isRequired,
+  errors: PropTypes.arrayOf(PropTypes.string).isRequired,
+  user: PropTypes.shape({
+    token: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired,
+    confirmed: PropTypes.bool.isRequired
+  }).isRequired
 };
 
 function mapStateToProps(state) {
   return {
-    friendData: state.friends.items,
-    loading: state.friends.loading,
-    error: state.friends.error,
-    user: state.user
+    userData: state.user.items,
+    errors: state.user.errors
   };
 }
 

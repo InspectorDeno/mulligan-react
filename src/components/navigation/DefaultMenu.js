@@ -19,13 +19,11 @@ const DefaultMenu = () => (
 
       <Menu.Menu position="right">
         <Menu.Item>
-          <Button as={Link} to="/login" color="orange">
+          <Button basic as={Link} to="/login" inverted color="orange">
             Log in
           </Button>
           <Button
-            basic
             color="orange"
-            inverted
             as={Link}
             to="/signup"
             style={{ marginLeft: "0.5em" }}

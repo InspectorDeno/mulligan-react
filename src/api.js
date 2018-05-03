@@ -15,12 +15,20 @@ export default {
     validateToken: token => axios.post("/api/auth/validate_token", { token }),
     resetPassword: data => axios.post("/api/auth/reset_password", { data }),
     getFriends: user =>
-      axios.post("/api/friends", { user }).then(res => res.data.friends),
+      axios
+        .post("/api/users/get_friends", { user })
+        .then(res => res.data.friends),
+    addFriend: (user, friend) =>
+      axios
+        .post("/api/friends/add", { user, friend })
+        .then(res => res.data.friendData),
     acceptFriend: (user, friend, response) =>
       axios
         .post("/api/friends/respond", { user, friend, response })
         .then(res => res.data.friends), // ändra denna THEN
-    //  axios.post("/api/findUser")
+    // TODO Kanske egen reducer för friend
+    findUser: user =>
+      axios.post("/api/users/find", { user }).then(res => res.data.userData),
     getWeather: () =>
       axios.get("/api/weather").then(res => res.data.weatherData) // For now or maybe done
   },

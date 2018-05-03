@@ -15,7 +15,7 @@ class SignupPage extends Component {
       <Grid columns={2} relaxed style={{ height: "100vh" }}>
         <Grid.Column style={{ background: "#3d3d3d" }} />
         <Grid.Column style={{ verticalAlign: "middle", background: "#1b1c1d" }}>
-          <Segment raised style={{ maxWidth: "450px" }}>
+          <Segment raised style={{ maxWidth: "450px", margin: "auto" }}>
             <Header as="h2" textAlign="center" color="orange">
               Sign Up
             </Header>

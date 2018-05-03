@@ -5,12 +5,14 @@
 .rdt {
   display: block;
   position: relative;
+  width: 300px;
 }
 
 .rdtPicker {
   display: block;
+  margin: auto;
   /* position: absolute; */
-  width: 250px;
+  width: 300px;
   padding: 4px;
   margin-top: 1px;
   /* z-index: 99999 !important; */

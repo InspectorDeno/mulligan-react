@@ -65,6 +65,12 @@ const App = ({ location, isAuthenticated }) => (
       />
       <UserRoute
         location={location}
+        path="/settings"
+        exact
+        component={DashboardPage}
+      />
+      <UserRoute
+        location={location}
         path="/my-rounds"
         exact
         component={GolfRoundsPage}
