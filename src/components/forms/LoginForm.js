@@ -7,7 +7,7 @@ import InlineError from "../messages/InlineError";
 class LoginForm extends Component {
   state = {
     data: {
-      email: "",
+      username_email: "",
       password: ""
     },
     loading: false,
@@ -39,8 +39,8 @@ class LoginForm extends Component {
   // Validator behövs inte??
   validate = data => {
     const errors = {};
-    if (!Validator.isEmail(data.email)) {
-      errors.email = "Enter a valid email";
+    if (!data.username_email) {
+      errors.username_email = "Enter a valid email";
     }
     if (!data.password) {
       errors.password = "Please enter a password";
@@ -60,19 +60,19 @@ class LoginForm extends Component {
           </Message>
         )}
 
-        <label htmlFor="email" style={{ float: "left" }}>
-          Email
+        <label htmlFor="username_email" style={{ float: "left" }}>
+          Username or Email
         </label>
         {errors.email && <InlineError text={errors.email} />}
         <Form.Field error={!!errors.email}>
           <Form.Input
             fluid
-            type="email"
-            name="email"
+            type="text"
+            name="username_email"
             icon="user"
             iconPosition="left"
-            placeholder="oi@oi.oi"
-            value={data.email}
+            placeholder="Username or Email"
+            value={data.username_email}
             onChange={this.onChange}
           />
         </Form.Field>
