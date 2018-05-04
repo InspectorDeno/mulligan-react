@@ -63,6 +63,7 @@ class FindUserForm extends Component {
             placeholder="example@email.com"
             value={data.email}
             onChange={this.onChange}
+            inverted
           />
         </Form.Field>
         <Button color="orange">Search for user</Button>

@@ -21,10 +21,16 @@ const store = createStore(
 // Dispatches USER_LOGGED_IN action if we have a local webstorage (for refresh)
 if (localStorage.mulliganJWT) {
   const payload = decode(localStorage.mulliganJWT);
+  console.log("payload");
+  console.log(payload);
   const user = {
-    token: localStorage.mulliganJWT,
     email: payload.email,
-    confirmed: payload.confirmed
+    username: payload.username,
+    gender: payload.gender,
+    hcp: payload.hcp,
+    confirmed: payload.confirmed,
+    token: localStorage.mulliganJWT,
+    friends: []
   };
   setAuthorizationHeader(localStorage.mulliganJWT);
   store.dispatch(userLoggedIn(user));

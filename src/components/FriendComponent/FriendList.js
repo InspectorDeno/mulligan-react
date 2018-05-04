@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import { Header, Divider } from "semantic-ui-react";
+import { Header, Divider, Feed } from "semantic-ui-react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { getFriends } from "../../actions/friends";
+import { getFriends } from "../../actions/users";
+import FriendListObject from "./FriendListObject";
 
 class FriendList extends Component {
   constructor(props) {
@@ -11,21 +12,26 @@ class FriendList extends Component {
   }
 
   componentDidMount() {
-    this.props
-      .dispatch(getFriends(this.props.user))
-      .then(res => {
-        this.setState({ friendData: res.friendData });
-      })
-      .catch(err => this.setState({ errors: err.response.data.errors }));
+    this.props.dispatch(getFriends(this.props.user)).catch(err => {
+      console.log(err);
+      this.setState({ errors: err.response.data.errors });
+    });
   }
 
   render() {
     const { friendData, errors } = this.props;
+    if (friendData) {
+      friendData.forEach(friend => console.log(friend.email));
+    }
     return (
       <div>
         <Header>Friend List</Header>
         <Divider />
-        {friendData.length > 0 ? friendData : errors.get_friends}
+        <Feed>
+          {friendData
+            ? friendData.map(friend => <FriendListObject friend={friend} />)
+            : errors.get_friends}
+        </Feed>
       </div>
     );
   }
@@ -45,7 +51,7 @@ FriendList.propTypes = {
 function mapStateToProps(state) {
   return {
     user: state.user,
-    friendData: state.friends.items,
+    friendData: state.user.friends,
     errors: state.friends.errors
   };
 }

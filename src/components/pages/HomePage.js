@@ -1,34 +1,38 @@
 import React from "react";
-import { Grid } from "semantic-ui-react";
-import { Link } from "react-router-dom";
-import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import * as actions from "../../actions/auth";
+import { Container, Header, Button, Segment } from "semantic-ui-react";
 
-const HomePage = ({ isAutenticated, logout }) => (
-  <div className="middle aligned center aligned grid">
-    <Grid.Column>
-      <h1>Home Page</h1>
-      {isAutenticated ? (
-        <button onClick={() => logout()}>Logout</button>
-      ) : (
-        <div>
-          <Link to="/login">Login</Link> or <Link to="/signup">Sign up</Link>
-        </div>
-      )}
-    </Grid.Column>
-  </div>
+const HomePageHeader = ({ mobile }) => (
+  <Container text>
+    <Header
+      content="Mulligan"
+      inverted
+      style={{
+        fontSize: mobile ? "2em" : "4em",
+        fontWeight: "normal",
+        marginTop: mobile ? "1.5em" : "2em"
+      }}
+    />
+    <Button inverted color="orange" size="huge">
+      Join today
+    </Button>
+  </Container>
 );
 
-HomePage.propTypes = {
-  isAutenticated: PropTypes.bool.isRequired,
-  logout: PropTypes.func.isRequired
+HomePageHeader.propTypes = {
+  mobile: PropTypes.bool.isRequired
 };
 
-function mapStateToProps(state) {
-  return {
-    isAutenticated: !!state.user.token
-  };
-}
+const DesktopContainer = () => (
+  <Segment
+    textAlign="center"
+    vertical
+    style={{ minHeight: 400, padding: "1em 0em", background: "#1e002d" }}
+  >
+    <HomePageHeader />
+  </Segment>
+);
 
-export default connect(mapStateToProps, { logout: actions.logout })(HomePage);
+const HomePage = () => <DesktopContainer />;
+
+export default HomePage;

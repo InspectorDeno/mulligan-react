@@ -6,7 +6,7 @@ import { Grid, Message, Header, Segment, Divider } from "semantic-ui-react";
 import LoginForm from "../forms/LoginForm";
 import { login } from "../../actions/auth";
 
-export class LoginPage extends Component {
+class LoginPage extends Component {
   // History is provided by router, and login is available to us when we connect this component to redux
   submit = data =>
     this.props.login(data).then(() => this.props.history.push("/dashboard"));

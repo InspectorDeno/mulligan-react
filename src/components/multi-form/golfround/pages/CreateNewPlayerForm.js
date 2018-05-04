@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
-import { Button, Form, Dropdown } from "semantic-ui-react";
+import { Button, Form, Dropdown, Segment } from "semantic-ui-react";
 import InlineError from "../../../messages/InlineError";
 import validate from "./validate";
 import { addPlayer } from "../../../../actions/players";
@@ -76,7 +76,7 @@ class CreateNewPlayerForm extends Component {
   render() {
     const { loading, invalid, handleSubmit } = this.props;
     return (
-      <div>
+      <Segment raised size="huge">
         {this.state.showCreatePlayer ? (
           <div style={{ display: "inline-block" }}>
             <Form loading={loading}>
@@ -106,9 +106,16 @@ class CreateNewPlayerForm extends Component {
             </Form>
           </div>
         ) : (
-          <Button icon="plus" onClick={this.addNewPlayer} />
+          <div style={{ display: "flex", justifyContent: "space-evenly" }}>
+            <div>Add new Player</div>
+            <Button
+              style={{ float: "right" }}
+              icon="plus"
+              onClick={this.addNewPlayer}
+            />
+          </div>
         )}
-      </div>
+      </Segment>
     );
   }
 }

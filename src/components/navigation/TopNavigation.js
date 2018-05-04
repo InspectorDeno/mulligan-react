@@ -13,11 +13,11 @@ const TopNavigation = ({ user, logout }) => (
   <div>
     <Menu
       fixed="top"
-      inverted
       borderless
       stackable
+      inverted
       size="large"
-      style={{ display: "block" }}
+      style={{ display: "block", background: "#1e002d" }}
     >
       {!user.confirmed && <ConfirmEmailMessage />}
 
@@ -42,7 +42,12 @@ const TopNavigation = ({ user, logout }) => (
           <Dropdown
             item
             simple
-            trigger={<Image avatar src={gravatarUrl(user.email)} />}
+            trigger={
+              <div>
+                <span style={{ marginRight: "10px" }}>{user.username}</span>
+                <Image avatar src={gravatarUrl(user.email)} />
+              </div>
+            }
           >
             <Dropdown.Menu>
               <Dropdown.Item onClick={() => logout()}>Account</Dropdown.Item>
@@ -58,7 +63,8 @@ const TopNavigation = ({ user, logout }) => (
 
 TopNavigation.propTypes = {
   user: PropTypes.shape({
-    email: PropTypes.string.isRequired
+    email: PropTypes.string.isRequired,
+    username: PropTypes.string.isRequired
   }).isRequired,
   logout: PropTypes.func.isRequired
 };

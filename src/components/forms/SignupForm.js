@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Form, Button, Message } from "semantic-ui-react";
+import { Form, Dropdown, Button, Message } from "semantic-ui-react";
 import Validator from "validator";
 import InlineError from "../messages/InlineError";
 
@@ -8,7 +8,9 @@ class SignupForm extends Component {
   state = {
     data: {
       email: "",
-      password: ""
+      username: "",
+      password: "",
+      gender: ""
     },
     options: [
       { key: "m", text: "Male", value: "male" },
@@ -18,13 +20,24 @@ class SignupForm extends Component {
     errors: {}
   };
 
-  onChange = e =>
+  onChange = (e, { value }) => {
     this.setState({
       data: {
         ...this.state.data,
-        [e.target.name]: e.target.value
+        [e.target.name]: value
       }
     });
+    // console.log(e);
+    // console.log(value);
+  };
+  onSelectChange = (e, d) => {
+    this.setState({
+      data: {
+        ...this.state.data,
+        [d.name]: d.value
+      }
+    });
+  };
 
   onSubmit = e => {
     e.preventDefault();
@@ -50,8 +63,14 @@ class SignupForm extends Component {
     if (!Validator.isEmail(data.email)) {
       errors.email = "Invalid email";
     }
+    if (!data.username) {
+      errors.username = "Can't be blank";
+    }
     if (!data.password) {
       errors.password = "Can't be blank";
+    }
+    if (!data.gender) {
+      errors.gender = "Can't be blank";
     }
     return errors;
   };
@@ -67,57 +86,71 @@ class SignupForm extends Component {
           </Message>
         )}
 
-        <label htmlFor="email" style={{ float: "left" }}>
-          Email
-        </label>
-        {errors.email && <InlineError text={errors.email} />}
-        <Form.Field error={!!errors.email}>
-          <Form.Input
-            fluid
-            type="email"
-            name="email"
-            icon="user"
-            iconPosition="left"
-            placeholder="oi@oi.oi"
-            value={data.email}
-            onChange={this.onChange}
-          />
-        </Form.Field>
-
-        <label htmlFor="password" style={{ float: "left" }}>
-          Password
-        </label>
-        {errors.password && <InlineError text={errors.password} />}
-        <Form.Field error={!!errors.password}>
-          <Form.Input
-            type="password"
-            name="password"
-            icon="lock"
-            iconPosition="left"
-            placeholder="123123"
-            value={data.password}
-            onChange={this.onChange}
-          />
-        </Form.Field>
+        <Form.Group widths="equal">
+          <Form.Field error={!!errors.email}>
+            <label htmlFor="email" style={{ float: "left" }}>
+              Email
+            </label>
+            {errors.email && <InlineError text={errors.email} />}
+            <Form.Input
+              name="email"
+              type="email"
+              icon="user"
+              iconPosition="left"
+              placeholder="email@email.com"
+              value={data.email}
+              onChange={this.onChange}
+            />
+          </Form.Field>
+          <Form.Field error={!!errors.username}>
+            <label htmlFor="username" style={{ float: "left" }}>
+              Username
+            </label>
+            {errors.username && <InlineError text={errors.username} />}
+            <Form.Input
+              name="username"
+              type="text"
+              icon="user"
+              iconPosition="left"
+              placeholder="GreatGolfeR"
+              value={data.username}
+              onChange={this.onChange}
+            />
+          </Form.Field>
+        </Form.Group>
 
         <Form.Group widths="equal">
-          <Form.Select
-            fluid
-            name="gender"
-            label="Gender"
-            options={options}
-            placeholder="Gender"
-          />
-          <Form.Input
-            fluid
-            type="double"
-            name="hcp"
-            label="Hcp"
-            icon="write"
-            iconPosition="left"
-          />
+          <Form.Field error={!!errors.password}>
+            <label htmlFor="password" style={{ float: "left" }}>
+              Password
+            </label>
+            {errors.password && <InlineError text={errors.password} />}
+            <Form.Input
+              type="password"
+              name="password"
+              icon="lock"
+              iconPosition="left"
+              placeholder="123123"
+              value={data.password}
+              onChange={this.onChange}
+            />
+          </Form.Field>
+          <Form.Field error={!!errors.gender}>
+            <label htmlFor="gender" style={{ float: "left" }}>
+              Gender
+            </label>
+            {errors.gender && <InlineError text={errors.gender} />}
+            <Dropdown
+              selection
+              name="gender"
+              placeholder="Gender"
+              options={options}
+              value={data.gender}
+              onChange={this.onSelectChange}
+            />
+          </Form.Field>
         </Form.Group>
-        <Button fluid color="black">
+        <Button fluid color="orange">
           Sign up
         </Button>
       </Form>

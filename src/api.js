@@ -17,7 +17,7 @@ export default {
     getFriends: user =>
       axios
         .post("/api/users/get_friends", { user })
-        .then(res => res.data.friends),
+        .then(res => res.data.friendData),
     addFriend: (user, friend) =>
       axios
         .post("/api/friends/add", { user, friend })

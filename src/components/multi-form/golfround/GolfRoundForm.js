@@ -23,8 +23,6 @@ class GolfRoundForm extends Component {
     const { page } = this.state;
     return (
       <div>
-        <h1>Create Golf Round</h1>
-        <Divider />
         {page === 1 && <StepOne onSubmit={this.nextPage} />}
         {page === 2 && (
           <StepTwo previousPage={this.previousPage} onSubmit={this.nextPage} />
