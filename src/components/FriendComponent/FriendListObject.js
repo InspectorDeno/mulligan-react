@@ -1,14 +1,31 @@
 import React from "react";
 import { Button, Feed } from "semantic-ui-react";
 
-const FriendListObject = props => {
+export const PendingFriendListObject = props => {
+  const { pending } = props;
+  return (
+    <Feed.Event>
+      <Feed.Label icon="heart" />
+      <Feed.Content>
+        <Feed.Summary>
+          {pending.username}
+          <Button floated="right" size="tiny" color="green" icon="checkmark" />
+          <Button floated="right" size="tiny" color="red" icon="remove" />
+        </Feed.Summary>
+        <Feed.Extra>Hcp: {pending.hcp}</Feed.Extra>
+      </Feed.Content>
+    </Feed.Event>
+  );
+};
+
+export const FriendListObject = props => {
   const { friend } = props;
   return (
     <Feed.Event>
       <Feed.Label icon="heart" />
       <Feed.Content>
         <Feed.Summary>
-          {friend.email}
+          {friend.username}
           <Button floated="right" size="tiny">
             Invite
           </Button>
@@ -21,5 +38,3 @@ const FriendListObject = props => {
     </Feed.Event>
   );
 };
-
-export default FriendListObject;

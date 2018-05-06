@@ -11,7 +11,10 @@ import {
   SET_HCP_BEGIN,
   SET_HCP_SUCCESS,
   SET_HCP_FAILED,
-  SET_SHOW_COMPLETE_SIGNUP
+  SET_SHOW_COMPLETE_SIGNUP,
+  PENDING_DATA_REQUESTED,
+  PENDING_DATA_RETRIEVED,
+  PENDING_DATA_FAILED
 } from "../types";
 
 // Find User Thunk
@@ -50,17 +53,29 @@ export const setHcpBegin = hcp => ({
 
 export const setHcpSuccess = () => ({
   type: SET_HCP_SUCCESS
-})
+});
 
 export const setHcpError = error => ({
   type: SET_HCP_FAILED,
   errors: error.response.data.errors
-})
+});
 export const setShowCompleteSignup = () => ({
-  type: SET_SHOW_COMPLETE_SIGNUP,
-})
+  type: SET_SHOW_COMPLETE_SIGNUP
+});
 
+export const getPendingBegin = () => ({
+  type: PENDING_DATA_REQUESTED
+});
 
+export const getPendingSuccess = pendingData => ({
+  type: PENDING_DATA_RETRIEVED,
+  payload: pendingData
+});
+
+export const getPendingError = error => ({
+  type: PENDING_DATA_FAILED,
+  errors: error
+});
 
 // API calls
 export const signup = data => dispatch =>
@@ -68,7 +83,6 @@ export const signup = data => dispatch =>
     localStorage.mulliganJWT = user.token;
     dispatch(userLoggedIn(user));
   });
-
 
 // For finding a user in the database
 export function findUser(user) {
@@ -94,9 +108,26 @@ export function getFriends(user) {
         dispatch(getFriendsSuccess(data));
       })
       .catch(err => {
-        dispatch(addError(err.response.data.errors));
+        console.log(err);
+        // dispatch(addError(err.response.data.errors));
         dispatch(getFriendsError());
         // TODO: This shouldn't really dispatch an error imo, we just don't have any friends...
+      });
+  };
+}
+
+// For fetching pending friends
+export function getPending(user) {
+  return dispatch => {
+    dispatch(getPendingBegin());
+    return api.user
+      .getPending(user)
+      .then(data => {
+        dispatch(getPendingSuccess(data));
+      })
+      .catch(err => {
+        console.log(err);
+        dispatch(getPendingError());
       });
   };
 }
@@ -104,13 +135,12 @@ export function getFriends(user) {
 export const setHcp = (user, hcp) => dispatch => {
   dispatch(setHcpBegin());
   api.user.setHcp(user, hcp).then(updatedUser => {
-      localStorage.mulliganJWT = updatedUser.token;
-      dispatch(setHcpSuccess());
-  })
-}
+    localStorage.mulliganJWT = updatedUser.token;
+    dispatch(setHcpSuccess());
+  });
+};
 
-  export const shownModal = () => dispatch => dispatch(setShowCompleteSignup());
-
+export const shownModal = () => dispatch => dispatch(setShowCompleteSignup());
 
 // export function setHcp(user, hcp) {
 //   return dispatch => {

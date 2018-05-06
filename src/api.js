@@ -14,11 +14,16 @@ export default {
       axios.post("/api/auth/reset_password_request", { email }),
     validateToken: token => axios.post("/api/auth/validate_token", { token }),
     resetPassword: data => axios.post("/api/auth/reset_password", { data }),
-    setHcp: (user, hcp) => axios.post("/api/users/sethcp", { user, hcp}).then(res => res.data.user),
+    setHcp: (user, hcp) =>
+      axios.post("/api/users/sethcp", { user, hcp }).then(res => res.data.user),
     getFriends: user =>
       axios
         .post("/api/users/get_friends", { user })
         .then(res => res.data.friendData),
+    getPending: user =>
+      axios
+        .post("(api/users/get_pending", { user })
+        .then(res => res.data.pendingData),
     addFriend: (user, friend) =>
       axios
         .post("/api/friends/add", { user, friend })

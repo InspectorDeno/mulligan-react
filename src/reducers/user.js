@@ -13,13 +13,23 @@ import {
   SET_HCP_BEGIN,
   SET_HCP_SUCCESS,
   SET_HCP_FAILED,
-  SET_SHOW_COMPLETE_SIGNUP
+  SET_SHOW_COMPLETE_SIGNUP,
+  PENDING_DATA_REQUESTED,
+  PENDING_DATA_RETRIEVED,
+  PENDING_DATA_FAILED
 } from "../types";
 
 const initialState = {
-  users: [{
-    errors: {}
-  }],
+  users: [
+    {
+      errors: {}
+    }
+  ],
+  pending: [
+    {
+      errors: {}
+    }
+  ],
   shownModal: false,
   loading: false,
   errors: {}
@@ -31,14 +41,14 @@ export default function user(state = initialState, action = {}) {
       return action.user;
     case USER_LOGGED_OUT:
       return {};
-      case SET_HCP_BEGIN:
-      return {...state, loading: true };
-      case SET_HCP_SUCCESS:
-      return {...state, loading: false };
-      case SET_HCP_FAILED:
-      return {...state, loading: false, errors: action.errors };
+    case SET_HCP_BEGIN:
+      return { ...state, loading: true };
+    case SET_HCP_SUCCESS:
+      return { ...state, loading: false };
+    case SET_HCP_FAILED:
+      return { ...state, loading: false, errors: action.errors };
     case USER_DATA_REQUESTED:
-      return { ...state, loading: true, users: []};
+      return { ...state, loading: true, users: [] };
     case USER_DATA_RETRIEVED:
       return { ...state, loading: false, users: [action.payload] };
     case USER_DATA_FAILED:
@@ -52,13 +62,28 @@ export default function user(state = initialState, action = {}) {
       return { ...state, loading: false };
     // för då finns kanske också action.payload.error
     case FRIEND_REQUEST_SENT:
-      return { ...state, loading: true, };
+      return { ...state, loading: true };
     case FRIEND_REQUEST_SUCCESS:
       return { ...state, loading: false, users: [action.payload] };
     case FRIEND_REQUEST_FAILED:
-      return { ...state, loading: false, users: [{ ...state.users[0], errors: action.errors } ]};
+      return {
+        ...state,
+        loading: false,
+        users: [{ ...state.users[0], errors: action.errors }]
+      };
     case SET_SHOW_COMPLETE_SIGNUP:
-      return { ...state, shownModal: true};
+      return { ...state, shownModal: true };
+    case PENDING_DATA_REQUESTED:
+      return { ...state, loading: true };
+    case PENDING_DATA_RETRIEVED:
+      return { ...state, loading: false, pending: [action.payload] };
+    case PENDING_DATA_FAILED:
+      return {
+        ...state,
+        loading: false,
+        pending: [{ ...state.pending[0], errors: action.errors }]
+      };
+
     default:
       return state;
   }
