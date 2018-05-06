@@ -17,7 +17,7 @@ export const getAddFriendSuccess = userData => ({
 
 export const getAddFriendError = error => ({
   type: FRIEND_REQUEST_FAILED,
-  payload: error.response.data.errors
+  errors: error.response.data.errors
 });
 
 // Handle HTTP errors since fetch won't.
@@ -34,6 +34,6 @@ export function addFriend(user, friend) {
     return api.user
       .addFriend(user, friend)
       .then(userData => dispatch(getAddFriendSuccess(userData)))
-      .catch(error => dispatch(getAddFriendError(error)));
+    .catch(error => dispatch(getAddFriendError(error)));
   };
 }

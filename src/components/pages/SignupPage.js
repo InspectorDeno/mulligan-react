@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Segment, Grid, Header, Divider } from "semantic-ui-react";
+import { Segment, Header, Divider } from "semantic-ui-react";
 import SignupForm from "../forms/SignupForm";
 import { signup } from "../../actions/users";
 
@@ -11,7 +11,6 @@ class SignupPage extends Component {
 
   render() {
     return (
-      // TODO: Hey let's make a css for this shite
       <div style={{ maxWidth: "500px", margin: "auto" }}>
         <Segment raised>
           <Header as="h2" textAlign="center" color="orange">

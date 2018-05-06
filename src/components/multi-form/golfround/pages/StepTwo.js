@@ -44,7 +44,7 @@ class StepTwo extends Component {
     return (
       <div>
         <Header>Enter a date</Header>
-        <Form error onSubmit={handleSubmit}>
+        <Form error>
           <Field
             name="selectedDate"
             component={this.DateTimePicker}

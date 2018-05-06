@@ -24,11 +24,6 @@ export const logout = () => dispatch => {
   dispatch(userLoggedOut());
 };
 
-//Lägg i en funktion här
-//export const users = () => dispatch => {
-// api.user.
-//}
-
 export const confirm = token => dispatch =>
   api.user.confirm(token).then(user => {
     localStorage.mulliganJWT = user.token;

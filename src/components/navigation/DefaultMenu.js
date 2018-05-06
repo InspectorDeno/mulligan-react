@@ -1,5 +1,5 @@
 import React from "react";
-import { Menu, Container, Button, Segment } from "semantic-ui-react";
+import { Menu, Container, Button } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
 // Should just be visibile for authenticated users

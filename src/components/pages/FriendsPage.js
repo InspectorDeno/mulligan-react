@@ -1,19 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import {
-  Segment,
-  Header,
-  Card,
-  Button,
-  Message,
-  Divider,
-  Grid
-} from "semantic-ui-react";
+import { first, pick, find} from "underscore"
+import { Segment, Header, Card, Button, Divider } from "semantic-ui-react";
 import FindUserForm from "../forms/FindUserForm";
 import FriendList from "../FriendComponent/FriendList";
 import { addFriend } from "../../actions/friends";
-import { findUser } from "../../actions/users";
+import { findUser }from "../../actions/users";
 
 // if pending friend request load pending cards
 // if friends, load friend cards
@@ -26,54 +19,51 @@ class FriendsPage extends Component {
     };
   }
 
-  submit = data => this.props.dispatch(findUser(data));
+  submit = data => this.props.findUser(data);
 
   addFriend = email => {
-    this.props.dispatch(addFriend(this.props.user, email)).catch(err => {
-      const errors = {};
-      errors.add_friend = err;
-      this.setState({ errors });
-    });
+    // TODO: This currently sends the whole user with tuns of props.. maybe don't do that
+    this.props.addFriend(this.props.user, email);
   };
 
   render() {
-    const { errors, userData } = this.props;
+    const { user, foundUser } = this.props;
+    // const { errors } = this.state;
     return (
       <div>
         <Segment.Group horizontal raised style={{ background: "#f3f4f5" }}>
           <Segment secondary>
             <Header>Find Mulligan Users</Header>
             <Divider />
-            {errors && errors.find_user ? (
-              <Message error>{errors.find_user}</Message>
-            ) : (
-              ""
-            )}
             <FindUserForm submit={this.submit} />
             <div>
-              {userData && userData.email ? (
+              {
+                foundUser && foundUser.username ? (
                 <div>
                   <Divider />
                   <Card style={{ marginTop: "30px" }}>
                     <Card.Content>
-                      <Card.Header>{userData.email}</Card.Header>
-                      <Card.Meta>Hcp: {userData.hcp}</Card.Meta>
+                      <Card.Header>{foundUser.username}</Card.Header>
+                      <Card.Meta>Hcp: {foundUser.hcp}</Card.Meta>
                     </Card.Content>
+                    {user.username !== foundUser.username && 
                     <Card.Content extra>
+                      {foundUser.errors ? foundUser.errors.add_friend : 
                       <Button
                         basic
                         fluid
                         color="green"
-                        onClick={() => this.addFriend(userData.email)}
+                        onClick={() => this.addFriend(foundUser.username)}
                       >
-                        {/* ONCKLICK, ADD FREIDN */}
                         Add Friend
                       </Button>
+                      }
                     </Card.Content>
+                    }
                   </Card>
                 </div>
               ) : (
-                ""
+                "Bajs"
               )}
             </div>
           </Segment>
@@ -87,11 +77,12 @@ class FriendsPage extends Component {
 }
 
 FriendsPage.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  userData: PropTypes.arrayOf(PropTypes.object).isRequired,
-  errors: PropTypes.arrayOf(PropTypes.string).isRequired,
+  findUser: PropTypes.func.isRequired,
+  addFriend: PropTypes.func.isRequired,
+  foundUser: PropTypes.arrayOf(PropTypes.object).isRequired,
   user: PropTypes.shape({
     token: PropTypes.string.isRequired,
+    username: PropTypes.string.isRequired,
     email: PropTypes.string.isRequired,
     confirmed: PropTypes.bool.isRequired
   }).isRequired
@@ -99,9 +90,9 @@ FriendsPage.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    userData: state.user.users,
-    errors: state.user.errors
+    user: state.user,
+    foundUser: first(state.user.users)
   };
 }
 
-export default connect(mapStateToProps)(FriendsPage);
+export default connect(mapStateToProps, { findUser, addFriend })(FriendsPage);

@@ -1,6 +1,7 @@
 import { combineReducers } from "redux";
 import { reducer as reduxFormReducer } from "redux-form";
 
+import errors from "./reducers/errors";
 import user from "./reducers/user";
 import counter from "./reducers/counter";
 import weather from "./reducers/weather";
@@ -9,6 +10,7 @@ import golfclub from "./reducers/golfclub";
 import players from "./reducers/players";
 
 export default combineReducers({
+  errors,
   user,
   counter,
   weather,

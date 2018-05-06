@@ -14,6 +14,7 @@ export default {
       axios.post("/api/auth/reset_password_request", { email }),
     validateToken: token => axios.post("/api/auth/validate_token", { token }),
     resetPassword: data => axios.post("/api/auth/reset_password", { data }),
+    setHcp: (user, hcp) => axios.post("/api/users/sethcp", { user, hcp}).then(res => res.data.user),
     getFriends: user =>
       axios
         .post("/api/users/get_friends", { user })
@@ -21,7 +22,7 @@ export default {
     addFriend: (user, friend) =>
       axios
         .post("/api/friends/add", { user, friend })
-        .then(res => res.data.friendData),
+        .then(res => res.data.add_friend),
     acceptFriend: (user, friend, response) =>
       axios
         .post("/api/friends/respond", { user, friend, response })

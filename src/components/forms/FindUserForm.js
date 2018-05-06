@@ -1,83 +1,128 @@
-import React, { Component } from "react";
-import { Form, Button, Message } from "semantic-ui-react";
-import { connect } from "react-redux";
+import React, {
+  Component
+} from "react";
+import {
+  Form,
+  Button,
+  Message
+} from "semantic-ui-react";
+import {
+  connect
+} from "react-redux";
+import { find } from "underscore"
 import PropTypes from "prop-types";
-import Validator from "validator";
 import InlineError from "../messages/InlineError";
+// import * as actions from "../../actions/errorAction"
 
 class FindUserForm extends Component {
   state = {
     data: {
-      email: ""
+      username_email: ""
     },
     loading: false,
     errors: {}
   };
 
+    // componentWillUnmount() {
+    //   const {findUserError} = this.props;
+    //     if (findUserError.find_user) {
+    //       this.props.removeError(findUserError);
+    //     }
+    // }
+
   onChange = e =>
     this.setState({
       ...this.state,
-      data: { ...this.state.data, [e.target.name]: e.target.value }
+      data: { ...this.state.data,
+        [e.target.name]: e.target.value
+      }
     });
 
   onSubmit = () => {
     const errors = this.validate(this.state.data);
-    this.setState({ errors });
+    const { findUserError } = this.props
+    this.setState({
+      errors
+    });
     if (Object.keys(errors).length === 0) {
-      this.setState({ loading: true });
-      // Validation errors from the server will be written to the component's state. Display with message
+      this.setState({
+        loading: true
+      });
+      // Remove previous errors
+      if(findUserError.find_user){
+        this.props.removeError(findUserError);
+      }
       this.props
         .submit(this.state.data)
-        .then(() => this.setState({ loading: false }));
+        .then(() => this.setState({
+          loading: false
+        }));
     }
   };
 
   validate = data => {
     const errors = {};
-    if (!Validator.isEmail(data.email)) {
-      errors.email = "Enter a valid email";
+    if (!data.username_email) {
+      errors.username_email = "Required";
     }
     return errors;
   };
 
   render() {
-    const { data, errors, loading } = this.state;
-    return (
-      <Form onSubmit={this.onSubmit} loading={loading}>
-        {errors.global && (
-          <Message negative>
-            <Message.Header>Failed to log in</Message.Header>
-            <p>{errors.global}</p>
-          </Message>
-        )}
-        <label htmlFor="email" style={{ float: "left" }}>
-          Email
-        </label>
-        {errors.email && <InlineError text={errors.email} />}
-        <Form.Field error={!!errors.email}>
-          <Form.Input
-            type="email"
-            name="email"
-            icon="user"
-            iconPosition="left"
-            placeholder="example@email.com"
-            value={data.email}
-            onChange={this.onChange}
-            inverted
-          />
-        </Form.Field>
-        <Button color="orange">Search for user</Button>
-      </Form>
-    );
-  }
+    const {
+      data,
+      loading,
+      errors
+    } = this.state;
+    const {
+      findUserError,
+    } = this.props;
+
+    return ( 
+    <Form
+        loading = {loading}> 
+        {findUserError.find_user && ( 
+        <Message negative>
+            <Message.Header> {
+              findUserError.find_user
+            } </Message.Header>
+        </Message>
+          )
+        } <label htmlFor = "email"
+        style = {{float: "left"}}>
+        Username or Email </label> {
+        errors.username_email && <InlineError text = {errors.username_email}/>
+      } <Form.Field error = {!!errors.username_email}>
+      <Form.Input type = "text"
+    name = "username_email"
+    icon = "user"
+    iconPosition = "left"
+    placeholder = "Username or Email"
+    value = {
+      data.username_email
+    }
+    onChange = {
+      this.onChange
+    }
+    inverted />
+      </Form.Field> 
+      <Button color = "orange" onClick={this.onSubmit}> Search for user </Button> 
+    </Form>
+  );
+}
 }
 FindUserForm.propTypes = {
-  submit: PropTypes.func.isRequired
+  submit: PropTypes.func.isRequired,
+  findUserError: PropTypes.arrayOf(PropTypes.object),
+  removeError: PropTypes.func.isRequired,
+};
+FindUserForm.defaultProps = {
+  findUserError: []
 };
 
 function mapStateToProps(state) {
   return {
-    errors: state.user.error
+    findUserError: state.user.errors 
   };
 }
 

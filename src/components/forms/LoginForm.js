@@ -27,11 +27,9 @@ class LoginForm extends Component {
     if (Object.keys(errors).length === 0) {
       this.setState({ loading: true });
       // Validation errors from the server will be written to the component's state. Display with message
-      this.props
-        .submit(this.state.data)
-        .catch(err =>
-          this.setState({ errors: err.response.data.errors, loading: false })
-        );
+      this.props.submit(this.state.data).catch(err => {
+        this.setState({ errors: err.response.data.errors, loading: false });
+      });
     }
   };
 
@@ -43,7 +41,7 @@ class LoginForm extends Component {
       errors.username_email = "Enter a valid email";
     }
     if (!data.password) {
-      errors.password = "Please enter a password";
+      errors.password = "Enter a password";
     }
     return errors;
   };
@@ -63,8 +61,8 @@ class LoginForm extends Component {
         <label htmlFor="username_email" style={{ float: "left" }}>
           Username or Email
         </label>
-        {errors.email && <InlineError text={errors.email} />}
-        <Form.Field error={!!errors.email}>
+        {errors.username_email && <InlineError text={errors.username_email} />}
+        <Form.Field error={!!errors.username_email}>
           <Form.Input
             fluid
             type="text"

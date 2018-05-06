@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Field, reduxForm } from "redux-form";
+import { reduxForm } from "redux-form";
 import {
   Button,
   Divider,
@@ -64,7 +64,6 @@ class StepThree extends Component {
       submitting,
       players,
       friendData,
-      errors
     } = this.props;
 
     if (players) {
@@ -95,17 +94,7 @@ class StepThree extends Component {
               <CreateNewPlayerForm />
             </Grid.Column>
             <Grid.Column>
-              {/* <List selection>
-                {players.length > 0 && (
-                  <Field
-                    name="selectedPlayers"
-                    component={this.FriendPicker}
-                    players={players}
-                  />
-                )
-                // This doesn't get selected atm...
-                }
-              </List> */}
+                    Hej
             </Grid.Column>
           </Grid>
           <Divider />
@@ -123,7 +112,13 @@ StepThree.propTypes = {
   previousPage: PropTypes.func.isRequired,
   invalid: PropTypes.bool.isRequired,
   submitting: PropTypes.bool.isRequired,
-  players: PropTypes.arrayOf(PropTypes.object).isRequired
+  loading: PropTypes.bool.isRequired,
+  players: PropTypes.arrayOf(PropTypes.object).isRequired,
+  user: PropTypes.shape({
+    email: PropTypes.string.isRequired,
+    username: PropTypes.string.isRequired,
+    token: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 function mapStateToProps(state) {
@@ -134,11 +129,13 @@ function mapStateToProps(state) {
     errors: state.user.errors
   };
 }
+/* eslint-disable */
 StepThree = reduxForm({
   form: "golfroundwizard", //       <------ same form name
   destroyOnUnmount: false, //       <------ preserve form data
   forceUnregisterOnUnmount: true // <------ unregister fields on unmount
 })(StepThree);
 StepThree = connect(mapStateToProps)(StepThree);
+/* eslint-disable */
 
 export default StepThree;
