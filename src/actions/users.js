@@ -83,8 +83,9 @@ export const respondFriendRequestBegin = () => ({
   type: RESPOND_FRIEND_BEGIN
 });
 
-export const respondFriendRequestSuccess = () => ({
-  type: RESPOND_FRIEND_SUCCESS
+export const respondFriendRequestSuccess = userData => ({
+  type: RESPOND_FRIEND_SUCCESS,
+  payload: userData
 });
 
 export const respondFriendRequestError = error => ({

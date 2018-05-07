@@ -40,10 +40,7 @@ class FriendsPage extends Component {
       )
     }
     return (
-      <Button
-        positive
-        fluid
-        onClick={() => this.addFriend(foundUser.username)}>
+      <Button positive fluid onClick={() => this.addFriend(foundUser.username)}>
         Add Friend
         </Button>
     )
@@ -52,7 +49,6 @@ class FriendsPage extends Component {
 
   render() {
     const { user, foundUser } = this.props;
-    // const { errors } = this.state;
     return (
       <div>
         <Segment.Group horizontal raised style={{ background: "#f3f4f5" }}>
