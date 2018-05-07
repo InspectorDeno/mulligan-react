@@ -1,6 +1,46 @@
 import React from "react";
-import PropTypes from 'prop-types';
-import { Button, Feed } from "semantic-ui-react";
+import PropTypes from "prop-types";
+import { Button, Feed, Message } from "semantic-ui-react";
+
+const RenderPendingContent = ({ pending, onRespond }) => {
+  if (true) {
+    return (
+      <Message
+        header={"WDUP"}
+        negative
+        compact
+        style={{ float: "right", marginTop: 0 }}
+      />
+    );
+  } else if (pending.error) {
+    return (
+      <Message
+        header={pending.error}
+        negative
+        compact
+        style={{ float: "right", marginTop: 0 }}
+      />
+    );
+  }
+  return (
+    <div>
+      <Button
+        floated="right"
+        size="tiny"
+        negative
+        icon="remove"
+        onClick={() => onRespond(pending.username, false)}
+      />
+      <Button
+        floated="right"
+        size="tiny"
+        positive
+        icon="checkmark"
+        onClick={() => onRespond(pending.username, true)}
+      />
+    </div>
+  );
+};
 
 export const PendingFriendListObject = ({ pending, onRespond }) => (
   <Feed.Event>
@@ -8,8 +48,7 @@ export const PendingFriendListObject = ({ pending, onRespond }) => (
     <Feed.Content>
       <Feed.Summary>
         {pending.username}
-        <Button floated="right" size="tiny" negative icon="remove" onClick={() => onRespond(pending.username, false)} />
-        <Button floated="right" size="tiny" positive icon="checkmark" onClick={() => onRespond(pending.username, true)} />
+        <RenderPendingContent pending={pending} onRespond={onRespond} />
       </Feed.Summary>
       <Feed.Extra>Hcp: {pending.hcp}</Feed.Extra>
     </Feed.Content>
@@ -18,8 +57,8 @@ export const PendingFriendListObject = ({ pending, onRespond }) => (
 
 PendingFriendListObject.propTypes = {
   pending: PropTypes.bool.isRequired,
-  onRespond: PropTypes.func.isRequired,
-}
+  onRespond: PropTypes.func.isRequired
+};
 
 export const FriendListObject = ({ friend }) => (
   <Feed.Event>
@@ -42,8 +81,6 @@ export const FriendListObject = ({ friend }) => (
 FriendListObject.propTypes = {
   friend: PropTypes.shape({
     username: PropTypes.string.isRequired,
-    hcp: PropTypes.number.isRequired,
+    hcp: PropTypes.number.isRequired
   }).isRequired
-}
-
-
+};
