@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import moment from "moment";
 import { Field, reduxForm } from "redux-form";
 import { Button, Dropdown, Divider, Message, Header } from "semantic-ui-react";
 import { getGolfClub } from "../../../../actions/golfclubs";
@@ -104,7 +105,10 @@ const mapStateToProps = state => ({
 StepOne = connect(mapStateToProps, { getGolfClub })(StepOne);
 
 export default reduxForm({
-  form: "golfroundwizard", //        <------ same form name
+  form: "golfroundwizard",
+  initialValues: {
+    selectedDate: moment(new Date(Date.now()).setMinutes(0))
+  },
   destroyOnUnmount: false, //        <------ preserve form data
   forceUnregisterOnUnmount: true // <------ unregister fields on unmount
 })(StepOne);

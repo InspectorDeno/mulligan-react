@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { first, pick, find } from "underscore";
-import { Segment, Header, Card, Button, Divider } from "semantic-ui-react";
+import { first } from "underscore";
+import { Segment, Header, Card, Button, Divider, Message } from "semantic-ui-react";
 import FindUserForm from "../forms/FindUserForm";
 import FriendList from "../FriendComponent/FriendList";
 import { addFriend } from "../../actions/friends";
@@ -15,7 +15,8 @@ class FriendsPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userData: []
+      userData: [],
+
     };
   }
 
@@ -26,18 +27,41 @@ class FriendsPage extends Component {
     this.props.addFriend(this.props.user, email);
   };
 
+  renderFriendCardContent = () => {
+    const { foundUser } = this.props;
+    if (foundUser.errors) {
+      return (
+        <Message header={foundUser.errors.add_friend} negative style={{ marginTop: 0 }} />
+      )
+    }
+    else if (foundUser.message) {
+      return (
+        <Message header={foundUser.message} positive style={{ marginTop: 0 }} />
+      )
+    }
+    return (
+      <Button
+        positive
+        fluid
+        onClick={() => this.addFriend(foundUser.username)}>
+        Add Friend
+        </Button>
+    )
+
+  }
+
   render() {
     const { user, foundUser } = this.props;
     // const { errors } = this.state;
     return (
       <div>
         <Segment.Group horizontal raised style={{ background: "#f3f4f5" }}>
-          <Segment secondary>
+          <Segment>
             <Header>Find Mulligan Users</Header>
             <Divider />
             <FindUserForm submit={this.submit} />
             <div>
-              {foundUser && foundUser.username ? (
+              {foundUser && foundUser.username && (
                 <div>
                   <Divider />
                   <Card style={{ marginTop: "30px" }}>
@@ -46,29 +70,14 @@ class FriendsPage extends Component {
                       <Card.Meta>Hcp: {foundUser.hcp}</Card.Meta>
                     </Card.Content>
                     {user.username !== foundUser.username && (
-                      <Card.Content extra>
-                        {foundUser.errors ? (
-                          foundUser.errors.add_friend
-                        ) : (
-                          <Button
-                            basic
-                            fluid
-                            color="green"
-                            onClick={() => this.addFriend(foundUser.username)}
-                          >
-                            Add Friend
-                          </Button>
-                        )}
-                      </Card.Content>
+                      <this.renderFriendCardContent />
                     )}
                   </Card>
                 </div>
-              ) : (
-                ""
               )}
             </div>
           </Segment>
-          <Segment secondary>
+          <Segment>
             <FriendList />
           </Segment>
         </Segment.Group>

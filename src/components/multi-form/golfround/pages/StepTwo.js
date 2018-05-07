@@ -29,6 +29,7 @@ class StepTwo extends Component {
         name={name}
         dateFormat="ddd D/M"
         timeFormat="HH:mm"
+        defaultValue={!value && new Date(Date.now()).setMinutes(0)}
         value={value}
         timeConstraints={{ minutes: { step: 5 } }}
         onChange={param => {
@@ -71,7 +72,7 @@ StepTwo.propTypes = {
 };
 
 export default reduxForm({
-  form: "golfroundwizard", //       <------ same form name
-  destroyOnUnmount: false, //       <------ preserve form data
-  forceUnregisterOnUnmount: true // <------ unregister fields on unmount
+  form: "golfroundwizard",
+  destroyOnUnmount: false,
+  forceUnregisterOnUnmount: true
 })(StepTwo);

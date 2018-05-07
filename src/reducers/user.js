@@ -64,7 +64,7 @@ export default function user(state = initialState, action = {}) {
     case FRIEND_REQUEST_SENT:
       return { ...state, loading: true };
     case FRIEND_REQUEST_SUCCESS:
-      return { ...state, loading: false, users: [action.payload] };
+      return { ...state, loading: false, users: [{...state.users[0], message: action.payload.message}] };
     case FRIEND_REQUEST_FAILED:
       return {
         ...state,
@@ -76,7 +76,7 @@ export default function user(state = initialState, action = {}) {
     case PENDING_DATA_REQUESTED:
       return { ...state, loading: true };
     case PENDING_DATA_RETRIEVED:
-      return { ...state, loading: false, pending: [action.payload] };
+      return { ...state, loading: false, pending: action.payload.data };
     case PENDING_DATA_FAILED:
       return {
         ...state,

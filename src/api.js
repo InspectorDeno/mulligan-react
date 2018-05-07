@@ -22,17 +22,16 @@ export default {
         .then(res => res.data.friendData),
     getPending: user =>
       axios
-        .post("(api/users/get_pending", { user })
+        .post("/api/users/get_pending", { user })
         .then(res => res.data.pendingData),
     addFriend: (user, friend) =>
       axios
         .post("/api/friends/add", { user, friend })
         .then(res => res.data.add_friend),
-    acceptFriend: (user, friend, response) =>
+    respondFriendship: (user, friend, response) =>
       axios
         .post("/api/friends/respond", { user, friend, response })
-        .then(res => res.data.friends), // ändra denna THEN
-    // TODO Kanske egen reducer för friend
+        .then(res => res.data.respondData),
     findUser: user =>
       axios.post("/api/users/find", { user }).then(res => res.data.userData),
     getWeather: () =>

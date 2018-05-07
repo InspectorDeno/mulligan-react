@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Header, Divider, Feed } from "semantic-ui-react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { getFriends, getPending } from "../../actions/users";
+import { getFriends, getPending, respondFriendRequest } from "../../actions/users";
 import { FriendListObject, PendingFriendListObject } from "./FriendListObject";
 
 class FriendList extends Component {
@@ -16,35 +16,38 @@ class FriendList extends Component {
     this.props.dispatch(getPending(this.props.user));
   }
 
+  respond = (username, verdict) => {
+    this.props.dispatch(respondFriendRequest(this.props.user.username, username, verdict));
+  }
+
   render() {
     const { friendData, pendingData } = this.props;
 
     return (
-      <div>
+      <div
+        style={{
+          width: "100%"
+        }}
+      >
         {pendingData &&
-          pendingData.length >
-            0(
-              <div>
-                <Header> Pending </Header>
-                <Divider />
-                <Feed>
-                  {" "}
-                  {friendData.length > 0
-                    ? friendData.map(pending => (
-                        <PendingFriendListObject pending={pending} />
-                      ))
-                    : "No pending friend requests"}
-                </Feed>
-              </div>
-            )}
-        <Header> Friend List </Header>
-        <Divider />
+          pendingData.length > 0 && (
+            <div>
+              <Header>Pending Friends</Header> <Divider />
+              <Feed>
+                {pendingData.length > 0
+                  ? pendingData.map(pending => (
+                    <PendingFriendListObject pending={pending} onRespond={this.respond} />
+                  ))
+                  : "No pending friend requests"}
+              </Feed>
+            </div>
+          )}
+        <Header> Friends </Header> <Divider />
         <Feed>
-          {" "}
           {friendData.length > 0
             ? friendData.map(friend => <FriendListObject friend={friend} />)
-            : "You have no friends"}{" "}
-        </Feed>{" "}
+            : "You have no friends"}
+        </Feed>
       </div>
     );
   }
@@ -55,9 +58,7 @@ FriendList.propTypes = {
   friendData: PropTypes.arrayOf(PropTypes.object).isRequired,
   pendingData: PropTypes.arrayOf(PropTypes.object).isRequired,
   user: PropTypes.shape({
-    token: PropTypes.string.isRequired,
-    email: PropTypes.string.isRequired,
-    confirmed: PropTypes.bool.isRequired
+    username: PropTypes.string.isRequired
   }).isRequired
 };
 

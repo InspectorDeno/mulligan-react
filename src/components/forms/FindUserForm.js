@@ -1,15 +1,6 @@
-import React, {
-  Component
-} from "react";
-import {
-  Form,
-  Button,
-  Message
-} from "semantic-ui-react";
-import {
-  connect
-} from "react-redux";
-import { find } from "underscore"
+import React, { Component } from "react";
+import { Form, Button, Message } from "semantic-ui-react";
+import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import InlineError from "../messages/InlineError";
 // import * as actions from "../../actions/errorAction"
@@ -23,13 +14,6 @@ class FindUserForm extends Component {
     errors: {}
   };
 
-    // componentWillUnmount() {
-    //   const {findUserError} = this.props;
-    //     if (findUserError.find_user) {
-    //       this.props.removeError(findUserError);
-    //     }
-    // }
-
   onChange = e =>
     this.setState({
       ...this.state,
@@ -40,7 +24,7 @@ class FindUserForm extends Component {
 
   onSubmit = () => {
     const errors = this.validate(this.state.data);
-    const { findUserError } = this.props
+
     this.setState({
       errors
     });
@@ -48,10 +32,7 @@ class FindUserForm extends Component {
       this.setState({
         loading: true
       });
-      // Remove previous errors
-      if(findUserError.find_user){
-        this.props.removeError(findUserError);
-      }
+
       this.props
         .submit(this.state.data)
         .then(() => this.setState({
@@ -69,18 +50,11 @@ class FindUserForm extends Component {
   };
 
   render() {
-    const {
-      data,
-      loading,
-      errors
-    } = this.state;
-    const {
-      findUserError,
-    } = this.props;
+    const { data, loading, errors } = this.state;
+    const { findUserError } = this.props;
 
     return ( 
-    <Form
-        loading = {loading}> 
+    <Form loading = {loading}> 
         {findUserError.find_user && ( 
         <Message negative>
             <Message.Header> {
@@ -88,24 +62,23 @@ class FindUserForm extends Component {
             } </Message.Header>
         </Message>
           )
-        } <label htmlFor = "email"
-        style = {{float: "left"}}>
-        Username or Email </label> {
-        errors.username_email && <InlineError text = {errors.username_email}/>
-      } <Form.Field error = {!!errors.username_email}>
-      <Form.Input type = "text"
-    name = "username_email"
-    icon = "user"
-    iconPosition = "left"
-    placeholder = "Username or Email"
-    value = {
-      data.username_email
-    }
-    onChange = {
-      this.onChange
-    }
-    inverted />
+        } 
+        <label htmlFor = "email" style = {{float: "left"}}>
+          Username or Email 
+        </label> 
+        { errors.username_email && <InlineError text = {errors.username_email}/> } 
+      <Form.Field error = {!!errors.username_email}>
+        <Form.Input 
+          type = "text"
+          name = "username_email"
+          icon = "user"
+          iconPosition = "left"
+          placeholder = "Username or Email"
+          value = { data.username_email }
+          onChange = { this.onChange }
+          inverted />
       </Form.Field> 
+
       <Button color = "orange" onClick={this.onSubmit}> Search for user </Button> 
     </Form>
   );
@@ -114,7 +87,6 @@ class FindUserForm extends Component {
 FindUserForm.propTypes = {
   submit: PropTypes.func.isRequired,
   findUserError: PropTypes.arrayOf(PropTypes.object),
-  removeError: PropTypes.func.isRequired,
 };
 FindUserForm.defaultProps = {
   findUserError: []

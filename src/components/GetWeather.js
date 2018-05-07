@@ -33,9 +33,7 @@ class GetWeather extends Component {
     const windDir = `wi wi-wind from-${data[0].windDir}-deg`;
     const windSpeed = data[0].windSpeed;
     const precepAmount = data[0].precMean;
-    // const date = data.filter(entry => entry.validTime);
     return (
-      // Icon
 
       <Item.Group divided>
         <h3>

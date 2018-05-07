@@ -62,3 +62,4 @@ export const setWeatherIcon = code => {
 export const setWindIcon = code => {
   return "9";
 };
+
