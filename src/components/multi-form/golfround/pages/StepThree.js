@@ -9,7 +9,8 @@ import {
   List,
   Header,
   Grid,
-  Segment
+  Segment,
+  Item
 } from "semantic-ui-react";
 import CreateNewPlayerForm from "./CreateNewPlayerForm";
 import GolfFriendObject from "../GolfFriendObject";
@@ -80,21 +81,23 @@ class StepThree extends Component {
           <Grid columns={3}>
             <Grid.Column>
               <Segment.Group raised>
-                <Segment inverted color="orange">
+                <Segment inverted color="orange" secondary>
                   Mulligan Friends
                 </Segment>
-                {friendData
-                  ? friendData.map(friend => (
-                      <Segment>
+                <Item.Group>
+                  {friendData
+                    ? friendData.map(friend => (
+                      <Item>
                         <GolfFriendObject friend={friend} />
-                      </Segment>
+                      </Item>
                     ))
-                  : "HEJ"}
+                    : "HEJ"}
+                </Item.Group>
+                <CreateNewPlayerForm />
               </Segment.Group>
-              <CreateNewPlayerForm />
             </Grid.Column>
             <Grid.Column>
-                    Hej
+              Hej
             </Grid.Column>
           </Grid>
           <Divider />
@@ -124,7 +127,7 @@ StepThree.propTypes = {
 function mapStateToProps(state) {
   return {
     user: state.user,
-    players: state.players.players,
+    players: state.golfrounds.players,
     friendData: state.user.friends,
     errors: state.user.errors
   };

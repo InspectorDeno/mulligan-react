@@ -143,9 +143,7 @@ export function getPending(user) {
     dispatch(getPendingBegin());
     return api.user
       .getPending(user)
-      .then(data => {
-        dispatch(getPendingSuccess(data));
-      })
+      .then(data => dispatch(getPendingSuccess(data)))
       .catch(err => {
         console.log(err);
         dispatch(getPendingError(err.response.data.errors));
@@ -166,7 +164,7 @@ export const shownModal = () => dispatch => dispatch(setShowCompleteSignup());
 export const respondFriendRequest = (user, friend, response) => dispatch => {
   dispatch(respondFriendRequestBegin());
   api.user.respondFriendship(user, friend, response).then(respondData => {
-    console.log(respondData);
-    dispatch(respondFriendRequestSuccess())
+    dispatch(respondFriendRequestSuccess(respondData));
+    dispatch(getFriends(user));
   })
 }

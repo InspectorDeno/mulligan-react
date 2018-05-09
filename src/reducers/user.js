@@ -89,7 +89,7 @@ export default function user(state = initialState, action = {}) {
     case RESPOND_FRIEND_SUCCESS:
       return { ...state, loading: false, pending: [{ ...state.pending[0], message: action.payload.message }] };
     case RESPOND_FRIEND_FAILED:
-      return { ...state, loading: false, users: [{ ...state.users[0], errors: action.errors }] };
+      return { ...state, loading: false, pending: [{ ...state.pending[0], errors: action.errors }] };
 
     default:
       return state;

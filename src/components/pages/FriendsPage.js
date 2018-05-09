@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { first } from "underscore";
+import { first, findWhere } from "underscore";
 import { Segment, Header, Card, Button, Divider, Message } from "semantic-ui-react";
 import FindUserForm from "../forms/FindUserForm";
 import FriendList from "../FriendComponent/FriendList";
@@ -25,25 +25,36 @@ class FriendsPage extends Component {
   addFriend = email => {
     // TODO: This currently sends the whole user with tuns of props.. maybe don't do that
     this.props.addFriend(this.props.user, email);
+
   };
 
   renderFriendCardContent = () => {
-    const { foundUser } = this.props;
+    const { foundUser, friends } = this.props;
+
+
     if (foundUser.errors) {
       return (
         <Message header={foundUser.errors.add_friend} negative style={{ marginTop: 0 }} />
       )
     }
-    else if (foundUser.message) {
+    if (foundUser.message) {
       return (
         <Message header={foundUser.message} positive style={{ marginTop: 0 }} />
       )
     }
-    return (
-      <Button positive fluid onClick={() => this.addFriend(foundUser.username)}>
-        Add Friend
-        </Button>
-    )
+
+    if ((findWhere(friends, foundUser)) !== undefined) {
+      return (
+        <Message header="Already friends" info style={{ marginTop: 0 }} />
+      )
+    }
+
+    if (foundUser)
+      return (
+        <Button positive fluid onClick={() => this.addFriend(foundUser.username)}>
+          Add Friend
+        </Button >
+      )
 
   }
 
@@ -85,7 +96,8 @@ class FriendsPage extends Component {
 FriendsPage.propTypes = {
   findUser: PropTypes.func.isRequired,
   addFriend: PropTypes.func.isRequired,
-  foundUser: PropTypes.arrayOf(PropTypes.object).isRequired,
+  friends: PropTypes.arrayOf(PropTypes.object),
+  foundUser: PropTypes.shape({}),
   user: PropTypes.shape({
     token: PropTypes.string.isRequired,
     username: PropTypes.string.isRequired,
@@ -94,10 +106,16 @@ FriendsPage.propTypes = {
   }).isRequired
 };
 
+FriendsPage.defaultProps = {
+  foundUser: {},
+  friends: []
+}
+
 function mapStateToProps(state) {
   return {
     user: state.user,
-    foundUser: first(state.user.users)
+    foundUser: first(state.user.users),
+    friends: state.user.friends
   };
 }
 

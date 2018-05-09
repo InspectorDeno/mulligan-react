@@ -17,7 +17,8 @@ class FindUserForm extends Component {
   onChange = e =>
     this.setState({
       ...this.state,
-      data: { ...this.state.data,
+      data: {
+        ...this.state.data,
         [e.target.name]: e.target.value
       }
     });
@@ -53,48 +54,48 @@ class FindUserForm extends Component {
     const { data, loading, errors } = this.state;
     const { findUserError } = this.props;
 
-    return ( 
-    <Form loading = {loading}> 
-        {findUserError.find_user && ( 
-        <Message negative>
+    return (
+      <Form loading={loading}>
+        {findUserError.find_user && (
+          <Message negative>
             <Message.Header> {
               findUserError.find_user
             } </Message.Header>
-        </Message>
-          )
-        } 
-        <label htmlFor = "email" style = {{float: "left"}}>
-          Username or Email 
-        </label> 
-        { errors.username_email && <InlineError text = {errors.username_email}/> } 
-      <Form.Field error = {!!errors.username_email}>
-        <Form.Input 
-          type = "text"
-          name = "username_email"
-          icon = "user"
-          iconPosition = "left"
-          placeholder = "Username or Email"
-          value = { data.username_email }
-          onChange = { this.onChange }
-          inverted />
-      </Form.Field> 
+          </Message>
+        )
+        }
+        <label htmlFor="email" style={{ float: "left" }}>
+          Username or Email
+        </label>
+        {errors.username_email && <InlineError text={errors.username_email} />}
+        <Form.Field error={!!errors.username_email}>
+          <Form.Input
+            type="text"
+            name="username_email"
+            icon="user"
+            iconPosition="left"
+            placeholder="Username or Email"
+            value={data.username_email}
+            onChange={this.onChange}
+            inverted />
+        </Form.Field>
 
-      <Button color = "orange" onClick={this.onSubmit}> Search for user </Button> 
-    </Form>
-  );
-}
+        <Button color="orange" onClick={this.onSubmit}> Search for user </Button>
+      </Form>
+    );
+  }
 }
 FindUserForm.propTypes = {
   submit: PropTypes.func.isRequired,
-  findUserError: PropTypes.arrayOf(PropTypes.object),
+  findUserError: PropTypes.shape({}),
 };
 FindUserForm.defaultProps = {
-  findUserError: []
+  findUserError: {}
 };
 
 function mapStateToProps(state) {
   return {
-    findUserError: state.user.errors 
+    findUserError: state.user.errors
   };
 }
 

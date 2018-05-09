@@ -2,7 +2,9 @@ import api from "../api";
 import {
   FRIEND_REQUEST_SENT,
   FRIEND_REQUEST_SUCCESS,
-  FRIEND_REQUEST_FAILED
+  FRIEND_REQUEST_FAILED,
+  LOAD_FRIEND_GOLFROUND,
+  UNLOAD_FRIEND_GOLFROUND
 } from "../types";
 
 // Thunk
@@ -34,6 +36,9 @@ export function addFriend(user, friend) {
     return api.user
       .addFriend(user, friend)
       .then(userData => dispatch(getAddFriendSuccess(userData)))
-    .catch(error => dispatch(getAddFriendError(error)));
+      .catch(error => dispatch(getAddFriendError(error)));
   };
 }
+
+export const loadFriend = data => ({ type: LOAD_FRIEND_GOLFROUND, data });
+export const unloadFriend = data => dispatch => dispatch(({ type: UNLOAD_FRIEND_GOLFROUND, data }));

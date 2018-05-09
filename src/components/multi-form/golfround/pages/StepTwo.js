@@ -4,7 +4,6 @@ import moment from "moment";
 import Datetime from "react-datetime";
 import { Button, Divider, Form, Message, Header } from "semantic-ui-react";
 import { Field, reduxForm } from "redux-form";
-import "./dateTime.css";
 
 class StepTwo extends Component {
   constructor(props) {

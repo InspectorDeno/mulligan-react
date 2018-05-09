@@ -1,21 +1,17 @@
 import { PLAYER_ADDED, PLAYER_DELETED } from "../types";
 
 const initialState = {
-  players: []
+  players: [],
+  golfclub: "",
+  date: ""
 };
 
-function returnNameObj(name) {
-  return {
-    name
-  };
-}
-
-export default function players(state = initialState, action = {}) {
+export default function golfrounds(state = initialState, action = {}) {
   switch (action.type) {
     case PLAYER_ADDED:
       return {
         ...state,
-        players: [...state.players, Object.assign({}, action.player)]
+        players: [...state.golfrounds, Object.assign({}, action.player)]
       };
     case PLAYER_DELETED: {
       const newState = Object.assign([], state);

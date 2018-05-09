@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { connect } from 'react-redux'; 
+import { connect } from 'react-redux';
 import PropTypes from "prop-types";
 import { Button, Modal, Header, Grid, Form } from "semantic-ui-react";
 import { Field, reduxForm } from "redux-form";
@@ -14,7 +14,7 @@ const validate = value => {
   if (isNaN(value.hcpInput)) {
     errors.hcpInput = "Must be a number";
   }
-  if(value.hcpInput > 54 || value.hcpInput < -10){
+  if (value.hcpInput > 54 || value.hcpInput < -10) {
     errors.hcpInput = "Not a valid HCP"
   }
   return errors;
@@ -28,7 +28,6 @@ class CompleteSignupModal extends Component {
 
   submitHcp = values => {
     this.props.setHcp(this.props.user, values.hcpInput);
-    console.log("submitting?");
     // .catch(err =>
     //     this.setState({
     //       errors: err.response.data.errors,
@@ -51,24 +50,24 @@ class CompleteSignupModal extends Component {
   };
 
 
-  HCPInput = ({input}) => (
+  HCPInput = ({ input }) => (
     <input
-    value={input.value}
-    onChange={input.onChange}
-    style = {
-      {
-        boxShadow: "#666666 0px 0px 8pt 5pt",
-        color: "white",
-        backgroundColor: "rgba(255,255,255,0.1)",
-        width: "145pt",
-        height: "40pt",
-        fontSize: "30pt",
-        textAlign: "center",
-        marginTop: "12pt",
-        marginBottom: "45pt",
-        border: "none"
+      value={input.value}
+      onChange={input.onChange}
+      style={
+        {
+          boxShadow: "#666666 0px 0px 8pt 5pt",
+          color: "white",
+          backgroundColor: "rgba(255,255,255,0.1)",
+          width: "145pt",
+          height: "40pt",
+          fontSize: "30pt",
+          textAlign: "center",
+          marginTop: "12pt",
+          marginBottom: "45pt",
+          border: "none"
+        }
       }
-    }
     />
   );
 
@@ -90,31 +89,31 @@ class CompleteSignupModal extends Component {
         onClose={this.close}
 
       >
-        <Modal.Content style={{textAlign:"center"}}>
-      <Grid>
-        <Grid.Column>
-            <Grid.Row>
-            <Header style={{marginBottom:"60px", fontSize:"60px"}} inverted>Welcome to Mulligan</Header>
-            </Grid.Row>
-            <Grid.Row>
-              <h3>Enter your HCP</h3>
-              <Form>
-              <Field name="hcpInput" component={this.HCPInput}/>
-              </Form>
-            </Grid.Row>
-            <Grid.Row>
-              <div style={{margin:"auto", display:"flex", flexDirection:"row", justifyContent:"space-evenly", width:"40%"}}>
+        <Modal.Content style={{ textAlign: "center" }}>
+          <Grid>
+            <Grid.Column>
+              <Grid.Row>
+                <Header style={{ marginBottom: "60px", fontSize: "60px" }} inverted>Welcome to Mulligan</Header>
+              </Grid.Row>
+              <Grid.Row>
+                <h3>Enter your HCP</h3>
+                <Form>
+                  <Field name="hcpInput" component={this.HCPInput} />
+                </Form>
+              </Grid.Row>
+              <Grid.Row>
+                <div style={{ margin: "auto", display: "flex", flexDirection: "row", justifyContent: "space-evenly", width: "40%" }}>
 
-            <Button onClick={this.close} inverted color="orange">
-              Later...
+                  <Button onClick={this.close} inverted color="orange">
+                    Later...
             </Button>
-            <Button onClick={handleSubmit(this.submitHcp)} color="orange" disabled={submitting || invalid}>
-              Next
+                  <Button onClick={handleSubmit(this.submitHcp)} color="orange" disabled={submitting || invalid}>
+                    Next
             </Button>
-              </div>
-            </Grid.Row>
-        </Grid.Column>
-      </Grid>
+                </div>
+              </Grid.Row>
+            </Grid.Column>
+          </Grid>
         </Modal.Content>
       </Modal>
     )

@@ -21,7 +21,7 @@ const store = createStore(
 // Dispatches USER_LOGGED_IN action if we have a local webstorage (for refresh)
 if (localStorage.mulliganJWT) {
   const payload = decode(localStorage.mulliganJWT);
-  console.log(payload);
+  // console.log(payload);
   const user = {
     email: payload.email,
     username: payload.username,

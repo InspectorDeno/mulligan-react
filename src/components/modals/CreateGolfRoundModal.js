@@ -70,10 +70,10 @@ class CreateGolfRoundModal extends Component {
               All done
             </Button>
           ) : (
-            <Button color="orange" onClick={() => this.onIncrement()}>
-              Next
+              <Button color="orange" onClick={() => this.onIncrement()}>
+                Next
             </Button>
-          )}
+            )}
         </Modal.Actions>
       </Modal>
     );

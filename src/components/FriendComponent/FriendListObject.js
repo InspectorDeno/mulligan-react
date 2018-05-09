@@ -3,20 +3,11 @@ import PropTypes from "prop-types";
 import { Button, Feed, Message } from "semantic-ui-react";
 
 const RenderPendingContent = ({ pending, onRespond }) => {
-  if (true) {
+  if (pending.message) {
     return (
       <Message
-        header={"WDUP"}
-        negative
-        compact
-        style={{ float: "right", marginTop: 0 }}
-      />
-    );
-  } else if (pending.error) {
-    return (
-      <Message
-        header={pending.error}
-        negative
+        header={pending.message}
+        info
         compact
         style={{ float: "right", marginTop: 0 }}
       />
@@ -42,6 +33,14 @@ const RenderPendingContent = ({ pending, onRespond }) => {
   );
 };
 
+RenderPendingContent.propTypes = {
+  pending: PropTypes.shape({
+    username: PropTypes.string,
+    message: PropTypes.string,
+  }).isRequired,
+  onRespond: PropTypes.func.isRequired,
+}
+
 export const PendingFriendListObject = ({ pending, onRespond }) => (
   <Feed.Event>
     <Feed.Label icon="heart" />
@@ -56,7 +55,10 @@ export const PendingFriendListObject = ({ pending, onRespond }) => (
 );
 
 PendingFriendListObject.propTypes = {
-  pending: PropTypes.bool.isRequired,
+  pending: PropTypes.shape({
+    username: PropTypes.string,
+    message: PropTypes.string,
+  }).isRequired,
   onRespond: PropTypes.func.isRequired
 };
 
@@ -80,7 +82,7 @@ export const FriendListObject = ({ friend }) => (
 
 FriendListObject.propTypes = {
   friend: PropTypes.shape({
-    username: PropTypes.string.isRequired,
-    hcp: PropTypes.number.isRequired
+    username: PropTypes.string,
+    hcp: PropTypes.number
   }).isRequired
 };

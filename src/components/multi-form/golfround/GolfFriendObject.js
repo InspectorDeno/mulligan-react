@@ -8,8 +8,7 @@ const GolfFriendObject = props => {
       <Icon size="big" name="heart" />
       <div>
         <Item.Content>
-          <Item.Description>{friend.email}</Item.Description>
-          <Item.Extra>Hcp: {friend.hcp}</Item.Extra>
+          <Item.Description>{friend.username}</Item.Description>
         </Item.Content>
       </div>
     </div>
