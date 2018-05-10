@@ -1,10 +1,8 @@
-import { PLAYER_ADDED, PLAYER_DELETED } from "../types";
+import { LOAD_PLAYER } from "../types";
 
-export const addPlayer = playerObj => ({
-  type: PLAYER_ADDED,
-  player: playerObj
+export const load = player => ({
+  type: LOAD_PLAYER,
+  data: player
 });
-export const deletePlayer = playerObj => ({
-  type: PLAYER_DELETED,
-  player: playerObj
-});
+
+export const loadPlayer = player => dispatch => dispatch(load(player));

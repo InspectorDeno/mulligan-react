@@ -1,37 +1,46 @@
 import React, { Component } from "react";
-import { Button, Modal } from "semantic-ui-react";
-import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import CreateGolfRound, {
-  pages
-} from "../multi-form/golfround/CreateGolfRound";
-import { increment, decrement } from "../../actions/counter";
-import GolfRoundForm from "../multi-form/golfround/GolfRoundForm";
+import { connect } from "react-redux";
+import { reduxForm, formValueSelector } from "redux-form";
+import moment from "moment";
+import { Button, Modal, Grid, Label } from "semantic-ui-react";
+import validate from "../CreateGolfRound/validate";
+import RemoteSubmitButton from "../CreateGolfRound/RemoteSubmitButton";
+import * as actions from "../../actions/golfrounds"
+import StepOne from "../CreateGolfRound/StepOne";
+import StepTwo from "../CreateGolfRound/StepTwo";
+import StepThree from "../CreateGolfRound/StepThree";
+import StepFour from "../CreateGolfRound/StepFour";
 
 class CreateGolfRoundModal extends Component {
-  state = {
-    open: false,
-    page: ""
+  constructor(props) {
+    super(props)
+    this.nextPage = this.nextPage.bind(this)
+    this.previousPage = this.previousPage.bind(this)
+    this.state = {
+      page: 1
+    }
   };
 
-  componentWillReceiveProps(newProps) {
-    this.setState({ page: newProps.step });
+  nextPage() {
+    this.setState({ page: this.state.page + 1 })
   }
-
-  onIncrement = () => {
-    // First check what page we're on
-    this.props.increment();
-  };
-  onDecrement = () => this.props.decrement();
+  previousPage() {
+    this.setState({ page: this.state.page - 1 })
+  }
 
   closeConfigShow = (closeOnEscape, closeOnRootNodeClick) => () => {
     this.setState({ closeOnEscape, closeOnRootNodeClick, open: true });
   };
 
-  close = () => this.setState({ open: false });
+  close = () => {
+    this.props.dispatch(this.props.reset);
+    this.setState({ open: false, page: 1 })
+  };
 
   render() {
-    const { open, closeOnEscape, closeOnRootNodeClick } = this.state;
+    const { open, closeOnEscape, closeOnRootNodeClick, page } = this.state;
+    const { invalid, submitting, golfclubError, loading } = this.props;
 
     return (
       <Modal
@@ -46,51 +55,109 @@ class CreateGolfRoundModal extends Component {
         closeOnRootNodeClick={closeOnRootNodeClick}
         onClose={this.close}
         closeIcon
-        dimmer="blurring"
         trigger={
-          <Button onClick={this.closeConfigShow(true, false)}>
+          <Button onClick={() => {
+            this.closeConfigShow(true, false);
+            this.setState({ open: true });
+          }}>
             Create Golf Round
           </Button>
         }
       >
-        <Modal.Header>Golf Round</Modal.Header>
-        <Modal.Content scrolling style={{ height: "500px" }}>
+        <Modal.Header>Create Golf Round</Modal.Header>
+        <Modal.Content scrolling
+          style={{ minHeight: "300px" }}
+        >
           <Modal.Description>
-            <GolfRoundForm />
+            {page === 1 && <StepOne />}
+            {page === 2 && <StepTwo />}
+            {page === 3 && <StepThree />}
+            {page === 4 && <StepFour />}
           </Modal.Description>
         </Modal.Content>
         <Modal.Actions>
-          {this.props.step > 1 && (
-            <Button color="orange" inverted onClick={() => this.onDecrement()}>
-              Previous
-            </Button>
-          )}
-          {this.props.step >= pages.length ? (
-            <Button color="green" onClick={this.submit}>
-              All done
-            </Button>
-          ) : (
-              <Button color="orange" onClick={() => this.onIncrement()}>
-                Next
-            </Button>
-            )}
+
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            {page === 1 &&
+              <Button size="huge" color="yellow" onClick={this.nextPage} disabled={invalid || golfclubError || loading}
+              > Next </Button>
+            }
+            {page === 2 &&
+              <div>
+                <Button size="huge" color="blue" inverted onClick={this.previousPage}
+                >Previous
+                </Button>
+                <Button size="huge" color="blue" onClick={this.nextPage} disabled={invalid}
+                >Next
+                </Button>
+              </div>
+            }
+            {page === 3 &&
+              <div>
+                <Button size="huge" color="purple" inverted onClick={this.previousPage}
+                >Previous
+                </Button>
+                <Button size="huge" color="purple" onClick={this.nextPage} disabled={invalid}
+                >Next
+                </Button>
+              </div>
+            }
+            {page === 4 &&
+              <div>
+                <Button size="huge" color="orange" inverted onClick={this.previousPage}
+                >Previous
+                </Button>
+                <RemoteSubmitButton disabled={invalid || submitting} />
+              </div>
+            }
+          </div>
         </Modal.Actions>
-      </Modal>
+      </Modal >
     );
   }
 }
-
-function mapStateToProps(state) {
-  return {
-    step: state.counter
-  };
-}
-
 CreateGolfRoundModal.propTypes = {
-  increment: PropTypes.func.isRequired,
-  decrement: PropTypes.func.isRequired,
-  step: PropTypes.number.isRequired
+  dispatch: PropTypes.func.isRequired,
+  invalid: PropTypes.bool.isRequired,
+  submitting: PropTypes.bool.isRequired,
+  golfclubError: PropTypes.bool.isRequired,
+  loading: PropTypes.bool.isRequired,
+  reset: PropTypes.func.isRequired,
 };
-export default connect(mapStateToProps, { increment, decrement })(
-  CreateGolfRoundModal
-);
+
+const selector = formValueSelector('createGolfRound');
+CreateGolfRoundModal = connect(state => {
+  const golfclub = selector(state, "golfclub");
+  const golfdate = moment(selector(state, "golfdate")).toLocaleString();
+  const golfplayers = selector(state, "golfplayers");
+  return {
+    golfclub,
+    golfdate,
+    golfplayers,
+    golfclubError: !!state.golfclub.error,
+    loading: state.golfclub.loading,
+    user: state.user
+  }
+})(CreateGolfRoundModal)
+
+
+CreateGolfRoundModal = reduxForm({
+  form: "createGolfRound",
+  keepDirtyOnReinitialize: true,
+  destroyOnUnmount: false,
+  forceUnregisterOnUnmount: true,
+  validate
+})(CreateGolfRoundModal);
+
+CreateGolfRoundModal = connect(state => ({
+  initialValues: {
+    golfdate: moment(new Date(Date.now()).setMinutes(0)).toDate(),
+    golfplayers: [{
+      playerName: state.user.username,
+      playerHcp: state.user.hcp.value,
+      playerGender: state.user.gender,
+      playerTee: state.user.gender === "male" ? "Yellow" : "Red"
+    }]
+  }
+}), { load: actions.loadPlayer })(CreateGolfRoundModal)
+export default CreateGolfRoundModal;

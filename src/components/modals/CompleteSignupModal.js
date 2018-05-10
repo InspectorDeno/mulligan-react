@@ -28,11 +28,7 @@ class CompleteSignupModal extends Component {
 
   submitHcp = values => {
     this.props.setHcp(this.props.user, values.hcpInput);
-    // .catch(err =>
-    //     this.setState({
-    //       errors: err.response.data.errors,
-    //       loading: false
-    //     }));
+
     const { errors } = this.state
     if (Object.keys(errors).length === 0) {
       this.props.user.hcp.sethcp = true;

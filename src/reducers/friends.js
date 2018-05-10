@@ -1,4 +1,4 @@
-import { LOAD_FRIEND_GOLFROUND, UNLOAD_FRIEND_GOLFROUND } from "../types";
+import { } from "../types";
 
 const initialState = {
   data: [],
@@ -8,10 +8,6 @@ const initialState = {
 
 export default function friends(state = initialState, action = {}) {
   switch (action.type) {
-    case LOAD_FRIEND_GOLFROUND:
-      return { data: action.data }
-    case UNLOAD_FRIEND_GOLFROUND:
-      return { data: action.data }
     default:
       return state;
   }

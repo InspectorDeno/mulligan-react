@@ -1,26 +1,11 @@
-import { PLAYER_ADDED, PLAYER_DELETED } from "../types";
+import { LOAD_PLAYER } from "../types";
 
-const initialState = {
-  players: [],
-  golfclub: "",
-  date: ""
-};
-
-export default function golfrounds(state = initialState, action = {}) {
+export default function golfrounds(state = {}, action) {
   switch (action.type) {
-    case PLAYER_ADDED:
+    case LOAD_PLAYER:
       return {
-        ...state,
-        players: [...state.golfrounds, Object.assign({}, action.player)]
+        data: action.data
       };
-    case PLAYER_DELETED: {
-      const newState = Object.assign([], state);
-      const indexOfPlayerToDelete = state.findIndex(
-        player => player.id === action.player.id
-      );
-      newState.splice(indexOfPlayerToDelete, 1);
-      return newState;
-    }
     default:
       return state;
   }

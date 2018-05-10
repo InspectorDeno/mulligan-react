@@ -2,9 +2,7 @@ import api from "../api";
 import {
   FRIEND_REQUEST_SENT,
   FRIEND_REQUEST_SUCCESS,
-  FRIEND_REQUEST_FAILED,
-  LOAD_FRIEND_GOLFROUND,
-  UNLOAD_FRIEND_GOLFROUND
+  FRIEND_REQUEST_FAILED
 } from "../types";
 
 // Thunk
@@ -22,14 +20,6 @@ export const getAddFriendError = error => ({
   errors: error.response.data.errors
 });
 
-// Handle HTTP errors since fetch won't.
-function handleErrors(response) {
-  if (!response.ok) {
-    throw Error(response.statusText);
-  }
-  return response;
-}
-
 export function addFriend(user, friend) {
   return dispatch => {
     dispatch(getAddFriendBegin());
@@ -39,6 +29,3 @@ export function addFriend(user, friend) {
       .catch(error => dispatch(getAddFriendError(error)));
   };
 }
-
-export const loadFriend = data => ({ type: LOAD_FRIEND_GOLFROUND, data });
-export const unloadFriend = data => dispatch => dispatch(({ type: UNLOAD_FRIEND_GOLFROUND, data }));

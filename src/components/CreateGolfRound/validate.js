@@ -1,4 +1,5 @@
 import moment from "moment";
+import { map, find, filter } from "underscore"
 
 const validate = values => {
     const errors = {}
@@ -45,6 +46,22 @@ const validate = values => {
     if (values.golfplayers && values.golfplayers.length > 4) {
         errors.golfplayers = { _error: "Limit is 4 players" }
     }
+    if (!values.golfscores || !values.golfscores.length) {
+        errors.golfscores = { _error: "Invalid" }
+    } else {
+        const scoresArrayErrors = [];
+        values.golfscores.forEach(((hole, index) => {
+            let golfHoleErrors = {};
+            const f = filter(hole, "score");
+            // console.log(hole);
+            if (f.length !== values.golfplayers.length) {
+                golfHoleErrors = "Required"
+                scoresArrayErrors[index] = golfHoleErrors;
+                errors.golfscores = { _error: scoresArrayErrors };
+            }
+
+        }));
+    };
 
     return errors
 }
