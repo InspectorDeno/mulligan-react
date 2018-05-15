@@ -3,10 +3,9 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { reduxForm, formValueSelector } from "redux-form";
 import moment from "moment";
-import { Button, Modal, Grid, Label } from "semantic-ui-react";
+import { Button, Modal } from "semantic-ui-react";
 import validate from "../CreateGolfRound/validate";
 import RemoteSubmitButton from "../CreateGolfRound/RemoteSubmitButton";
-import * as actions from "../../actions/golfrounds"
 import StepOne from "../CreateGolfRound/StepOne";
 import StepTwo from "../CreateGolfRound/StepTwo";
 import StepThree from "../CreateGolfRound/StepThree";
@@ -56,7 +55,7 @@ class CreateGolfRoundModal extends Component {
         onClose={this.close}
         closeIcon
         trigger={
-          <Button onClick={() => {
+          <Button color="yellow" size="huge" onClick={() => {
             this.closeConfigShow(true, false);
             this.setState({ open: true });
           }}>
@@ -159,5 +158,5 @@ CreateGolfRoundModal = connect(state => ({
       playerTee: state.user.gender === "male" ? "Yellow" : "Red"
     }]
   }
-}), { load: actions.loadPlayer })(CreateGolfRoundModal)
+}))(CreateGolfRoundModal)
 export default CreateGolfRoundModal;

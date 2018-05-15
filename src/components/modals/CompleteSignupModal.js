@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { Button, Modal, Header, Grid, Form } from "semantic-ui-react";
 import { Field, reduxForm } from "redux-form";
 import { shownModal, setHcp } from "../../actions/users";
+import InlineError from "../../components/messages/InlineError"
 
 
 const validate = value => {
@@ -27,7 +28,7 @@ class CompleteSignupModal extends Component {
   };
 
   submitHcp = values => {
-    this.props.setHcp(this.props.user, values.hcpInput);
+    this.props.setHcp(values.hcpInput);
 
     const { errors } = this.state
     if (Object.keys(errors).length === 0) {
@@ -46,25 +47,29 @@ class CompleteSignupModal extends Component {
   };
 
 
-  HCPInput = ({ input }) => (
-    <input
-      value={input.value}
-      onChange={input.onChange}
-      style={
-        {
-          boxShadow: "#666666 0px 0px 8pt 5pt",
-          color: "white",
-          backgroundColor: "rgba(255,255,255,0.1)",
-          width: "145pt",
-          height: "40pt",
-          fontSize: "30pt",
-          textAlign: "center",
-          marginTop: "12pt",
-          marginBottom: "45pt",
-          border: "none"
+  HCPInput = ({ input, meta }) => (
+    <div style={{ display: "inline-grid" }}>
+      {meta.dirty && meta.error && <InlineError text={meta.error} />}
+      <input
+        value={input.value}
+        onChange={input.onChange}
+        style={
+          {
+            boxShadow: "#666666 0px 0px 8pt 5pt",
+            color: "white",
+            backgroundColor: "rgba(255,255,255,0.1)",
+            width: "145pt",
+            height: "40pt",
+            fontSize: "30pt",
+            textAlign: "center",
+            marginTop: "5pt",
+            marginBottom: "45pt",
+            border: "none"
+          }
         }
-      }
-    />
+      />
+
+    </div>
   );
 
   render() {

@@ -77,6 +77,7 @@ export const FriendListObject = ({ friend }) => (
       </Feed.Summary>
       <Feed.Extra>Hcp: {friend.hcp}</Feed.Extra>
     </Feed.Content>
+
   </Feed.Event>
 );
 

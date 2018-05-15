@@ -22,15 +22,8 @@ class FriendsPage extends Component {
 
   submit = data => this.props.findUser(data);
 
-  addFriend = email => {
-    // TODO: This currently sends the whole user with tuns of props.. maybe don't do that
-    this.props.addFriend(this.props.user, email);
-
-  };
-
   renderFriendCardContent = () => {
     const { foundUser, friends } = this.props;
-
 
     if (foundUser.errors) {
       return (
@@ -51,11 +44,12 @@ class FriendsPage extends Component {
 
     if (foundUser)
       return (
-        <Button positive fluid onClick={() => this.addFriend(foundUser.username)}>
+        <Button positive fluid onClick={() => this.props.addFriend(foundUser.username)}>
           Add Friend
         </Button >
       )
 
+    return ""
   }
 
   render() {
@@ -99,10 +93,7 @@ FriendsPage.propTypes = {
   friends: PropTypes.arrayOf(PropTypes.object),
   foundUser: PropTypes.shape({}),
   user: PropTypes.shape({
-    token: PropTypes.string.isRequired,
-    username: PropTypes.string.isRequired,
-    email: PropTypes.string.isRequired,
-    confirmed: PropTypes.bool.isRequired
+    username: PropTypes.string.isRequired
   }).isRequired
 };
 

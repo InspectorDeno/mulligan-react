@@ -10,10 +10,20 @@ import InlineError from "../messages/InlineError"
 class StepFour extends Component {
 
     componentDidMount() {
-        const { golfclubdata } = this.props;
-        golfclubdata.forEach(() => {
-            this.props.dispatch(arrayPush("createGolfRound", "golfscores", {}));
-        })
+        const { golfscores } = this.props;
+        // Push only once
+        if (!golfscores.length) {
+            const { golfclubdata } = this.props;
+            golfclubdata.forEach(hole => {
+                this.props.dispatch(arrayPush("createGolfRound", "golfholes",
+                    {
+                        number: hole.number,
+                        index: hole.index,
+                        par: hole.par
+                    }));
+                this.props.dispatch(arrayPush("createGolfRound", "golfscores", {}));
+            })
+        }
     }
 
     renderInput = ({ input, type, meta, error }) => (
@@ -114,6 +124,7 @@ StepFour.propTypes = {
     golfclub: PropTypes.string,
     golfclubdata: PropTypes.arrayOf(PropTypes.object),
     golfplayers: PropTypes.arrayOf(PropTypes.object),
+    golfscores: PropTypes.arrayOf(PropTypes.object),
     golfdate: PropTypes.string,
 }
 
@@ -121,6 +132,7 @@ StepFour.defaultProps = {
     golfclub: "",
     golfclubdata: [],
     golfplayers: [],
+    golfscores: [],
     golfdate: ""
 }
 
@@ -129,10 +141,12 @@ StepFour = connect(state => {
     const golfclub = selector(state, "golfclub");
     const golfdate = moment(selector(state, "golfdate")).toLocaleString();
     const golfplayers = selector(state, "golfplayers");
+    const golfscores = selector(state, "golfscores");
     return {
         golfclub,
         golfdate,
         golfplayers,
+        golfscores,
         user: state.user,
         golfclubdata: state.golfclub.items
     }

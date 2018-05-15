@@ -20,11 +20,11 @@ export const getAddFriendError = error => ({
   errors: error.response.data.errors
 });
 
-export function addFriend(user, friend) {
+export function addFriend(friend) {
   return dispatch => {
     dispatch(getAddFriendBegin());
     return api.user
-      .addFriend(user, friend)
+      .addFriend(friend)
       .then(userData => dispatch(getAddFriendSuccess(userData)))
       .catch(error => dispatch(getAddFriendError(error)));
   };

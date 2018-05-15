@@ -12,12 +12,12 @@ class FriendList extends Component {
   }
 
   componentDidMount() {
-    this.props.dispatch(getFriends(this.props.user.username));
-    this.props.dispatch(getPending(this.props.user.username));
+    this.props.dispatch(getFriends());
+    this.props.dispatch(getPending());
   }
 
   respond = (username, verdict) => {
-    this.props.dispatch(respondFriendRequest(this.props.user.username, username, verdict));
+    this.props.dispatch(respondFriendRequest(username, verdict));
   }
 
   render() {
@@ -56,10 +56,7 @@ class FriendList extends Component {
 FriendList.propTypes = {
   dispatch: PropTypes.func.isRequired,
   friendData: PropTypes.arrayOf(PropTypes.object),
-  pendingData: PropTypes.arrayOf(PropTypes.object),
-  user: PropTypes.shape({
-    username: PropTypes.string.isRequired
-  }).isRequired
+  pendingData: PropTypes.arrayOf(PropTypes.object)
 };
 
 FriendList.defaultProps = {
@@ -69,7 +66,6 @@ FriendList.defaultProps = {
 
 function mapStateToProps(state) {
   return {
-    user: state.user,
     friendData: state.user.friends,
     pendingData: state.user.pending
   };

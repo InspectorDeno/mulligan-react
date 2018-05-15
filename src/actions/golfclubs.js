@@ -31,12 +31,3 @@ export function getGolfClub(clubName) {
       });
   };
 }
-
-// export const getFriends = user => dispatch => {
-//   api.user
-//     .getFriends(user)
-//     .then(friendsData => {
-//       dispatch(getFriendsSuccess(friendsData));
-//     })
-//     .catch(err => dispatch(handleErrors(err)));
-// };

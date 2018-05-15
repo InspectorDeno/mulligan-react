@@ -32,7 +32,7 @@ class StepThree extends Component {
     componentDidMount() {
         // Only try to fetch data if we don't have it
         if (!this.props.friendData.length) {
-            this.props.dispatch(getFriends(this.props.user.username));
+            this.props.dispatch(getFriends());
         }
     }
 
@@ -148,7 +148,7 @@ class StepThree extends Component {
                             key: friend.username,
                             text: friend.username
                         }))}
-                        label="Add friend"
+                        label="Add Friend"
                         onChange={data => {
                             this.handleChange(data, fields);
                         }}
@@ -238,10 +238,7 @@ class StepThree extends Component {
 
 StepThree.propTypes = {
     dispatch: PropTypes.func.isRequired,
-    friendData: PropTypes.arrayOf(PropTypes.object),
-    user: PropTypes.shape({
-        username: PropTypes.string.isRequired
-    }).isRequired
+    friendData: PropTypes.arrayOf(PropTypes.object)
 }
 
 StepThree.defaultProps = {
@@ -251,7 +248,6 @@ StepThree.defaultProps = {
 const selector = formValueSelector('createGolfRound')
 function mapStateToProps(state) {
     return {
-        user: state.user,
         friendData: state.user.friends,
         submittedPlayers: selector(state, "golfplayers")
     };

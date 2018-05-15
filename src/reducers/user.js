@@ -19,20 +19,22 @@ import {
   PENDING_DATA_FAILED,
   RESPOND_FRIEND_BEGIN,
   RESPOND_FRIEND_SUCCESS,
-  RESPOND_FRIEND_FAILED
+  RESPOND_FRIEND_FAILED,
+  SUBMIT_SCORECARD_BEGIN,
+  SUBMIT_SCORECARD_SUCCESS,
+  SUBMIT_SCORECARD_FAILED
 } from "../types";
 
 const initialState = {
-  users: [
-    {
-      errors: {}
-    }
-  ],
-  pending: [
-    {
-      errors: {}
-    }
-  ],
+  users: [{
+    errors: {}
+  }],
+  pending: [{
+    errors: {}
+  }],
+  scorecards: [{
+    errors: {}
+  }],
   shownModal: false,
   loading: false,
   errors: {}
@@ -91,6 +93,12 @@ export default function user(state = initialState, action = {}) {
     case RESPOND_FRIEND_FAILED:
       return { ...state, loading: false, pending: [{ ...state.pending[0], errors: action.errors }] };
 
+    case SUBMIT_SCORECARD_BEGIN:
+      return { ...state, loading: true };
+    case SUBMIT_SCORECARD_SUCCESS:
+      return { ...state, loading: false }
+    case SUBMIT_SCORECARD_FAILED:
+      return { ...state, loading: false, scorecards: [{ errors: action.errors }] }
     default:
       return state;
   }
