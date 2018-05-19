@@ -80,7 +80,7 @@ class FindUserForm extends Component {
             inverted />
         </Form.Field>
 
-        <Button color="orange" onClick={this.onSubmit}> Search for user </Button>
+        <Button color="yellow" onClick={this.onSubmit}> Search for user </Button>
       </Form>
     );
   }

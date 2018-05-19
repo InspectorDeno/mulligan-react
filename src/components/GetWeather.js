@@ -4,16 +4,12 @@ import { connect } from "react-redux";
 import { Segment, Item } from "semantic-ui-react";
 import Moment from "react-moment";
 import "weather-icons/css/weather-icons.css";
-//import "weather-icons/css/weather-icons-wind.css";
+// import "weather-icons/css/weather-icons-wind.css";
 import { getWeather } from "../actions/weatherAction";
 import { setWeatherIcon } from "./mapWeatherToSymbol";
 
 class GetWeather extends Component {
-  state = {
-    weatherData: [],
-    loading: false,
-    error: ""
-  };
+  state = {};
 
   componentWillMount() {
     this.props
@@ -29,7 +25,7 @@ class GetWeather extends Component {
 
     const date = data[0].validTime;
     const temp = Math.round(data[0].degrees);
-    const symbol = setWeatherIcon(data[0].symbol);
+    const symbol = setWeatherIcon(data[0]);
     const windDir = `wi wi-wind from-${data[0].windDir}-deg`;
     const windSpeed = data[0].windSpeed;
     const precepAmount = data[0].precMean;

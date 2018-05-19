@@ -17,9 +17,12 @@ import {
   RESPOND_FRIEND_BEGIN,
   RESPOND_FRIEND_SUCCESS,
   RESPOND_FRIEND_FAILED,
-  SUBMIT_SCORECARD_BEGIN,
-  SUBMIT_SCORECARD_SUCCESS,
-  SUBMIT_SCORECARD_FAILED
+  ADD_SCORECARD_BEGIN,
+  ADD_SCORECARD_SUCCESS,
+  ADD_SCORECARD_FAILED,
+  SCORECARD_DATA_REQUESTED,
+  SCORECARD_DATA_RETRIEVED,
+  SCORECARD_DATA_FAILED
 } from "../types";
 
 // ---------------- FIND USER ----------------
@@ -101,19 +104,34 @@ export const setShowCompleteSignup = () => ({
   type: SET_SHOW_COMPLETE_SIGNUP
 });
 
-// ---------------- SUBMIT SCORECARD ----------------
+// ---------------- ADD A SCORECARD ----------------
 
-export const submitScorecardBegin = () => ({
-  type: SUBMIT_SCORECARD_BEGIN
+export const addScorecardBegin = () => ({
+  type: ADD_SCORECARD_BEGIN
 });
 
-export const submitScorecardSuccess = data => ({
-  type: SUBMIT_SCORECARD_SUCCESS,
+export const addScorecardSuccess = data => ({
+  type: ADD_SCORECARD_SUCCESS,
   payload: data
 });
 
-export const submitScorecardError = error => ({
-  type: SUBMIT_SCORECARD_FAILED,
+export const addScorecardError = error => ({
+  type: ADD_SCORECARD_FAILED,
+  errors: error
+});
+// ---------------- GET SCORECARDS ----------------
+
+export const getScorecardsBegin = () => ({
+  type: SCORECARD_DATA_REQUESTED
+});
+
+export const getScorecardsSuccess = data => ({
+  type: SCORECARD_DATA_RETRIEVED,
+  payload: data
+});
+
+export const getScorecardsError = error => ({
+  type: SCORECARD_DATA_FAILED,
   errors: error
 });
 
@@ -147,7 +165,6 @@ export function getFriends() {
         dispatch(getFriendsSuccess(data));
       })
       .catch(err => {
-        // dispatch(addError(err.response.data.errors));
         dispatch(getFriendsError(err.response.data.errors));
       });
   };
@@ -184,13 +201,25 @@ export const respondFriendRequest = (friend, response) => dispatch => {
 
 export const shownModal = () => dispatch => dispatch(setShowCompleteSignup());
 
-export function submitScorecard(data) {
+export function addScorecard(data) {
   return dispatch => {
-    dispatch({ type: SUBMIT_SCORECARD_BEGIN });
-    return api.user.submitScorecard(data)
-      .then(res => dispatch(submitScorecardSuccess(res)))
+    dispatch(addScorecardBegin());
+    return api.user.addScorecard(data)
+      .then(res => dispatch(addScorecardSuccess(res)))
       .catch(err => {
-        dispatch(submitScorecardError(err));
+        dispatch(addScorecardError(err));
+      });
+  };
+}
+export function getScorecards() {
+  return dispatch => {
+    dispatch(getScorecardsBegin());
+    return api.user.getScorecards()
+      .then(data => dispatch(getScorecardsSuccess(data)))
+      .catch(err => {
+        console.log("err");
+        console.log(err);
+        // dispatch(getScorecardsError(err));
       });
   };
 }

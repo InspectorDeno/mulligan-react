@@ -20,9 +20,12 @@ import {
   RESPOND_FRIEND_BEGIN,
   RESPOND_FRIEND_SUCCESS,
   RESPOND_FRIEND_FAILED,
-  SUBMIT_SCORECARD_BEGIN,
-  SUBMIT_SCORECARD_SUCCESS,
-  SUBMIT_SCORECARD_FAILED
+  ADD_SCORECARD_BEGIN,
+  ADD_SCORECARD_SUCCESS,
+  ADD_SCORECARD_FAILED,
+  SCORECARD_DATA_REQUESTED,
+  SCORECARD_DATA_RETRIEVED,
+  SCORECARD_DATA_FAILED
 } from "../types";
 
 const initialState = {
@@ -93,11 +96,18 @@ export default function user(state = initialState, action = {}) {
     case RESPOND_FRIEND_FAILED:
       return { ...state, loading: false, pending: [{ ...state.pending[0], errors: action.errors }] };
 
-    case SUBMIT_SCORECARD_BEGIN:
+    case ADD_SCORECARD_BEGIN:
       return { ...state, loading: true };
-    case SUBMIT_SCORECARD_SUCCESS:
+    case ADD_SCORECARD_SUCCESS:
       return { ...state, loading: false }
-    case SUBMIT_SCORECARD_FAILED:
+    case ADD_SCORECARD_FAILED:
+      return { ...state, loading: false, scorecards: [{ errors: action.errors }] }
+
+    case SCORECARD_DATA_REQUESTED:
+      return { ...state, loading: true };
+    case SCORECARD_DATA_RETRIEVED:
+      return { ...state, loading: false, scorecards: action.payload.data }
+    case SCORECARD_DATA_FAILED:
       return { ...state, loading: false, scorecards: [{ errors: action.errors }] }
     default:
       return state;

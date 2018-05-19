@@ -14,14 +14,14 @@ class StepFour extends Component {
         // Push only once
         if (!golfscores.length) {
             const { golfclubdata } = this.props;
-            golfclubdata.forEach(hole => {
+            golfclubdata.forEach((hole, index) => {
                 this.props.dispatch(arrayPush("createGolfRound", "golfholes",
                     {
                         number: hole.number,
                         index: hole.index,
                         par: hole.par
                     }));
-                this.props.dispatch(arrayPush("createGolfRound", "golfscores", {}));
+                this.props.dispatch(arrayPush("createGolfRound", "golfscores", { hole: index + 1 }));
             })
         }
     }

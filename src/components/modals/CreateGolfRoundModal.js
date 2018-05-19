@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { reduxForm, formValueSelector } from "redux-form";
+import { reduxForm, formValueSelector, submit } from "redux-form";
 import moment from "moment";
-import { Button, Modal } from "semantic-ui-react";
+import { Button, Modal, Icon } from "semantic-ui-react";
 import validate from "../CreateGolfRound/validate";
 import RemoteSubmitButton from "../CreateGolfRound/RemoteSubmitButton";
 import StepOne from "../CreateGolfRound/StepOne";
@@ -33,9 +33,13 @@ class CreateGolfRoundModal extends Component {
   };
 
   close = () => {
-    this.props.dispatch(this.props.reset);
     this.setState({ open: false, page: 1 })
   };
+
+  submitAndClose = () => {
+    this.props.dispatch(submit('createGolfRound'));
+    this.close();
+  }
 
   render() {
     const { open, closeOnEscape, closeOnRootNodeClick, page } = this.state;
@@ -53,13 +57,19 @@ class CreateGolfRoundModal extends Component {
         closeOnEscape={closeOnEscape}
         closeOnRootNodeClick={closeOnRootNodeClick}
         onClose={this.close}
+        onOpen={() => this.props.dispatch(this.props.reset)}
         closeIcon
         trigger={
-          <Button color="yellow" size="huge" onClick={() => {
-            this.closeConfigShow(true, false);
-            this.setState({ open: true });
-          }}>
-            Create Golf Round
+          <Button
+            icon
+            labelPosition="right"
+            color="yellow"
+            size="huge"
+            onClick={() => {
+              this.closeConfigShow(true, false);
+              this.setState({ open: true });
+            }}><Icon name="plus" />
+            Create New Golf Round
           </Button>
         }
       >
@@ -106,7 +116,9 @@ class CreateGolfRoundModal extends Component {
                 <Button size="huge" color="orange" inverted onClick={this.previousPage}
                 >Previous
                 </Button>
-                <RemoteSubmitButton disabled={invalid || submitting} />
+                <Button size="huge" color="orange" disabled={invalid || submitting} onClick={this.submitAndClose}
+                >All done
+                </Button>
               </div>
             }
           </div>
@@ -144,7 +156,6 @@ CreateGolfRoundModal = reduxForm({
   form: "createGolfRound",
   keepDirtyOnReinitialize: true,
   destroyOnUnmount: false,
-  forceUnregisterOnUnmount: true,
   validate
 })(CreateGolfRoundModal);
 

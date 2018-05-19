@@ -36,7 +36,8 @@ export default {
       axios.post("/api/users/find", { user }).then(res => res.data.userData),
     getWeather: () =>
       axios.get("/api/weather").then(res => res.data.weatherData),
-    submitScorecard: (data) => axios.post("/api/golfrounds/add", { data }).then(res => res.data.submitScorecard)
+    addScorecard: (data) => axios.post("/api/golfrounds/add", { data }).then(res => res.data.scorecardData),
+    getScorecards: () => axios.post("/api/golfrounds").then(res => res.data.scorecardData)
   },
   golfclub: {
     findClub: clubName =>

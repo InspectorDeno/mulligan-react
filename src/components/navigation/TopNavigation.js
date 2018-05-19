@@ -29,7 +29,7 @@ const TopNavigation = ({ user, logout }) => (
           Home
         </Menu.Item>
         <Menu.Item name="golfrounds" as={Link} to="/my-rounds">
-          Golf rounds
+          Golf Rounds
         </Menu.Item>
         <Menu.Item name="friends" as={Link} to="/golfclubs">
           Golf Clubs

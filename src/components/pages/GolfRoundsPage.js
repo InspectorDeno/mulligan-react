@@ -1,23 +1,26 @@
 import React, { PureComponent } from "react";
 import PropTypes from 'prop-types';
 import { connect } from "react-redux";
-import { Segment } from "semantic-ui-react";
+import { Divider, Segment } from "semantic-ui-react";
 import CreateGolfRoundModal from "../modals/CreateGolfRoundModal";
-import { submitScorecard } from '../../actions/users';
+import { addScorecard } from '../../actions/users';
+import GolfroundsList from "../GolfRoundComponents/GolfroundsList"
 
 class GolfRoundsPage extends PureComponent {
 
   submit = data => {
-    this.props.dispatch(submitScorecard(data));
+    this.props.dispatch(addScorecard(data));
   }
 
   render() {
     return (
       <div>
-        <Segment style={{ width: "100%" }}>
+        <div style={{ textAlign: "center" }}>
+          <Divider hidden />
           <CreateGolfRoundModal onSubmit={this.submit} />
-        </Segment>
-        <Segment>Old rounds here</Segment>
+          <Divider hidden />
+        </div>
+        <GolfroundsList />
       </div >
     )
   }
