@@ -12,7 +12,7 @@ class GolfroundsList extends Component {
     this.state = {};
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.dispatch(getScorecards());
   }
 
