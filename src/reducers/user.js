@@ -25,19 +25,27 @@ import {
   ADD_SCORECARD_FAILED,
   SCORECARD_DATA_REQUESTED,
   SCORECARD_DATA_RETRIEVED,
-  SCORECARD_DATA_FAILED
+  SCORECARD_DATA_FAILED,
+  CHANGE_PASSWORD_BEGIN,
+  CHANGE_PASSWORD_SUCCESS
 } from "../types";
 
 const initialState = {
-  users: [{
-    errors: {}
-  }],
-  pending: [{
-    errors: {}
-  }],
-  scorecards: [{
-    errors: {}
-  }],
+  users: [
+    {
+      errors: {}
+    }
+  ],
+  pending: [
+    {
+      errors: {}
+    }
+  ],
+  scorecards: [
+    {
+      errors: {}
+    }
+  ],
   shownModal: false,
   loading: false,
   errors: {}
@@ -75,9 +83,17 @@ export default function user(state = initialState, action = {}) {
     case FRIEND_REQUEST_SENT:
       return { ...state, loading: true };
     case FRIEND_REQUEST_SUCCESS:
-      return { ...state, loading: false, users: [{ ...state.users[0], message: action.payload.message }] };
+      return {
+        ...state,
+        loading: false,
+        users: [{ ...state.users[0], message: action.payload.message }]
+      };
     case FRIEND_REQUEST_FAILED:
-      return { ...state, loading: false, users: [{ ...state.users[0], errors: action.errors }] };
+      return {
+        ...state,
+        loading: false,
+        users: [{ ...state.users[0], errors: action.errors }]
+      };
 
     case SET_SHOW_COMPLETE_SIGNUP:
       return { ...state, shownModal: true };
@@ -87,28 +103,53 @@ export default function user(state = initialState, action = {}) {
     case PENDING_DATA_RETRIEVED:
       return { ...state, loading: false, pending: action.payload.data };
     case PENDING_DATA_FAILED:
-      return { ...state, loading: false, pending: [{ ...state.pending[0], errors: action.errors }] };
+      return {
+        ...state,
+        loading: false,
+        pending: [{ ...state.pending[0], errors: action.errors }]
+      };
 
     case RESPOND_FRIEND_BEGIN:
       return { ...state, loading: true };
     case RESPOND_FRIEND_SUCCESS:
-      return { ...state, loading: false, pending: [{ ...state.pending[0], message: action.payload.message }] };
+      return {
+        ...state,
+        loading: false,
+        pending: [{ ...state.pending[0], message: action.payload.message }]
+      };
     case RESPOND_FRIEND_FAILED:
-      return { ...state, loading: false, pending: [{ ...state.pending[0], errors: action.errors }] };
+      return {
+        ...state,
+        loading: false,
+        pending: [{ ...state.pending[0], errors: action.errors }]
+      };
 
     case ADD_SCORECARD_BEGIN:
       return { ...state, loading: true };
     case ADD_SCORECARD_SUCCESS:
-      return { ...state, loading: false }
+      return { ...state, loading: false };
     case ADD_SCORECARD_FAILED:
-      return { ...state, loading: false, scorecards: [{ errors: action.errors }] }
+      return {
+        ...state,
+        loading: false,
+        scorecards: [{ errors: action.errors }]
+      };
 
     case SCORECARD_DATA_REQUESTED:
       return { ...state, loading: true };
     case SCORECARD_DATA_RETRIEVED:
-      return { ...state, loading: false, scorecards: action.payload.data }
+      return { ...state, loading: false, scorecards: action.payload.data };
     case SCORECARD_DATA_FAILED:
-      return { ...state, loading: false, scorecards: [{ errors: action.errors }] }
+      return {
+        ...state,
+        loading: false,
+        scorecards: [{ errors: action.errors }]
+      };
+    case CHANGE_PASSWORD_BEGIN:
+      return { ...state, loading: true };
+    case CHANGE_PASSWORD_SUCCESS:
+      return { ...state, loading: false };
+
     default:
       return state;
   }

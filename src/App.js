@@ -16,6 +16,7 @@ import ResetPasswordPage from "./components/pages/ResetPasswordPage";
 import DashboardPage from "./components/pages/DashboardPage";
 import GolfRoundsPage from "./components/pages/GolfRoundsPage";
 import GolfClubsPage from "./components/pages/GolfClubsPage";
+import SettingsPage from "./components/pages/SettingsPage";
 
 import GuestRoute from "./components/routes/GuestRoute";
 import UserRoute from "./components/routes/UserRoute";
@@ -81,7 +82,7 @@ class App extends Component {
             location={location}
             path="/settings"
             exact
-            component={DashboardPage}
+            component={SettingsPage}
           />
           <UserRoute
             location={location}

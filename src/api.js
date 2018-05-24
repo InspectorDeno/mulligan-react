@@ -14,17 +14,15 @@ export default {
       axios.post("/api/auth/reset_password_request", { email }),
     validateToken: token => axios.post("/api/auth/validate_token", { token }),
     resetPassword: data => axios.post("/api/auth/reset_password", { data }),
-    setHcp: (hcp) =>
+    changePassword: newPassword =>
+      axios.post("/api/users/change_password", { newPassword }),
+    setHcp: hcp =>
       axios.post("/api/users/sethcp", { hcp }).then(res => res.data.user),
     getFriends: () =>
-      axios
-        .post("/api/users/get_friends")
-        .then(res => res.data.friendData),
+      axios.post("/api/users/get_friends").then(res => res.data.friendData),
     getPending: () =>
-      axios
-        .post("/api/users/get_pending")
-        .then(res => res.data.pendingData),
-    addFriend: (friend) =>
+      axios.post("/api/users/get_pending").then(res => res.data.pendingData),
+    addFriend: friend =>
       axios
         .post("/api/friends/add", { friend })
         .then(res => res.data.add_friend),
@@ -32,10 +30,14 @@ export default {
       axios
         .post("/api/friends/respond", { friend, response })
         .then(res => res.data.respondData),
-    findUser: (user) =>
+    findUser: user =>
       axios.post("/api/users/find", { user }).then(res => res.data.userData),
-    addScorecard: (data) => axios.post("/api/golfrounds/add", { data }).then(res => res.data.scorecardData),
-    getScorecards: () => axios.post("/api/golfrounds").then(res => res.data.scorecardData)
+    addScorecard: data =>
+      axios
+        .post("/api/golfrounds/add", { data })
+        .then(res => res.data.scorecardData),
+    getScorecards: () =>
+      axios.post("/api/golfrounds").then(res => res.data.scorecardData)
   },
   golfclub: {
     findClub: clubName =>
@@ -44,6 +46,7 @@ export default {
         .then(res => res.data.golfClubData)
   },
   weather: {
-    getCurrent: () => axios.get("/api/weather").then(res => res.data.weatherData),
+    getCurrent: () =>
+      axios.get("/api/weather").then(res => res.data.weatherData)
   }
 };

@@ -1,5 +1,5 @@
-import React from 'react';
-import { connect } from "react-redux"
+import React from "react";
+import { connect } from "react-redux";
 import { Container, Header, Button, Segment } from "semantic-ui-react";
 
 const HomePageHeader = () => (
@@ -19,7 +19,6 @@ const HomePageHeader = () => (
   </Container>
 );
 
-
 const DesktopContainer = () => (
   <Segment
     textAlign="center"
@@ -29,8 +28,6 @@ const DesktopContainer = () => (
     <HomePageHeader />
   </Segment>
 );
-
-
 
 const HomePage = () => <DesktopContainer />;
 
