@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Header, Form, Button } from "semantic-ui-react";
+import { Form, Button, Message, Icon } from "semantic-ui-react";
+import InlineError from "../messages/InlineError";
 
 class ChangeHcpForm extends Component {
   state = {
     data: {},
     loading: false,
-    errors: {}
+    errors: {},
+    message: ""
   };
 
   onChange = (e, { value }) => {
@@ -29,6 +31,9 @@ class ChangeHcpForm extends Component {
         loading: true
       });
       this.props.submit(this.state.data);
+      this.setState({
+        message: "Succesfully changed your handicap"
+      });
     }
   };
 
@@ -41,30 +46,47 @@ class ChangeHcpForm extends Component {
       errors.hcpInput = "Must be a number";
     }
     if (value.hcpInput > 54 || value.hcpInput < -10) {
-      errors.hcpInput = "Not a valid HCP";
+      errors.hcpInput = "Not a valid Hcp";
     }
+    console.log(errors);
     return errors;
   };
 
   render() {
-    const { errors, data } = this.state;
+    const { errors, data, message } = this.state;
     return (
       <div>
-        {errors && errors.hcpInput}
-        <Form onSubmit={this.onSubmit}>
-          <Header>Change handicap </Header>
-          <label htmlFor="hcp" text="Enter hcp" style={{ float: "left" }} />
-          <Form.Input
-            fluid
-            name="hcpInput"
-            value={data.hcp}
-            icon="user"
-            iconPosition="right"
-            placeholder="New hcp"
-            onChange={this.onChange}
-          />
-          <Button> Change hcp </Button>
+        <Form>
+          <Form.Field>
+            <label htmlFor="hcpInput" style={{ float: "left" }}>
+              Enter Hcp
+            </label>
+            {errors && <InlineError text={errors.hcpInput} />}
+            <Form.Input
+              fluid
+              name="hcpInput"
+              value={data.hcp}
+              icon="wheelchair"
+              iconPosition="right"
+              placeholder="New Hcp"
+              onChange={this.onChange}
+            />
+          </Form.Field>
         </Form>
+        <div style={{ marginTop: "1em" }}>
+          {message ? (
+            <Message positive fluid>
+              <div style={{ display: "flex" }}>
+                <Icon name="checkmark" />
+                {message}
+              </div>
+            </Message>
+          ) : (
+            <Button onClick={this.onSubmit} color="olive">
+              Set Hcp
+            </Button>
+          )}
+        </div>
       </div>
     );
   }

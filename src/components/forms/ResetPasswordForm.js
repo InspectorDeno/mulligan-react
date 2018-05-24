@@ -58,47 +58,55 @@ class ForgotPasswordForm extends Component {
     const { loading } = this.props;
 
     return (
-      <Form onSubmit={this.onSubmit} loading={loading}>
-        {!!errors.global && <Message negative>{errors.global}</Message>}
-        <Form.Field error={!!errors.password}>
-          <label htmlFor="password" style={{ float: "left" }}>
-            New Password
-          </label>
-          {errors.password && <InlineError text={errors.password} />}
-          <Form.Input
-            type="password"
-            name="password"
-            id="password"
-            placeholder="Your new password"
-            value={data.password}
-            onChange={this.onChange}
-          />
-        </Form.Field>
-        <Form.Field error={!!errors.confirmPassword}>
-          <label htmlFor="confirmPassword" style={{ float: "left" }}>
-            Repeat New Password
-          </label>
-          {errors.confirmPassword && (
-            <InlineError text={errors.confirmPassword} />
+      <div>
+        <Form l oading={loading}>
+          {!!errors.global && <Message negative>{errors.global}</Message>}
+          <Form.Field error={!!errors.password}>
+            <label htmlFor="password" style={{ float: "left" }}>
+              New Password
+            </label>
+            {errors.password && <InlineError text={errors.password} />}
+            <Form.Input
+              type="password"
+              name="password"
+              id="password"
+              placeholder="Your new password"
+              value={data.password}
+              onChange={this.onChange}
+            />
+          </Form.Field>
+          <Form.Field error={!!errors.confirmPassword}>
+            <label htmlFor="confirmPassword" style={{ float: "left" }}>
+              Repeat New Password
+            </label>
+            {errors.confirmPassword && (
+              <InlineError text={errors.confirmPassword} />
+            )}
+            <Form.Input
+              type="password"
+              name="confirmPassword"
+              id="confirmPassword"
+              placeholder="Repeat new password"
+              value={data.confirmPassword}
+              onChange={this.onChange}
+            />
+          </Form.Field>
+        </Form>
+        <div style={{ marginTop: "1em" }}>
+          {message ? (
+            <Message positive fluid>
+              <div style={{ display: "flex" }}>
+                <Icon name="checkmark" />
+                {message}
+              </div>
+            </Message>
+          ) : (
+            <Button onClick={this.onSubmit} color="olive">
+              Change Password
+            </Button>
           )}
-          <Form.Input
-            type="password"
-            name="confirmPassword"
-            id="confirmPassword"
-            placeholder="Repeat new password"
-            value={data.confirmPassword}
-            onChange={this.onChange}
-          />
-        </Form.Field>
-        {message ? (
-          <Message icon positive>
-            <Icon name="checkmark" />
-            <Message.Header>{message}</Message.Header>
-          </Message>
-        ) : (
-          <Button primary>Set new password</Button>
-        )}
-      </Form>
+        </div>
+      </div>
     );
   }
 }

@@ -39,7 +39,7 @@ class App extends Component {
       <div>
         {isAuthenticated ? <TopNavigation /> : <DefaultMenu />}
         <Route location={location} path="/" exact component={HomePage} />
-        <div style={{ height: "81px" }} />
+        {/* <div style={{ height: "81px" }} /> */}
         <Route
           location={location}
           path="/confirmation/:token"
@@ -77,32 +77,30 @@ class App extends Component {
           exact
           component={DashboardPage}
         />
-        <div className="ui container" style={{ height: "100%" }}>
-          <UserRoute
-            location={location}
-            path="/settings"
-            exact
-            component={SettingsPage}
-          />
-          <UserRoute
-            location={location}
-            path="/my-rounds"
-            exact
-            component={GolfRoundsPage}
-          />
-          <UserRoute
-            location={location}
-            path="/friends"
-            exact
-            component={FriendsPage}
-          />
-          <UserRoute
-            location={location}
-            path="/golfclubs"
-            exact
-            component={GolfClubsPage}
-          />
-        </div>
+        <UserRoute
+          location={location}
+          path="/settings"
+          exact
+          component={SettingsPage}
+        />
+        <UserRoute
+          location={location}
+          path="/my-rounds"
+          exact
+          component={GolfRoundsPage}
+        />
+        <UserRoute
+          location={location}
+          path="/friends"
+          exact
+          component={FriendsPage}
+        />
+        <UserRoute
+          location={location}
+          path="/golfclubs"
+          exact
+          component={GolfClubsPage}
+        />
       </div>
     );
   }

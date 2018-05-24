@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Container, Header } from "semantic-ui-react";
+import { Divider, Container, Header, Segment, Icon } from "semantic-ui-react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import ChangeHcpForm from "../forms/ChangeHcpForm";
@@ -16,23 +16,48 @@ class SettingsPage extends Component {
     this.props.setHcp(data.hcpInput);
   };
 
+  PageHeader = () => (
+    <Segment
+      vertical
+      textAlign="center"
+      style={{
+        minHeight: 200,
+        padding: "1em 0em ",
+        background:
+          "linear-gradient(154deg, #1e002d, #1e002d,#1e002d, #b5cc18)",
+        border: "none",
+        marginBottom: "4em"
+      }}
+    >
+      <Header
+        inverted
+        style={{
+          fontSize: "4em",
+          fontWeight: "normal",
+          marginTop: "1em"
+        }}
+      >
+        Settings
+      </Header>
+    </Segment>
+  );
   render() {
     return (
       <div>
-        <Header
-          style={{
-            fontSize: "4em",
-            fontWeight: "normal"
-          }}
-        >
-          Settings page
-        </Header>
-
+        <this.PageHeader />
         <Container>
-          <ChangeHcpForm submit={this.submitHcp} />
-        </Container>
-        <Container>
-          <ResetPasswordForm submit={this.submitPw} />
+          <Segment.Group raised horizontal style={{ background: "#f3f4f5" }}>
+            <Segment>
+              <Header> Change Handicap </Header>
+              <Divider />
+              <ChangeHcpForm submit={this.submitHcp} />
+            </Segment>
+            <Segment>
+              <Header> Change Password </Header>
+              <Divider />
+              <ResetPasswordForm submit={this.submitPw} />
+            </Segment>
+          </Segment.Group>
         </Container>
       </div>
     );

@@ -25,9 +25,9 @@ const TopNavigation = ({ user, logout }) => (
         <Menu.Item header name="menuIcon" as={Link} to="/dashboard">
           Mulligan
         </Menu.Item>
-        <Menu.Item name="home" as={Link} to="/dashboard">
+        {/* <Menu.Item name="home" as={Link} to="/dashboard">
           Home
-        </Menu.Item>
+        </Menu.Item> */}
         <Menu.Item name="golfrounds" as={Link} to="/my-rounds">
           Golf Rounds
         </Menu.Item>
