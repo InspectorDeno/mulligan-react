@@ -1,5 +1,6 @@
-import React from 'react';
-import { connect } from "react-redux"
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from "react-redux";
 import { Container, Header, Button, Segment } from "semantic-ui-react";
 
 const HomePageHeader = () => (
@@ -15,9 +16,9 @@ const HomePageHeader = () => (
     />
     <Button inverted color="orange" size="huge">
       Join today
-    </Button>
+</Button>
   </Container>
-);
+)
 
 
 const DesktopContainer = () => (
@@ -30,8 +31,40 @@ const DesktopContainer = () => (
   </Segment>
 );
 
+class HomePage extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+    };
+  }
+
+  componentDidMount() {
+    const { isAuthenticated } = this.props;
+    if (isAuthenticated) {
+      this.props.history.push("/dashboard");
+    }
+  }
+
+  render() {
+    return (
+      <DesktopContainer />
+    )
+  }
+}
+
+HomePage.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired
+  }).isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
+}
+
+function mapStateToProps(state) {
+  return {
+    isAuthenticated: !!state.user.email
+  }
+}
 
 
-const HomePage = () => <DesktopContainer />;
-
-export default HomePage;
+export default connect(mapStateToProps)(HomePage);

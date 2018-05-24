@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Route } from "react-router-dom";
-import io from "socket.io-client";
 
 import TopNavigation from "./components/navigation/TopNavigation";
 import DefaultMenu from "./components/navigation/DefaultMenu";
