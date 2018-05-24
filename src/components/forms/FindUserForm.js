@@ -34,11 +34,11 @@ class FindUserForm extends Component {
         loading: true
       });
 
-      this.props
-        .submit(this.state.data)
-        .then(() => this.setState({
+      this.props.submit(this.state.data).then(() =>
+        this.setState({
           loading: false
-        }));
+        })
+      );
     }
   };
 
@@ -58,12 +58,9 @@ class FindUserForm extends Component {
       <Form loading={loading}>
         {findUserError.find_user && (
           <Message negative>
-            <Message.Header> {
-              findUserError.find_user
-            } </Message.Header>
+            <Message.Header> {findUserError.find_user} </Message.Header>
           </Message>
-        )
-        }
+        )}
         <label htmlFor="email" style={{ float: "left" }}>
           Username or Email
         </label>
@@ -77,17 +74,20 @@ class FindUserForm extends Component {
             placeholder="Username or Email"
             value={data.username_email}
             onChange={this.onChange}
-            inverted />
+            inverted
+          />
         </Form.Field>
 
-        <Button color="yellow" onClick={this.onSubmit}> Search for user </Button>
+        <Button color="orange" onClick={this.onSubmit}>
+          Search for user
+        </Button>
       </Form>
     );
   }
 }
 FindUserForm.propTypes = {
   submit: PropTypes.func.isRequired,
-  findUserError: PropTypes.shape({}),
+  findUserError: PropTypes.shape({})
 };
 FindUserForm.defaultProps = {
   findUserError: {}

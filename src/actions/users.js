@@ -22,9 +22,18 @@ import {
   ADD_SCORECARD_FAILED,
   SCORECARD_DATA_REQUESTED,
   SCORECARD_DATA_RETRIEVED,
-  SCORECARD_DATA_FAILED
+  SCORECARD_DATA_FAILED,
+  CHANGE_PASSWORD_BEGIN,
+  CHANGE_PASSWORD_SUCCESS
 } from "../types";
+// ----------------CHANGE PASSWORD-----------------
+export const changePasswordBegin = () => ({
+  type: CHANGE_PASSWORD_BEGIN
+});
 
+export const changePasswordSuccess = () => ({
+  type: CHANGE_PASSWORD_SUCCESS
+});
 // ---------------- FIND USER ----------------
 export const findUserBegin = () => ({
   type: USER_DATA_REQUESTED
@@ -142,6 +151,15 @@ export const signup = data => dispatch =>
     dispatch(userLoggedIn(user));
   });
 
+// For changing password
+export function changePassword(newPassword) {
+  return dispatch => {
+    dispatch(changePasswordBegin());
+    return api.user
+      .changePassword(newPassword)
+      .then(() => dispatch(changePasswordSuccess()));
+  };
+}
 // For finding a user in the database
 export function findUser(user) {
   return dispatch => {
@@ -183,7 +201,7 @@ export function getPending() {
   };
 }
 
-export const setHcp = (hcp) => dispatch => {
+export const setHcp = hcp => dispatch => {
   dispatch(setHcpBegin());
   api.user.setHcp(hcp).then(updatedUser => {
     localStorage.mulliganJWT = updatedUser.token;
@@ -196,15 +214,16 @@ export const respondFriendRequest = (friend, response) => dispatch => {
   api.user.respondFriendship(friend, response).then(respondData => {
     dispatch(respondFriendRequestSuccess(respondData));
     dispatch(getFriends());
-  })
-}
+  });
+};
 
 export const shownModal = () => dispatch => dispatch(setShowCompleteSignup());
 
 export function addScorecard(data) {
   return dispatch => {
     dispatch(addScorecardBegin());
-    return api.user.addScorecard(data)
+    return api.user
+      .addScorecard(data)
       .then(res => dispatch(addScorecardSuccess(res)))
       .catch(err => {
         dispatch(addScorecardError(err));
@@ -214,7 +233,8 @@ export function addScorecard(data) {
 export function getScorecards() {
   return dispatch => {
     dispatch(getScorecardsBegin());
-    return api.user.getScorecards()
+    return api.user
+      .getScorecards()
       .then(data => dispatch(getScorecardsSuccess(data)))
       .catch(err => {
         console.log("err");

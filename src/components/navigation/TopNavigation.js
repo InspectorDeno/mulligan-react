@@ -25,9 +25,9 @@ const TopNavigation = ({ user, logout }) => (
         <Menu.Item header name="menuIcon" as={Link} to="/dashboard">
           Mulligan
         </Menu.Item>
-        <Menu.Item name="home" as={Link} to="/dashboard">
+        {/* <Menu.Item name="home" as={Link} to="/dashboard">
           Home
-        </Menu.Item>
+        </Menu.Item> */}
         <Menu.Item name="golfrounds" as={Link} to="/my-rounds">
           Golf Rounds
         </Menu.Item>
@@ -45,12 +45,17 @@ const TopNavigation = ({ user, logout }) => (
             trigger={
               <div>
                 <span style={{ marginRight: "10px" }}>{user.username}</span>
-                <Image avatar src={gravatarUrl(user.email, { default: "identicon" })} />
+                <Image
+                  avatar
+                  src={gravatarUrl(user.email, { default: "identicon" })}
+                />
               </div>
             }
           >
             <Dropdown.Menu>
-              <Dropdown.Item as={Link} to="/dashboard">Account</Dropdown.Item>
+              <Dropdown.Item as={Link} to="/settings">
+                Account
+              </Dropdown.Item>
               <Dropdown.Item onClick={() => logout()}>Logout</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>

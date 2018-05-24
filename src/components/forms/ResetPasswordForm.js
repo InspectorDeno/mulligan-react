@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Form, Button, Message } from "semantic-ui-react";
+import { connect } from "react-redux";
+import { Form, Button, Message, Icon } from "semantic-ui-react";
 import PropTypes from "prop-types";
 import InlineError from "../messages/InlineError";
 
@@ -10,7 +11,7 @@ class ForgotPasswordForm extends Component {
       password: "",
       confirmPassword: ""
     },
-    loading: false,
+    message: "",
     errors: {}
   };
 
@@ -26,13 +27,14 @@ class ForgotPasswordForm extends Component {
     const errors = this.validate(this.state.data);
     this.setState({ errors });
     if (Object.keys(errors).length === 0) {
-      this.setState({ loading: true });
       // Validation errors from the server will be written to the component's state. Display with message
       this.props
         .submit(this.state.data)
-        .catch(err =>
-          this.setState({ errors: err.response.data.errors, loading: false })
-        );
+        .catch(err => this.setState({ errors: err.response.data.errors }));
+      this.setState({
+        data: { password: "", confirmPassword: "" },
+        message: "Success!"
+      });
     }
   };
 
@@ -45,45 +47,75 @@ class ForgotPasswordForm extends Component {
       errors.password = "Passwords must match";
       errors.confirmPassword = "Passwords must match";
     }
+    if (data.password.length < 6) {
+      errors.password = "Password must be at least six (6) characters";
+    }
     return errors;
   };
 
   render() {
-    const { data, errors, loading } = this.state;
+    const { data, errors, message } = this.state;
+    const { loading } = this.props;
 
     return (
-      <Form onSubmit={this.onSubmit} loading={loading}>
-        {!!errors.global && <Message negative>{errors.global}</Message>}
-        <Form.Field error={!!errors.password}>
-          <label htmlFor="password">New Password</label>
-          <input
-            type="password"
-            name="password"
-            id="password"
-            placeholder="Your new password"
-            value={data.password}
-            onChange={this.onChange}
-          />
-          {errors.password && <InlineError text={errors.password} />}
-        </Form.Field>
-        <Form.Field error={!!errors.confirmPassword}>
-          <label htmlFor="confirmPassword">Repeat New Password</label>
-          <input
-            type="password"
-            name="confirmPassword"
-            id="confirmPassword"
-            placeholder="Repeat new password"
-            value={data.confirmPassword}
-            onChange={this.onChange}
-          />
-          {errors.confirmPassword && (
-            <InlineError text={errors.confirmPassword} />
+      <div>
+        <Form l oading={loading}>
+          {!!errors.global && <Message negative>{errors.global}</Message>}
+          <Form.Field error={!!errors.password}>
+            <label htmlFor="password" style={{ float: "left" }}>
+              New Password
+            </label>
+            {errors.password && <InlineError text={errors.password} />}
+            <Form.Input
+              type="password"
+              name="password"
+              id="password"
+              placeholder="Your new password"
+              value={data.password}
+              onChange={this.onChange}
+            />
+          </Form.Field>
+          <Form.Field error={!!errors.confirmPassword}>
+            <label htmlFor="confirmPassword" style={{ float: "left" }}>
+              Repeat New Password
+            </label>
+            {errors.confirmPassword && (
+              <InlineError text={errors.confirmPassword} />
+            )}
+            <Form.Input
+              type="password"
+              name="confirmPassword"
+              id="confirmPassword"
+              placeholder="Repeat new password"
+              value={data.confirmPassword}
+              onChange={this.onChange}
+            />
+          </Form.Field>
+        </Form>
+        <div style={{ marginTop: "1em" }}>
+          {message ? (
+            <Message positive fluid>
+              <div style={{ display: "flex" }}>
+                <Icon name="checkmark" />
+                {message}
+              </div>
+            </Message>
+          ) : (
+            <Button onClick={this.onSubmit} color="olive">
+              Change Password
+            </Button>
           )}
-        </Form.Field>
-        <Button primary>Reset</Button>
-      </Form>
+        </div>
+      </div>
     );
   }
+}
+
+function mapStateToProps(state) {
+  return {
+    loading: state.user.loading,
+    message: state.user.message
+  };
 }
 
 ForgotPasswordForm.propTypes = {
@@ -91,4 +123,4 @@ ForgotPasswordForm.propTypes = {
   token: PropTypes.string.isRequired
 };
 
-export default ForgotPasswordForm;
+export default connect(mapStateToProps)(ForgotPasswordForm);

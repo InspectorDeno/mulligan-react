@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Route } from "react-router-dom";
+import io from "socket.io-client";
 
 import TopNavigation from "./components/navigation/TopNavigation";
 import DefaultMenu from "./components/navigation/DefaultMenu";
@@ -15,6 +16,7 @@ import ResetPasswordPage from "./components/pages/ResetPasswordPage";
 import DashboardPage from "./components/pages/DashboardPage";
 import GolfRoundsPage from "./components/pages/GolfRoundsPage";
 import GolfClubsPage from "./components/pages/GolfClubsPage";
+import SettingsPage from "./components/pages/SettingsPage";
 
 import GuestRoute from "./components/routes/GuestRoute";
 import UserRoute from "./components/routes/UserRoute";
@@ -37,7 +39,7 @@ class App extends Component {
       <div>
         {isAuthenticated ? <TopNavigation /> : <DefaultMenu />}
         <Route location={location} path="/" exact component={HomePage} />
-        <div style={{ height: "81px" }} />
+        {/* <div style={{ height: "81px" }} /> */}
         <Route
           location={location}
           path="/confirmation/:token"
@@ -75,32 +77,30 @@ class App extends Component {
           exact
           component={DashboardPage}
         />
-        <div className="ui container" style={{ height: "100%" }}>
-          <UserRoute
-            location={location}
-            path="/settings"
-            exact
-            component={DashboardPage}
-          />
-          <UserRoute
-            location={location}
-            path="/my-rounds"
-            exact
-            component={GolfRoundsPage}
-          />
-          <UserRoute
-            location={location}
-            path="/friends"
-            exact
-            component={FriendsPage}
-          />
-          <UserRoute
-            location={location}
-            path="/golfclubs"
-            exact
-            component={GolfClubsPage}
-          />
-        </div>
+        <UserRoute
+          location={location}
+          path="/settings"
+          exact
+          component={SettingsPage}
+        />
+        <UserRoute
+          location={location}
+          path="/my-rounds"
+          exact
+          component={GolfRoundsPage}
+        />
+        <UserRoute
+          location={location}
+          path="/friends"
+          exact
+          component={FriendsPage}
+        />
+        <UserRoute
+          location={location}
+          path="/golfclubs"
+          exact
+          component={GolfClubsPage}
+        />
       </div>
     );
   }
