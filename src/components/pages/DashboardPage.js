@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Image } from "semantic-ui-react";
 import GetWeather from "../GetWeather";
 import CompleteSignupModal from "../modals/CompleteSignupModal"
 
@@ -16,6 +17,7 @@ class DashboardPage extends Component {
     const { user } = this.props;
     return (
       <div>
+        {/* <Image as="img" src="/src/assets/images/titleist.png" /> */}
         <GetWeather />
         {!user.hcp.sethcp && !user.shownModal && <CompleteSignupModal />}
       </div>

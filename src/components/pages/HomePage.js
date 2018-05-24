@@ -1,16 +1,16 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import { connect } from "react-redux"
 import { Container, Header, Button, Segment } from "semantic-ui-react";
 
-const HomePageHeader = ({ mobile }) => (
+const HomePageHeader = () => (
   <Container text>
     <Header
       content="Mulligan"
       inverted
       style={{
-        fontSize: mobile ? "2em" : "4em",
+        fontSize: "4em",
         fontWeight: "normal",
-        marginTop: mobile ? "1.5em" : "2em"
+        marginTop: "2em"
       }}
     />
     <Button inverted color="orange" size="huge">
@@ -19,9 +19,6 @@ const HomePageHeader = ({ mobile }) => (
   </Container>
 );
 
-HomePageHeader.propTypes = {
-  mobile: PropTypes.bool.isRequired
-};
 
 const DesktopContainer = () => (
   <Segment
@@ -32,6 +29,8 @@ const DesktopContainer = () => (
     <HomePageHeader />
   </Segment>
 );
+
+
 
 const HomePage = () => <DesktopContainer />;
 

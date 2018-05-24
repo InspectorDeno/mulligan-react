@@ -34,8 +34,6 @@ export default {
         .then(res => res.data.respondData),
     findUser: (user) =>
       axios.post("/api/users/find", { user }).then(res => res.data.userData),
-    getWeather: () =>
-      axios.get("/api/weather").then(res => res.data.weatherData),
     addScorecard: (data) => axios.post("/api/golfrounds/add", { data }).then(res => res.data.scorecardData),
     getScorecards: () => axios.post("/api/golfrounds").then(res => res.data.scorecardData)
   },
@@ -44,5 +42,8 @@ export default {
       axios
         .post("/api/golfclub", { clubName })
         .then(res => res.data.golfClubData)
+  },
+  weather: {
+    getCurrent: () => axios.get("/api/weather").then(res => res.data.weatherData),
   }
 };

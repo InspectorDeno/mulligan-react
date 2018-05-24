@@ -2,10 +2,24 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Field, FieldArray, formValueSelector, arrayPush } from "redux-form";
-import { Segment, List, Grid, Form, Label } from 'semantic-ui-react';
-import moment from "moment";
+import { Segment, List, Table, Form, Label, Grid, Dropdown, Sticky, Rail } from 'semantic-ui-react';
+import { sortBy } from "underscore";
 import InlineError from "../messages/InlineError"
 
+const driveOptions = [
+    { key: "fairway", value: "fairway", text: "Fairway" },
+    { key: "long", value: "long", text: "Long" },
+    { key: "left", value: "left", text: "Left" },
+    { key: "right", value: "right", text: "Right" },
+    { key: "short", value: "short", text: "Short" },
+];
+const driveOptionsPar3 = [
+    { key: "green", value: "green", text: "Green" },
+    { key: "long", value: "long", text: "Long" },
+    { key: "left", value: "left", text: "Left" },
+    { key: "right", value: "right", text: "Right" },
+    { key: "short", value: "short", text: "Short" },
+];
 
 class StepFour extends Component {
 
@@ -34,86 +48,142 @@ class StepFour extends Component {
                 <Form.Input
                     {...input}
                     type={type}
-                    style={{ width: "100%" }} />
+                    style={{ width: "70px" }}
+                />
             </div>
         </div>
     );
 
-    renderStrokes = ({ fields, meta, players }) => (
-        <List style={{ display: "flex", justifyContent: "center" }}>
+    renderSelect = field => (
+        <div>
             <div>
-                {fields.map((golfhole, index) => (
-                    <Segment raised compact inverted style={{ width: "660px", background: "#c3d646" }}
-                    >
-                        <List.Item key={index} style={{ background: "white", width: "auto" }}>
-
-                            {/* {/* The actual score grid */}
-                            <div style={{ fontSize: "25px", fontWeight: "bold", width: "auto", background: "#c3d646" }}
-                            >Hole {index + 1}</div>
-
-                            <Grid celled="internally" style={{
-                                // display: "inline-grid", 
-                                // gridTemplateColumns: "min-content"
-                            }}>
-                                {/* First row */}
-                                <Grid.Row style={{ background: "#c3d646" }}>
-                                    <Grid.Column style={{ width: "100px" }}>
-                                        <h3>Player</h3>
-                                    </Grid.Column>
-                                    {players.map(player => (
-                                        <Grid.Column style={{ width: "130px" }}>
-                                            <h3>{player.playerName}</h3>
-                                        </Grid.Column>
-                                    ))}
-                                </Grid.Row>
-                                {/* Second Row */}
-                                <Grid.Row>
-                                    <Grid.Column style={{ width: "100px", color: "darkslategray" }}>
-                                        <h3>Strokes</h3>
-                                    </Grid.Column>
-                                    {players.map(player => (
-                                        <Grid.Column style={{ width: "130px", padding: "0.5em" }}>
-                                            <Field
-                                                name={`${golfhole}.${player.playerName}.score`}
-                                                type="number"
-                                                component={this.renderInput}
-                                                error={meta.error && meta.error[index] && meta.error[index].length && meta.error[index]}
-                                            />
-
-                                        </Grid.Column>
-                                    ))}
-                                </Grid.Row>
-                                {/* Putts */}
-                                <Grid.Row>
-                                    <Grid.Column style={{ width: "100px", color: "darkslategray" }}>
-                                        <h3>Putts</h3>
-                                    </Grid.Column>
-                                    {players.map(player => (
-                                        <Grid.Column style={{ width: "130px", padding: "0.5em" }}>
-                                            <Field
-                                                name={`${golfhole}.${player.playerName}.putts`}
-                                                type="number"
-                                                component={this.renderInput}
-                                            />
-
-                                        </Grid.Column>
-                                    ))}
-                                </Grid.Row>
-                            </Grid>
-                        </List.Item>
-                    </Segment>
-                ))}
+                <Dropdown
+                    {...field.input}
+                    fluid
+                    selection
+                    placeholder={field.label}
+                    options={field.options}
+                    loading={field.loading}
+                    disabled={field.index === 0}
+                    onChange={(e, { value }) => {
+                        e.preventDefault();
+                        field.input.onChange(value);
+                    }}
+                />
             </div>
-        </List>
+        </div>
+    );
 
+    renderStrokes = ({ fields, meta, players, holes }) => (
+        <div style={{ display: "flex" }}>
+            <List style={{ display: "flex", justifyContent: "center", marginTop: "30px", marginLeft: "30px", width: "600px" }}>
+                <div>
+                    {fields.map((golfhole, index) => (
+                        <Segment.Group raised compact>
+                            <List.Item key={index}>
+                                <Segment attached="top" color="grey" inverted style={{ border: "none", textAlign: "center" }}>
+
+                                    {/* {/* The actual score grid */}
+                                    <Grid style={{ fontSize: "20px", fontWeight: "bold" }}>
+                                        <Grid.Row columns={3}>
+                                            <Grid.Column>
+                                                Hole: {holes[index].number}
+                                            </Grid.Column>
+                                            <Grid.Column>
+                                                Par: {holes[index].par}
+                                            </Grid.Column>
+                                            <Grid.Column>
+                                                Index: {holes[index].index}
+                                            </Grid.Column>
+                                        </Grid.Row>
+                                    </Grid>
+                                    {/* First row */}
+                                </Segment>
+                                <Table as={Segment} attached="bottom" textAlign="center" style={{ margin: "auto", border: "none" }}>
+                                    <Table.Row>
+                                        <Table.Cell style={{ background: "#f2711c", color: "white", fontWeight: "bold" }}>
+                                            Player
+                                            </Table.Cell>
+                                        <Table.Cell style={{ display: "flex", justifyContent: "center" }}>
+                                            Strokes<p style={{ margin: 0, color: "red" }}>*</p>
+                                        </Table.Cell>
+                                        <Table.Cell>
+                                            Putts
+                                        </Table.Cell>
+                                        <Table.Cell>
+                                            Drive
+                                        </Table.Cell>
+                                        <Table.Cell>
+                                            Chips
+                                        </Table.Cell>
+                                        <Table.Cell>
+                                            Penalties
+                                        </Table.Cell>
+                                    </Table.Row>
+                                    {/* Second Row */}
+                                    {players.map(player => (
+                                        <Table.Row>
+                                            <Table.Cell style={{ background: "#f2711c", color: "white", fontWeight: "bold" }}>
+                                                {player.playerName}
+                                            </Table.Cell>
+                                            <Table.Cell>
+                                                <Field
+                                                    name={`${golfhole}.${player.playerName}.score`}
+                                                    type="number"
+                                                    component={this.renderInput}
+                                                    error={meta.error && meta.error[index] && meta.error[index].length && meta.error[index]}
+                                                    onChange
+                                                />
+                                            </Table.Cell>
+                                            <Table.Cell>
+                                                <Field
+                                                    name={`${golfhole}.${player.playerName}.putts`}
+                                                    type="number"
+                                                    component={this.renderInput}
+                                                />
+                                            </Table.Cell>
+                                            <Table.Cell>
+                                                <Field
+                                                    name={`${golfhole}.${player.playerName}.drive`}
+                                                    component={this.renderSelect}
+                                                    options={holes[index].par === 3 ? driveOptionsPar3 : driveOptions}
+                                                    label="Drive"
+                                                />
+                                            </Table.Cell>
+                                            <Table.Cell>
+                                                <Field
+                                                    name={`${golfhole}.${player.playerName}.chips`}
+                                                    component={this.renderInput}
+                                                    type="number"
+                                                />
+                                            </Table.Cell>
+                                            <Table.Cell>
+                                                <Field
+                                                    name={`${golfhole}.${player.playerName}.penalties`}
+                                                    component={this.renderInput}
+                                                    type="number"
+                                                />
+                                            </Table.Cell>
+
+                                        </Table.Row>
+                                    ))}
+                                    {/* Putts */}
+                                </Table>
+                            </List.Item>
+                        </Segment.Group>
+                    ))}
+                </div>
+            </List>
+        </div>
     )
 
     render() {
-        const { golfclub, golfdate, golfplayers, golfclubdata } = this.props;
+        const { golfplayers, golfclubdata } = this.props;
+        const holes = sortBy(golfclubdata, "number");
         return (
             <div>
                 <Label ribbon size="huge" color="orange">How did it go?</Label>
-                <FieldArray name="golfscores" component={this.renderStrokes} players={golfplayers} />
+                <FieldArray name="golfscores" component={this.renderStrokes} holes={holes} players={golfplayers} />
             </div>
         );
     }
@@ -121,30 +191,22 @@ class StepFour extends Component {
 
 StepFour.propTypes = {
     dispatch: PropTypes.func.isRequired,
-    golfclub: PropTypes.string,
     golfclubdata: PropTypes.arrayOf(PropTypes.object),
     golfplayers: PropTypes.arrayOf(PropTypes.object),
     golfscores: PropTypes.arrayOf(PropTypes.object),
-    golfdate: PropTypes.string,
 }
 
 StepFour.defaultProps = {
-    golfclub: "",
     golfclubdata: [],
     golfplayers: [],
     golfscores: [],
-    golfdate: ""
 }
 
 const selector = formValueSelector('createGolfRound');
 StepFour = connect(state => {
-    const golfclub = selector(state, "golfclub");
-    const golfdate = moment(selector(state, "golfdate")).toLocaleString();
     const golfplayers = selector(state, "golfplayers");
     const golfscores = selector(state, "golfscores");
     return {
-        golfclub,
-        golfdate,
         golfplayers,
         golfscores,
         user: state.user,

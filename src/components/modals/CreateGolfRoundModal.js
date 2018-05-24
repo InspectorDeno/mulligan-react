@@ -3,9 +3,8 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { reduxForm, formValueSelector, submit } from "redux-form";
 import moment from "moment";
-import { Button, Modal, Icon } from "semantic-ui-react";
+import { Button, Modal, Icon, Segment } from "semantic-ui-react";
 import validate from "../CreateGolfRound/validate";
-import RemoteSubmitButton from "../CreateGolfRound/RemoteSubmitButton";
 import StepOne from "../CreateGolfRound/StepOne";
 import StepTwo from "../CreateGolfRound/StepTwo";
 import StepThree from "../CreateGolfRound/StepThree";
@@ -69,12 +68,13 @@ class CreateGolfRoundModal extends Component {
               this.closeConfigShow(true, false);
               this.setState({ open: true });
             }}><Icon name="plus" />
-            Create New Golf Round
+            Add New Golf Round
           </Button>
         }
       >
-        <Modal.Header>Create Golf Round</Modal.Header>
-        <Modal.Content scrolling
+        <Modal.Header>Add New Golf Round</Modal.Header>
+        <Modal.Content
+          scrolling
           style={{ minHeight: "300px" }}
         >
           <Modal.Description>
@@ -123,7 +123,7 @@ class CreateGolfRoundModal extends Component {
             }
           </div>
         </Modal.Actions>
-      </Modal >
+      </Modal>
     );
   }
 }

@@ -45,7 +45,7 @@ class StepOne extends Component {
                         <Field
                             name="golfclub"
                             component={this.renderSelect}
-                            placeholder="Select Golfclub"
+                            placeholder="Select Golf Course"
                             loading={loading}
                             options={golfClubs.map(val => ({
                                 value: val,

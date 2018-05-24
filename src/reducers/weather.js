@@ -5,9 +5,9 @@ import {
 } from "../types";
 
 const initialState = {
-  items: [],
+  items: {},
   loading: false,
-  error: ""
+  errors: ""
 };
 
 export default function weather(state = initialState, action = {}) {
@@ -16,21 +16,21 @@ export default function weather(state = initialState, action = {}) {
       return {
         ...state,
         loading: true,
-        error: ""
+        errors: ""
       };
     case WEATHER_DATA_RETRIEVED:
       return {
         ...state,
         loading: false,
-        items: action.payload.weatherData
+        items: action.payload
         // bättre med action.payload.weatherData tror jag
       };
     case WEATHER_DATA_FAILED:
       return {
         ...state,
         loading: false,
-        error: action.payload.error,
-        items: []
+        errors: action.errors,
+        items: {}
         // för då finns kanske också action.payload.error
       };
     default:

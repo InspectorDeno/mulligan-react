@@ -1,4 +1,4 @@
-// import api from "../api";
+import api from "../api";
 import {
   WEATHER_DATA_REQUESTED,
   WEATHER_DATA_RETRIEVED,
@@ -17,26 +17,16 @@ export const getWeatherSuccess = weatherData => ({
 
 export const getWeatherError = error => ({
   type: WEATHER_DATA_FAILED,
-  payload: error
+  errors: error
 });
 
-// Handle HTTP errors since fetch won't.
-function handleErrors(response) {
-  if (!response.ok) {
-    throw Error(response.statusText);
-  }
-  return response;
-}
 
 export function getWeather() {
   return dispatch => {
     dispatch(getWeatherBegin());
-    return fetch("/api/weather/")
-      .then(handleErrors)
-      .then(res => res.json())
-      .then(json => {
-        dispatch(getWeatherSuccess(json));
-        return json.weatherData;
-      });
+    return api.weather.getCurrent()
+      .then(weatherData =>
+        dispatch(getWeatherSuccess(weatherData)))
+      .catch(err => dispatch(getWeatherError(err.response.data.errors)));
   };
 }

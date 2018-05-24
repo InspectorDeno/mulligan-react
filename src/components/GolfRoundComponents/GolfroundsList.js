@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Loader, Divider, Header } from "semantic-ui-react";
+import { Loader, Header } from "semantic-ui-react";
+import { sortBy } from "underscore";
 import { getScorecards } from "../../actions/users";
-import Scorecard from "./Scorecard"
 import GolfroundObject from './GolfroundObject';
 
 class GolfroundsList extends Component {
@@ -18,17 +18,18 @@ class GolfroundsList extends Component {
 
   render() {
     const { error, scorecardData, loading } = this.props;
+    const rounds = sortBy(scorecardData, "date").reverse();
     return (
       <div style={{ width: "100%" }}>
         <Header as="h1">Golf Rounds</Header>
         {loading ?
           <Loader active indeterminate>Fetching Scorecards... </Loader> :
           <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between" }}>
-            {scorecardData.length > 0
-              ? scorecardData.map(data => (
+            {rounds.length > 0
+              ? rounds.map(data => (
                 <GolfroundObject data={data} error={error} />
               ))
-              : "You haven't added any scorecards yet"}
+              : "You haven't registered any golf rounds yet"}
           </div>
         }
       </div>

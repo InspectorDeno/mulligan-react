@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Segment, Button, Icon, Grid, Transition, Divider } from "semantic-ui-react";
 import PropTypes from 'prop-types';
 import moment from "moment";
-import { setWeatherIcon } from "../mapWeatherToSymbol";
+import setWeatherIcon from "../mapWeatherToSymbol";
 import Scorecard from "./Scorecard"
 
 class GolfroundObject extends Component {

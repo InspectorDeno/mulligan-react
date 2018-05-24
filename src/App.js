@@ -70,13 +70,13 @@ class App extends Component {
           exact
           component={ResetPasswordPage}
         />
+        <UserRoute
+          location={location}
+          path="/dashboard"
+          exact
+          component={DashboardPage}
+        />
         <div className="ui container" style={{ height: "100%" }}>
-          <UserRoute
-            location={location}
-            path="/dashboard"
-            exact
-            component={DashboardPage}
-          />
           <UserRoute
             location={location}
             path="/settings"
