@@ -47,11 +47,10 @@ class GolfRoundsPage extends PureComponent {
 
   render() {
     return (
-      <div style={{ paddingBottom: "100px" }}>
+      <div>
         <this.PageHeader />
         <Container>
           <div style={{ textAlign: "center" }}>
-            <Divider hidden />
             <CreateGolfRoundModal onSubmit={this.submit} />
             <Divider hidden />
           </div>

@@ -42,37 +42,16 @@ const RenderNinePoints = ({ player, start, data }) => {
 };
 
 const RenderPointsSum = ({ player, data }) => {
-  const hcp = player.playerHcp;
-  const maxExtraStrokes = Math.ceil(hcp / 18);
-  let extraStrokes = 0;
-  let sumPoints = 0;
-
-  _.times(data.golfholes.length, i => {
-    const index = find(data.golfholes, { number: 1 + i }).index;
-    const par = find(data.golfholes, { number: 1 + i }).par;
-    const score = Number(
-      reduce(
-        pick(findWhere(data.scores, { hole: 1 + i }), `${player.playerName}`),
-        "score"
-      ).score
-    );
-
-    if (index <= hcp % 18) {
-      extraStrokes = maxExtraStrokes;
-    } else {
-      extraStrokes = maxExtraStrokes - 1;
-    }
-    const point = par + extraStrokes - score + 2;
-    sumPoints += point;
-  });
+  const netScore = findWhere(data.stats, { player: `${player.playerName}` }).scores
+    .netScore;
   return (
     <Table.Cell
       style={{ background: "grey", color: "white", fontSize: "15px" }}
     >
-      {sumPoints}
+      {netScore}
     </Table.Cell>
   );
-};
+}
 
 const RenderNineHoles = ({ start }) => {
   let numbers = _.times(9, i => (
@@ -285,7 +264,6 @@ const Scorecard = ({ data }) => (
       {/* Hole numbers */}
       <Table.Row style={{ background: "grey", color: "white" }}>
         <Table.HeaderCell>Hole</Table.HeaderCell>
-        {/* TODO: Check for inner / outer */}
         <RenderNineHoles start={1} />
         <RenderNineHoles start={10} />
         <Table.HeaderCell style={{ background: "grey" }} width={1}>
@@ -329,13 +307,23 @@ const Scorecard = ({ data }) => (
       <Table.Body>
         <Table.Row>
           <Table.HeaderCell
-            colSpan={data.golfholes.length === 18 ? 22 : 12}
-            style={{ background: "lightblue", textAlign: "left" }}
+            colSpan={4}
+            style={{ background: "lightblue", textAlign: "left", border: "none" }}
           >
             <Icon name="user" />
             {player.playerName}
-            , Hcp:
-            {player.playerHcp}
+          </Table.HeaderCell>
+          <Table.HeaderCell
+            colSpan={5}
+            style={{ background: "lightblue", textAlign: "left", border: "none" }}
+          >
+            Hcp Round: {player.hcpRound ? "Yes" : "No"}
+          </Table.HeaderCell>
+          <Table.HeaderCell
+            colSpan={data.golfholes.length === 18 ? 13 : 3}
+            style={{ background: "lightblue", textAlign: "left", border: "none" }}
+          >
+            Hcp: {player.playerHcp}
           </Table.HeaderCell>
         </Table.Row>
         {/* Player score */}
@@ -354,7 +342,7 @@ const Scorecard = ({ data }) => (
         </Table.Row>
         {/* Player +/- Par */}
         <Table.Row>
-          <Table.HeaderCell>+/- Par</Table.HeaderCell>
+          <Table.HeaderCell style={{ padding: 0 }}>+/- Par</Table.HeaderCell>
           <RenderPlusMinus start={1} player={player} data={data} />
         </Table.Row>
       </Table.Body>

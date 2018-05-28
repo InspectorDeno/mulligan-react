@@ -30,7 +30,7 @@ const RoundStats = ({ data }) => (
                                 <b>Net Score</b>
                             </Grid.Column>
                             <Grid.Column>
-                                {stats.scores.grossScore}
+                                {stats.scores.netScore}
                             </Grid.Column>
                             <Grid.Column>
                                 <b>Penalties</b>

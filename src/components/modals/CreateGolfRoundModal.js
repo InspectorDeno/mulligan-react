@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { reduxForm, formValueSelector, submit, arrayPush } from "redux-form";
+import { reduxForm, formValueSelector, arrayPush } from "redux-form";
 import moment from "moment";
-import { reduce, find, pick } from "underscore";
+import _ from "lodash";
+import { reduce, find, pick, findWhere } from "underscore";
 import { Button, Modal, Icon, Loader, Dimmer } from "semantic-ui-react";
 import validate from "../CreateGolfRound/validate";
 import StepOne from "../CreateGolfRound/StepOne";
@@ -39,12 +40,40 @@ class CreateGolfRoundModal extends Component {
     this.props.dispatch(getScorecards());
   };
 
+  calculatePoints = (player, holes, scores) => {
+    const hcp = player.playerHcp;
+    const maxExtraStrokes = Math.ceil(hcp / 18);
+    let extraStrokes = 0;
+    let sumPoints = 0;
+
+    _.times(holes.length, i => {
+      const index = find(holes, { number: 1 + i }).index;
+      const par = find(holes, { number: 1 + i }).par;
+      const score = Number(
+        reduce(
+          pick(findWhere(scores, { hole: 1 + i }), `${player.playerName}`),
+          "score"
+        ).score
+      );
+
+      if (index <= hcp % 18) {
+        extraStrokes = maxExtraStrokes;
+      } else {
+        extraStrokes = maxExtraStrokes - 1;
+      }
+      const point = par + extraStrokes - score + 2;
+      sumPoints += point;
+    });
+    return (sumPoints);
+  }
+
   calculateStats = () => {
     const { golfplayers, golfscores, golfholes, handleSubmit } = this.props;
 
     golfplayers.forEach(player => {
       let played = 0;
       let grossScore = 0;
+      let netScore = 0;
       let putts = 0;
       let penalties = 0;
       let fir = 0;
@@ -63,6 +92,7 @@ class CreateGolfRoundModal extends Component {
       let par4score = 0;
       let par5score = 0;
 
+      netScore = this.calculatePoints(player, golfholes, golfscores);
       golfscores.forEach(hole => {
         const scoreObject = reduce(pick(hole, player.playerName), "score");
         const par = find(golfholes, { number: hole.hole }).par;
@@ -118,6 +148,7 @@ class CreateGolfRoundModal extends Component {
           player: `${player.playerName}`,
           scores: {
             grossScore,
+            netScore,
             putts,
             penalties
           },

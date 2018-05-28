@@ -29,7 +29,7 @@ class GolfroundObject extends Component {
                                 <div>
                                     {player.player === user.username &&
                                         <Segment circular inverted color="yellow" style={{ width: "45px", height: "45px", padding: 0, fontSize: "20px" }}>
-                                            {player.scores.grossScore}
+                                            {player.scores.netScore}
                                         </Segment>
                                     }
                                 </div>
@@ -44,11 +44,14 @@ class GolfroundObject extends Component {
                             </div>
                         </div>
                         <div style={{ display: "flex", flexDirection: "column", fontSize: "14px", margin: "12px 0 0 24px" }}>
-                            {data.stats.map(player => (
-                                <div style={{ display: "list-item", marginRight: "30px" }}>
-                                    {player.player}
-                                </div>
-                            ))}
+                            <div>
+                                {data.players.map(player => (
+                                    <div style={{ display: "list-item", marginRight: "40px" }}>
+                                        {player.playerName}
+                                        <div style={{ float: "right" }}>{player.playerHcp}</div>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                     </div>
                     <div style={{ display: "flex", flexDirection: "column", textAlign: "center", margin: "20px 15px" }}>
