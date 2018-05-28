@@ -13,26 +13,34 @@ class GolfRoundsPage extends PureComponent {
   };
   PageHeader = () => (
     <div style={{ marginBottom: "30px" }}>
-      <img src={header} alt="logo" style={{ width: "100%", boxShadow: "0 0 11px 0" }} />
-      {/* <div style={{ position: "relative", left: 0 }}>Hej</div> */}
-      <Segment compact style={{
-        marginTop: "-60px",
-        border: "none",
-        textAlign: "center",
-        background: "rgb(255,255,255)",
-        marginLeft: "50px",
-        boxShadow: "none",
-        borderRadius: "20px"
-      }}>
-        <Header style={{
-          fontSize: "4em",
-          fontWeight: "normal",
-          padding: "20px",
-          fontFamily: "Ananda",
-          color: "#1e002d"
-        }}>
+      <img
+        src={header}
+        alt="logo"
+        style={{ width: "100%", boxShadow: "0 0 11px 0" }}
+      />
+      <Segment
+        compact
+        style={{
+          marginTop: "-60px",
+          border: "none",
+          textAlign: "center",
+          background: "rgb(255,255,255)",
+          marginLeft: "50px",
+          boxShadow: "none",
+          borderRadius: "20px"
+        }}
+      >
+        <Header
+          style={{
+            fontSize: "4em",
+            fontWeight: "normal",
+            padding: "20px",
+            fontFamily: "Ananda",
+            color: "#1e002d"
+          }}
+        >
           Golf Rounds
-       </Header>
+        </Header>
       </Segment>
     </div>
   );
