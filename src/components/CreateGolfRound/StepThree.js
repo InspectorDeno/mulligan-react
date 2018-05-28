@@ -19,6 +19,10 @@ const genderOptions = [
     { key: "male", value: "male", text: "Male" },
     { key: "female", value: "female", text: "Female" },
 ];
+const hcpRoundOptions = [
+    { key: "yes", value: true, text: "Yes" },
+    { key: "no", value: false, text: "No" },
+];
 
 class StepThree extends Component {
     constructor(props) {
@@ -45,7 +49,8 @@ class StepThree extends Component {
                 playerName: theFriend.username,
                 playerHcp: theFriend.hcp,
                 playerGender: theFriend.gender,
-                playerTee: theFriend.gender === "male" ? "Yellow" : "Red"
+                playerTee: theFriend.gender === "male" ? "Yellow" : "Red",
+                hcpRound: false
             }
             friendPlayers.push(player);
 
@@ -54,8 +59,7 @@ class StepThree extends Component {
                 fields.push(player);
             }
         });
-        this.setState({ values: data.value });
-        this.setState({ players: friendPlayers });
+        this.setState({ values: data.value, players: friendPlayers });
     }
 
     // For determining whether to update the friends dropdown when a player is removed
@@ -82,30 +86,29 @@ class StepThree extends Component {
                     style={{ width: "100%" }} />
             </div>
         </div>
-    );
+    )
 
-    renderSelect = field => (
+    renderSelect = ({ input, label, options, meta, index }) => (
         <div>
-            <label htmlFor={field.input.name}><b>{field.label}</b></label>
-            {field.meta.touched && field.meta.error && <InlineError text={field.meta.error} />}
+            <label htmlFor={input.name}><b>{label}</b></label>
+            {meta.touched && meta.error && <InlineError text={meta.error} />}
             <div>
                 <Dropdown
-                    {...field.input}
+                    {...input}
                     fluid
                     floating
                     selection
-                    placeholder={field.label}
-                    options={field.options}
-                    loading={field.loading}
-                    disabled={field.index === 0}
+                    disabled={index === 0}
+                    placeholder={label}
+                    options={options}
                     onChange={(e, { value }) => {
                         e.preventDefault();
-                        field.input.onChange(value);
+                        input.onChange(value);
                     }}
                 />
             </div>
         </div>
-    );
+    )
 
     // Friends Select Dropdown
     renderFriendsSelect = ({ input, label, options, loading }) => {
@@ -158,7 +161,9 @@ class StepThree extends Component {
                         size="large"
                         labelPosition="left"
                         type="button"
-                        onClick={() => { fields.push({}) }}
+                        onClick={() => {
+                            fields.push({})
+                        }}
                         style={{ marginLeft: "10px" }}
                     ><Icon name="plus" /
                         >Add New Player
@@ -216,6 +221,12 @@ class StepThree extends Component {
                                 component={this.renderSelect}
                                 options={golfTeesOptions}
                                 label="Tee"
+                            />
+                            <Field
+                                name={`${player}.hcpRound`}
+                                component={this.renderSelect}
+                                options={hcpRoundOptions}
+                                label="Handicap Round?"
                             />
                         </List.Item>
                     </Segment>

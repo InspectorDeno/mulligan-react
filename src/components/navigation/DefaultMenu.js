@@ -17,9 +17,6 @@ const DefaultMenu = () => (
       <Menu.Item header name="Home" as={Link} to="/dashboard">
         Mulligan
       </Menu.Item>
-      <Menu.Item name="Golfkarta" as={Link} to="/dashboard">
-        Home
-      </Menu.Item>
       <Menu.Item name="Spela golf" as={Link} to="/dashboard">
         About us
       </Menu.Item>

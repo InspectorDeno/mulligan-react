@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Field, FieldArray, formValueSelector, arrayPush } from "redux-form";
-import { Segment, List, Table, Form, Label, Grid, Dropdown, Sticky, Rail } from 'semantic-ui-react';
+import { Segment, List, Table, Form, Label, Grid, Dropdown } from 'semantic-ui-react';
 import { sortBy } from "underscore";
 import InlineError from "../messages/InlineError"
 
@@ -132,7 +132,6 @@ class StepFour extends Component {
                                                     type="number"
                                                     component={this.renderInput}
                                                     error={meta.error && meta.error[index] && meta.error[index].length && meta.error[index]}
-                                                    onChange
                                                 />
                                             </Table.Cell>
                                             <Table.Cell>

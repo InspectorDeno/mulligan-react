@@ -17,30 +17,41 @@ class SettingsPage extends Component {
   };
 
   PageHeader = () => (
-    <Segment
-      vertical
-      textAlign="center"
-      style={{
-        minHeight: 200,
-        padding: "1em 0em ",
-        background:
-          "linear-gradient(154deg, #1e002d, #1e002d,#1e002d, #b5cc18)",
-        border: "none",
-        marginBottom: "4em"
-      }}
-    >
-      <Header
-        inverted
+    <div>
+      <Segment
+        vertical
+        textAlign="center"
         style={{
+          minHeight: 250,
+          padding: "1em 0em ",
+          background:
+            "linear-gradient(154deg, #1e002d, #1e002d, darkslategray)",
+          border: "none",
+          boxShadow: "0 0 11px 0"
+        }}
+      />
+      <Segment compact style={{
+        marginTop: "-60px",
+        border: "none",
+        textAlign: "center",
+        background: "rgb(255,255,255)",
+        marginLeft: "50px",
+        boxShadow: "none",
+        borderRadius: "20px"
+      }}>
+        <Header style={{
           fontSize: "4em",
           fontWeight: "normal",
-          marginTop: "1em"
-        }}
-      >
-        Settings
-      </Header>
-    </Segment>
+          padding: "20px",
+          fontFamily: "Ananda",
+          color: "#1e002d"
+        }}>
+          Account
+     </Header>
+      </Segment>
+    </div>
   );
+
   render() {
     return (
       <div>

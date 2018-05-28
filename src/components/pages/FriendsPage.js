@@ -15,7 +15,7 @@ import FindUserForm from "../forms/FindUserForm";
 import FriendList from "../FriendComponent/FriendList";
 import { addFriend } from "../../actions/friends";
 import { findUser } from "../../actions/users";
-import img from "../../assets/images/golf-friends.JPG";
+import header from "../../assets/images/golf-friends.JPG";
 
 // if pending friend request load pending cards
 // if friends, load friend cards
@@ -31,31 +31,28 @@ class FriendsPage extends Component {
   submit = data => this.props.findUser(data);
 
   PageHeader = () => (
-    <div>
-      {/* <Segment
-        vertical
-        textAlign="center"
-        style={{
-          minHeight: 200,
-          padding: "1em 0em ",
-          border: "none",
-          marginBottom: "4em"
-        }}
-      >
-      <Divider />
-    </Segment> */}
-      <img src={img} alt="logo" style={{ width: "100%" }} />
-      {/* <Header
-        as="img"
-        src={img}
-        alt="header"
-        style={{
+    <div style={{ marginBottom: "30px" }}>
+      <img src={header} alt="logo" style={{ width: "100%", boxShadow: "0 0 11px 0" }} />
+      {/* <div style={{ position: "relative", left: 0 }}>Hej</div> */}
+      <Segment compact style={{
+        marginTop: "-60px",
+        border: "none",
+        textAlign: "center",
+        background: "rgb(255,255,255)",
+        marginLeft: "50px",
+        boxShadow: "none",
+        borderRadius: "20px"
+      }}>
+        <Header style={{
           fontSize: "4em",
-          fontWeight: "normal"
-        }}
-      >
-        Friends
-      </Header> */}
+          fontWeight: "normal",
+          padding: "20px",
+          fontFamily: "Ananda",
+          color: "#1e002d"
+        }}>
+          Friends
+       </Header>
+      </Segment>
     </div>
   );
 

@@ -1,10 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Segment, Grid, Table, Icon } from "semantic-ui-react";
+import { Table, Icon } from "semantic-ui-react";
 import _ from "lodash";
-import moment from "moment";
 import { find, findWhere, pick, reduce } from "underscore";
-import { setWeatherIcon } from "../mapWeatherToSymbol";
 
 const RenderNineHoles = ({ start }) => {
     let numbers = _.times(9, i => (
@@ -60,19 +58,15 @@ const RenderNineScores = ({ start, player, data }) => {
             color = "gray"
         }
         return (
-            <Table.Cell key={i} style={{ background: color, borderTop: "2px solid white", borderBottom: "2px solid white" }}>{score}</Table.Cell>
+            <Table.Cell key={i} style={{ background: color, borderTop: "3px solid white", borderBottom: "3px solid white" }}>{score}</Table.Cell>
         )
     })
     return scores.concat(<Table.Cell style={{ background: "darkgrey", color: "white", fontSize: "15px" }}>{sum}</Table.Cell>);
 }
 
 const RenderScoreSum = ({ player, data }) => {
-    let sum = 0;
-    _.times(data.scores.length, i => {
-        const score = Number(reduce(pick(findWhere(data.scores, { hole: i + 1 }), `${player.playerName}`), "score").score);
-        sum += score;
-    });
-    return <Table.Cell style={{ background: "grey", color: "white", fontSize: "15px" }}>{sum}</Table.Cell>
+    const score = findWhere(data.stats, { player: `${player.playerName}` }).scores.grossScore;
+    return <Table.Cell style={{ background: "grey", color: "white", fontSize: "15px" }}>{score}</Table.Cell>
 }
 
 const RenderPlusMinus = ({ start, player, data }) => {
@@ -107,8 +101,8 @@ const RenderPlusMinus = ({ start, player, data }) => {
     return plusminus.concat(<Table.Cell style={{ background: "grey", color: "white", fontSize: "15px" }}>{diff > 0 && "+"}{diff}</Table.Cell>)
 }
 
-const Scorecard = ({ data, error }) => (
-    <Table celled size="small" compact collapsing stackable textAlign="center">
+const Scorecard = ({ data }) => (
+    <Table celled size="small" compact collapsing unstackable textAlign="center" style={{ margin: "10px" }}>
         <Table.Body>
             {/* Hole numbers */}
             <Table.Row style={{ background: "grey", color: "white" }}>

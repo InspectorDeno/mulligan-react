@@ -68,7 +68,7 @@ class ChangeHcpForm extends Component {
               value={data.hcp}
               icon="wheelchair"
               iconPosition="right"
-              placeholder="New Hcp"
+              placeholder="Enter Hcp"
               onChange={this.onChange}
             />
           </Form.Field>
@@ -82,10 +82,10 @@ class ChangeHcpForm extends Component {
               </div>
             </Message>
           ) : (
-            <Button onClick={this.onSubmit} color="olive">
-              Set Hcp
+              <Button onClick={this.onSubmit} color="orange">
+                Set Hcp
             </Button>
-          )}
+            )}
         </div>
       </div>
     );

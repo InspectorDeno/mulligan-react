@@ -1,11 +1,10 @@
 import React, { Component } from "react";
-import { Segment } from "semantic-ui-react";
+import { Segment, Header, Container } from "semantic-ui-react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { getGolfClub } from "../../actions/golfclubs";
+import header from "../../assets/images/titleist.png";
 
-// if pending friend request load pending cards
-// if friends, load friend cards
 
 class GolfClubsPage extends Component {
   constructor(props) {
@@ -23,15 +22,45 @@ class GolfClubsPage extends Component {
       .then(res => this.setState({ golfClubData: res.golfClubData }));
   }
 
+  PageHeader = () => (
+    <div style={{ marginBottom: "30px" }}>
+      <img src={header} alt="logo" style={{ width: "100%", boxShadow: "0 0 11px 0" }} />
+      <Segment compact style={{
+        marginTop: "-60px",
+        border: "none",
+        textAlign: "center",
+        background: "rgb(255,255,255)",
+        marginLeft: "40px",
+        boxShadow: "none",
+        borderRadius: "20px"
+      }}>
+        <Header style={{
+          fontSize: "4em",
+          fontWeight: "normal",
+          padding: "20px",
+          fontFamily: "Ananda",
+          color: "#1e002d"
+        }}>
+          Golf Clubs
+     </Header>
+      </Segment>
+    </div>
+  );
+
   render() {
     const { error, golfClubData } = this.props;
 
     return (
-      <Segment>
-        <div>Finding Linköpings Golfklubb</div>
-        <span>{error}</span>
-        <span>{golfClubData.length > 0 && golfClubData[0].club}</span>
-      </Segment>
+      <div>
+        <this.PageHeader />
+        <Container>
+          <Segment>
+            <div>Finding Linköpings Golfklubb</div>
+            <span>{error}</span>
+            <span>{golfClubData.length > 0 && golfClubData[0].club}</span>
+          </Segment>
+        </Container>
+      </div>
     );
   }
 }

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Message, Icon } from "semantic-ui-react";
+import { Message, Icon, Segment, Container, Header } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { confirm } from "../../actions/auth";
@@ -18,38 +18,77 @@ class ConfirmationPage extends Component {
       .catch(() => this.setState({ loading: false, success: false }));
   }
 
+  PageHeader = () => (
+    <div>
+      <Segment
+        vertical
+        textAlign="center"
+        style={{
+          minHeight: 250,
+          padding: "1em 0em ",
+          background:
+            "linear-gradient(154deg, #1e002d, #1e002d, darkslategray)",
+          border: "none",
+          boxShadow: "0 0 11px 0"
+        }}
+      />
+      <Segment compact style={{
+        marginTop: "-60px",
+        border: "none",
+        textAlign: "center",
+        background: "rgb(255,255,255)",
+        marginLeft: "50px",
+        boxShadow: "none",
+        borderRadius: "20px"
+      }}>
+        <Header style={{
+          fontSize: "4em",
+          fontWeight: "normal",
+          padding: "20px",
+          fontFamily: "Ananda",
+          color: "#1e002d"
+        }}>
+          Confirm
+     </Header>
+      </Segment>
+    </div>
+  );
+
   render() {
     const { loading, success } = this.state;
 
     return (
       <div>
-        {loading && (
-          <Message icon>
-            <Icon name="circle notched" loading />
-            <Message.Header>Validating your email</Message.Header>
-          </Message>
-        )}
-        {!loading &&
-          success && (
-            <Message success icon>
-              <Icon name="checkmark" />
-              <Message.Content>
-                <Message.Header>
-                  Thank you. Your account has been verified
+        <this.PageHeader />
+        <Container>
+          {loading && (
+            <Message icon>
+              <Icon name="circle notched" loading />
+              <Message.Header>Validating your email</Message.Header>
+            </Message>
+          )}
+          {!loading &&
+            success && (
+              <Message success icon>
+                <Icon name="checkmark" />
+                <Message.Content>
+                  <Message.Header>
+                    Thank you. Your account has been verified
                 </Message.Header>
-                <Link to="/dashboard">Go to your dashboard</Link>
-              </Message.Content>
-            </Message>
-          )}
-        {!loading &&
-          !success && (
-            <Message negative icon>
-              <Icon name="warning sign" />
-              <Message.Content>
-                <Message.Header>Oops. Invalid token</Message.Header>
-              </Message.Content>
-            </Message>
-          )}
+                  <Link to="/dashboard">Go to your dashboard</Link>
+                </Message.Content>
+              </Message>
+            )}
+          {!loading &&
+            !success && (
+              <Message negative icon>
+                <Icon name="warning sign" />
+                <Message.Content>
+                  <Message.Header>Oops... Your token is invalid</Message.Header>
+                </Message.Content>
+              </Message>
+            )}
+        </Container>
       </div>
     );
   }

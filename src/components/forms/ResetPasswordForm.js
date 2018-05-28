@@ -101,10 +101,10 @@ class ForgotPasswordForm extends Component {
               </div>
             </Message>
           ) : (
-            <Button onClick={this.onSubmit} color="olive">
-              Change Password
+              <Button onClick={this.onSubmit} color="orange">
+                Change Password
             </Button>
-          )}
+            )}
         </div>
       </div>
     );

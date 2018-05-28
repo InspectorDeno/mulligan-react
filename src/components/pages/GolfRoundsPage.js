@@ -5,39 +5,41 @@ import { Divider, Segment, Header, Container } from "semantic-ui-react";
 import CreateGolfRoundModal from "../modals/CreateGolfRoundModal";
 import { addScorecard } from "../../actions/users";
 import GolfroundsList from "../GolfRoundComponents/GolfroundsList";
+import header from "../../assets/images/titleist.png";
 
 class GolfRoundsPage extends PureComponent {
   submit = data => {
     this.props.dispatch(addScorecard(data));
   };
   PageHeader = () => (
-    <Segment
-      vertical
-      textAlign="center"
-      style={{
-        minHeight: 200,
-        padding: "1em 0em ",
-        background:
-          "linear-gradient(154deg, #1e002d, #1e002d,#1e002d, #b5cc18)",
+    <div style={{ marginBottom: "30px" }}>
+      <img src={header} alt="logo" style={{ width: "100%", boxShadow: "0 0 11px 0" }} />
+      {/* <div style={{ position: "relative", left: 0 }}>Hej</div> */}
+      <Segment compact style={{
+        marginTop: "-60px",
         border: "none",
-        marginBottom: "4em"
-      }}
-    >
-      <Header
-        inverted
-        style={{
+        textAlign: "center",
+        background: "rgb(255,255,255)",
+        marginLeft: "50px",
+        boxShadow: "none",
+        borderRadius: "20px"
+      }}>
+        <Header style={{
           fontSize: "4em",
           fontWeight: "normal",
-          marginTop: "1em"
-        }}
-      >
-        Golf Rounds
-      </Header>
-    </Segment>
+          padding: "20px",
+          fontFamily: "Ananda",
+          color: "#1e002d"
+        }}>
+          Golf Rounds
+       </Header>
+      </Segment>
+    </div>
   );
+
   render() {
     return (
-      <div>
+      <div style={{ paddingBottom: "100px" }}>
         <this.PageHeader />
         <Container>
           <div style={{ textAlign: "center" }}>

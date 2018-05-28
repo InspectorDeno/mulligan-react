@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Header, Container, Image, Segment } from "semantic-ui-react";
+import { Header, Container, Segment } from "semantic-ui-react";
 import GetWeather from "../GetWeather";
 import CompleteSignupModal from "../modals/CompleteSignupModal";
+import header from "../../assets/images/titleist.png";
+
 
 class DashboardPage extends Component {
   constructor(props) {
@@ -12,33 +14,27 @@ class DashboardPage extends Component {
   }
 
   PageHeader = () => (
-    <Segment
-      vertical
-      textAlign="center"
-      style={{
-        minHeight: 200,
-        padding: "1em 0em ",
-        background:
-          "linear-gradient(154deg, #1e002d, #1e002d,#1e002d, #b5cc18)",
+    <div style={{ marginBottom: "50px" }}>
+      <img src={header} alt="logo" style={{ width: "100%" }} />
+      {/* <div style={{ position: "relative", left: 0 }}>Hej</div> */}
+      <Segment compact style={{
+        marginTop: "-200px",
         border: "none",
-        marginBottom: "4em"
-      }}
-    >
-      <Header
-        inverted
-        style={{
+        textAlign: "center",
+        background: "rgb(255,255,255,0.7)",
+        marginBottom: "180px"
+      }}>
+        <Header style={{
           fontSize: "4em",
           fontWeight: "normal",
-          marginTop: "1em"
-        }}
-      >
-        <Header.Content>
-          Mulligan
-          <Header.Subheader>Home</Header.Subheader>
-        </Header.Content>
-      </Header>
-    </Segment>
+          padding: "0 10px 0 50px"
+        }}>
+          Home
+       </Header>
+      </Segment>
+    </div>
   );
+
   render() {
     const { user } = this.props;
     return (

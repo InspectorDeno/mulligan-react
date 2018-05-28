@@ -20,8 +20,7 @@ class GolfroundsList extends Component {
     const { error, scorecardData, loading } = this.props;
     const rounds = sortBy(scorecardData, "date").reverse();
     return (
-      <div style={{ width: "100%" }}>
-        <Header as="h1">Golf Rounds</Header>
+      <div style={{ width: "100%", marginTop: "40px" }}>
         {loading ?
           <Loader active indeterminate>Fetching Scorecards... </Loader> :
           <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between" }}>

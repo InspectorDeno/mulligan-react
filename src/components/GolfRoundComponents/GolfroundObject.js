@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { Segment, Button, Icon, Grid, Transition, Divider } from "semantic-ui-react";
+import { Segment, Button, Icon, Transition, Divider } from "semantic-ui-react";
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import moment from "moment";
 import setWeatherIcon from "../mapWeatherToSymbol";
-import Scorecard from "./Scorecard"
+import Scorecard from "./Scorecard";
+import RoundStats from "./RoundStats"
 
 class GolfroundObject extends Component {
     state = {
@@ -13,21 +15,43 @@ class GolfroundObject extends Component {
 
     render() {
         const { visible } = this.state;
-        const { data, error } = this.props;
+        const { data, error, user } = this.props;
         const weatherIcon = setWeatherIcon(data.weather);
-        const date = moment(data.date).format("dddd, DD-MMMM-YYYY")
-        const time = moment(data.date).format("HH:mm")
+        const date = moment(data.date).format("dddd DD-MMMM, HH:mm")
 
         return (
 
             <Segment secondary raised compact style={{ margin: "0 20px 20px 0" }}>
                 <div style={{ display: "flex", justifyContent: "space-between" }}>
-                    <div>
-                        {date}<br />
-                        {data.golfclub}<br />
-                        {time}
+                    <div style={{ display: "flex", flexDirection: "column" }}>
+                        <div style={{ display: "flex" }}>
+                            {data.stats.map(player => (
+                                <div>
+                                    {player.player === user.username &&
+                                        <Segment circular inverted color="yellow" style={{ width: "45px", height: "45px", padding: 0, fontSize: "20px" }}>
+                                            {player.scores.grossScore}
+                                        </Segment>
+                                    }
+                                </div>
+                            ))}
+                            <div style={{ display: "flex", flexDirection: "column", fontSize: "14px" }}>
+                                <div style={{ margin: "5px 0 0 10px" }}>
+                                    <b>{date}</b>
+                                </div>
+                                <div style={{ margin: "5px 0 0 10px" }}>
+                                    {data.golfclub}
+                                </div>
+                            </div>
+                        </div>
+                        <div style={{ display: "flex", flexDirection: "column", fontSize: "14px", margin: "12px 0 0 24px" }}>
+                            {data.stats.map(player => (
+                                <div style={{ display: "list-item", marginRight: "30px" }}>
+                                    {player.player}
+                                </div>
+                            ))}
+                        </div>
                     </div>
-                    <div style={{ display: "flex", flexDirection: "column", textAlign: "center", marginRight: "12px" }}>
+                    <div style={{ display: "flex", flexDirection: "column", textAlign: "center", margin: "20px 15px" }}>
                         <div
                             className={error ? "wi wi-refresh" : weatherIcon}
                             style={{
@@ -58,7 +82,7 @@ class GolfroundObject extends Component {
                             color="green"
                             onClick={this.toggleScorecardVisibility}
                         ><Icon name="arrow down" />
-                            Show scorecard
+                            Scorecard and Round Stats
                                     </Button>
                     }
                 </div>
@@ -67,14 +91,21 @@ class GolfroundObject extends Component {
                     {visible && (
                         <div>
                             <Divider hidden />
-                            <Scorecard data={data} error={error} />
+                            <Scorecard data={data} />
+                            <RoundStats data={data.stats} />
                         </div>
                     )
                     }
                 </Transition.Group>
-            </Segment>
+            </Segment >
 
         )
+    }
+}
+
+function mapStateToProps(state) {
+    return {
+        user: state.user
     }
 }
 
@@ -82,4 +113,4 @@ GolfroundObject.propTypes = {
 
 };
 
-export default GolfroundObject;
+export default connect(mapStateToProps)(GolfroundObject);

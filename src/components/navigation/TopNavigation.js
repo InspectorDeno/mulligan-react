@@ -60,6 +60,9 @@ const TopNavigation = ({ user, logout }) => (
             </Dropdown.Menu>
           </Dropdown>
         </Menu.Menu>
+        <Menu.Item>
+          HCP: {user.hcp.value}
+        </Menu.Item>
       </Container>
     </Menu>
     {!user.confirmed && <div style={{ height: "58px" }} />}
