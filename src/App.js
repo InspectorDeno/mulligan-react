@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Route } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 
 import TopNavigation from "./components/navigation/TopNavigation";
 import DefaultMenu from "./components/navigation/DefaultMenu";
@@ -17,10 +17,11 @@ import DashboardPage from "./components/pages/DashboardPage";
 import GolfRoundsPage from "./components/pages/GolfRoundsPage";
 import GolfClubsPage from "./components/pages/GolfClubsPage";
 import SettingsPage from "./components/pages/SettingsPage";
+import FriendsPage from "./components/pages/FriendsPage";
+import ErrorPage from "./components/pages/ErrorPage";
 
 import GuestRoute from "./components/routes/GuestRoute";
 import UserRoute from "./components/routes/UserRoute";
-import FriendsPage from "./components/pages/FriendsPage";
 
 class App extends Component {
   constructor() {
@@ -34,68 +35,72 @@ class App extends Component {
       <div>
         <div style={{ minHeight: "56em" }}>
           {isAuthenticated ? <TopNavigation /> : <DefaultMenu />}
-          <Route location={location} path="/" exact component={HomePage} />
-          <Route
-            location={location}
-            path="/confirmation/:token"
-            exact
-            component={ConfirmationPage}
-          />
-          <GuestRoute
-            location={location}
-            path="/login"
-            exact
-            component={LoginPage}
-          />
-
-          <GuestRoute
-            location={location}
-            path="/signup"
-            exact
-            component={SignupPage}
-          />
-          <GuestRoute
-            location={location}
-            path="/forgot_password"
-            exact
-            component={ForgotPasswordPage}
-          />
-          <GuestRoute
-            location={location}
-            path="/reset_password/:token"
-            exact
-            component={ResetPasswordPage}
-          />
-          <UserRoute
-            location={location}
-            path="/dashboard"
-            exact
-            component={DashboardPage}
-          />
-          <UserRoute
-            location={location}
-            path="/settings"
-            exact
-            component={SettingsPage}
-          />
-          <UserRoute
-            location={location}
-            path="/my-rounds"
-            exact
-            component={GolfRoundsPage}
-          />
-          <UserRoute
-            location={location}
-            path="/friends"
-            exact
-            component={FriendsPage}
-          />
-          <UserRoute
-            location={location}
-            path="/golfclubs"
-            exact
-            component={GolfClubsPage}
-          />
+          <Switch>
+            <Route location={location} path="/" exact component={HomePage} />
+            <Route
+              location={location}
+              exact
+              path="/confirmation/:token"
+              component={ConfirmationPage}
+            />
+            <GuestRoute
+              location={location}
+              exact
+              path="/login"
+              component={LoginPage}
+            />
+            <GuestRoute
+              location={location}
+              exact
+              path="/signup"
+              component={SignupPage}
+            />
+            <GuestRoute
+              location={location}
+              exact
+              path="/forgot_password"
+              component={ForgotPasswordPage}
+            />
+            <GuestRoute
+              location={location}
+              exact
+              path="/reset_password/:token"
+              component={ResetPasswordPage}
+            />
+            <UserRoute
+              location={location}
+              exact
+              path="/dashboard"
+              component={DashboardPage}
+            />
+            <UserRoute
+              location={location}
+              exact
+              path="/settings"
+              component={SettingsPage}
+            />
+            <UserRoute
+              location={location}
+              exact
+              path="/my-rounds"
+              component={GolfRoundsPage}
+            />
+            <UserRoute
+              location={location}
+              exact
+              path="/friends"
+              component={FriendsPage}
+            />
+            <UserRoute
+              location={location}
+              exact
+              path="/golfclubs"
+              component={GolfClubsPage}
+            />
+            <Route
+              component={ErrorPage}
+            />
+          </Switch>
         </div>
         <Footer />
       </div>

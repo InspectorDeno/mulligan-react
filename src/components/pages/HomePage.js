@@ -60,7 +60,7 @@ class HomePage extends Component {
       <div>
         <HomePageHeader />
         <Grid>
-          <Grid.Column width={9} style={{ padding: "100px 100px 0 100px" }}>
+          <Grid.Column width={8} style={{ padding: "100px 100px 0 100px" }}>
             <Header style={{ fontSize: "3em" }}>
               {"What is Mulligan?"}
             </Header>
@@ -86,7 +86,7 @@ class HomePage extends Component {
               </div>
             </Segment>
           </Grid.Column>
-          <Grid.Column width={7}>
+          <Grid.Column width={8}>
             <img src={friends} alt="logo" style={{ width: "100%", zIndex: "-1" }} />
           </Grid.Column>
         </Grid>

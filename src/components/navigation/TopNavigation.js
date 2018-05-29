@@ -38,10 +38,9 @@ const TopNavigation = ({ user, logout }) => (
           Find Friends
         </Menu.Item>
 
-        <Menu.Menu position="right">
+        <Menu.Menu position="right" >
           <Dropdown
             item
-            simple
             trigger={
               <div>
                 <span style={{ marginRight: "10px" }}>{user.username}</span>
@@ -52,8 +51,8 @@ const TopNavigation = ({ user, logout }) => (
               </div>
             }
           >
-            <Dropdown.Menu>
-              <Dropdown.Item as={Link} to="/settings">
+            <Dropdown.Menu >
+              <Dropdown.Item as={Link} to="/settings" >
                 Account
               </Dropdown.Item>
               <Dropdown.Item onClick={() => logout()}>Logout</Dropdown.Item>

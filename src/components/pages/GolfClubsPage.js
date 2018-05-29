@@ -1,11 +1,8 @@
 import React, { Component } from "react";
 import { Segment, Header, Container } from "semantic-ui-react";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
-import { getGolfClub } from "../../actions/golfclubs";
 import header from "../../assets/images/titleist.png";
 
-
+// Hard coded golf courses to choose from 
 class GolfClubsPage extends Component {
   constructor(props) {
     super(props);
@@ -14,12 +11,6 @@ class GolfClubsPage extends Component {
       loading: false,
       error: ""
     };
-  }
-
-  componentDidMount() {
-    this.props
-      .dispatch(getGolfClub("Linköpings Golfklubb"))
-      .then(res => this.setState({ golfClubData: res.golfClubData }));
   }
 
   PageHeader = () => (
@@ -48,16 +39,19 @@ class GolfClubsPage extends Component {
   );
 
   render() {
-    const { error, golfClubData } = this.props;
 
     return (
       <div>
         <this.PageHeader />
         <Container>
-          <Segment>
-            <div>Finding Linköpings Golfklubb</div>
-            <span>{error}</span>
-            <span>{golfClubData.length > 0 && golfClubData[0].club}</span>
+          <Segment basic>
+            <Header>
+              {"This functionality is yet to be implemented!"}
+            </Header>
+            <div style={{ fontSize: "1.1em" }}>
+              {"This page will contain a map where you will be able to search for nearby golf clubs"}
+              {" and get their contact information "}
+            </div>
           </Segment>
         </Container>
       </div>
@@ -65,23 +59,6 @@ class GolfClubsPage extends Component {
   }
 }
 
-GolfClubsPage.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  golfClubData: PropTypes.arrayOf(PropTypes.object),
-  loading: PropTypes.bool.isRequired,
-  error: PropTypes.string.isRequired
-};
 
-GolfClubsPage.defaultProps = {
-  golfClubData: []
-};
 
-function mapStateToProps(state) {
-  return {
-    golfClubData: state.golfclub.items,
-    loading: state.golfclub.loading,
-    error: state.golfclub.error
-  };
-}
-
-export default connect(mapStateToProps)(GolfClubsPage);
+export default GolfClubsPage;
