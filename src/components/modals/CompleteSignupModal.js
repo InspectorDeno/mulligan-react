@@ -85,6 +85,7 @@ class CompleteSignupModal extends Component {
         basic
         size="small"
         open={open}
+        dimmer="blurring"
         closeOnEscape={closeOnEscape}
         closeOnRootNodeClick={closeOnRootNodeClick}
         onClose={this.close}
@@ -97,7 +98,7 @@ class CompleteSignupModal extends Component {
                 <Header style={{ marginBottom: "60px", fontSize: "60px" }} inverted>Welcome to Mulligan</Header>
               </Grid.Row>
               <Grid.Row>
-                <h3>Enter your HCP</h3>
+                <div style={{ color: "#f2711c", fontSize: "1.5em" }}>Enter your HCP</div>
                 <Form>
                   <Field name="hcpInput" component={this.HCPInput} />
                 </Form>

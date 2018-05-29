@@ -109,6 +109,7 @@ class CreateGolfRoundModal extends Component {
               worse += 1;
               break;
             case 3:
+              tbogies += 1;
               break;
             case 2:
               dbogies += 1;

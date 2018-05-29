@@ -59,7 +59,20 @@ class StepFour extends Component {
         error.length &&
         meta.submitFailed && <InlineError text={error} />}
       <div>
-        <Form.Input {...input} type={type} style={{ width: "70px" }} />
+        <Form.Input
+          {...input}
+          type={type}
+          onChange={(e, { value }) => {
+            if (value > 9) {
+              input.onChange(9);
+            } else if (value < 1) {
+              input.onChange(1);
+            } else {
+              input.onChange(value);
+            }
+          }}
+          style={{ width: "70px" }}
+        />
       </div>
     </div>
   );
