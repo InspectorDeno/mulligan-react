@@ -14,6 +14,7 @@ import {
 import { sortBy } from "underscore";
 import InlineError from "../messages/InlineError";
 
+// Dropdown options
 const driveOptions = [
   { key: "fairway", value: "fairway", text: "Fairway" },
   { key: "long", value: "long", text: "Long" },
@@ -29,10 +30,11 @@ const driveOptionsPar3 = [
   { key: "short", value: "short", text: "Short" }
 ];
 
+// Fourth page in Create Golf Round where we fill in scores
 class StepFour extends Component {
   componentDidMount() {
     const { golfscores } = this.props;
-    // Push only once
+    // Push hole data only once
     if (!golfscores.length) {
       const { golfclubdata } = this.props;
       golfclubdata.forEach((hole, index) => {
@@ -50,9 +52,9 @@ class StepFour extends Component {
     }
   }
 
+  // Render Input
   renderInput = ({ input, type, meta, error }) => (
     <div>
-      {/* {<p>{JSON.stringify(meta, 2, 0)}</p>} */}
       {error &&
         error.length &&
         meta.submitFailed && <InlineError text={error} />}
@@ -62,6 +64,7 @@ class StepFour extends Component {
     </div>
   );
 
+  // Render Dropdown
   renderSelect = field => (
     <div>
       <div>
@@ -81,6 +84,7 @@ class StepFour extends Component {
       </div>
     </div>
   );
+
 
   renderStrokes = ({ fields, meta, players, holes }) => (
     <div style={{ display: "flex" }}>

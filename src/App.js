@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Route } from "react-router-dom";
-import io from "socket.io-client";
 
 import TopNavigation from "./components/navigation/TopNavigation";
 import DefaultMenu from "./components/navigation/DefaultMenu";
@@ -29,16 +28,11 @@ class App extends Component {
     this.state = {};
   }
 
-  // componentDidMount() {
-  //   const socket = io({ query: "nick=denduru" });
-  //   console.log("Mounting App");
-  //   socket.on("FromAPI", data => console.log(data));
-  // }
   render() {
     const { location, isAuthenticated } = this.props;
     return (
       <div>
-        <div style={{ minHeight: "50em" }}>
+        <div style={{ minHeight: "56em" }}>
           {isAuthenticated ? <TopNavigation /> : <DefaultMenu />}
           <Route location={location} path="/" exact component={HomePage} />
           <Route

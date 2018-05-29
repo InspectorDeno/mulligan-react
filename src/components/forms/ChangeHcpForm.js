@@ -15,7 +15,7 @@ class ChangeHcpForm extends Component {
     this.setState({
       data: {
         ...this.state.data,
-        [e.target.name]: value
+        [e.target.name]: Math.round(value * 10) / 10
       }
     });
   };
@@ -66,8 +66,8 @@ class ChangeHcpForm extends Component {
               fluid
               name="hcpInput"
               value={data.hcp}
-              icon="wheelchair"
-              iconPosition="right"
+              icon="pencil"
+              iconPosition="left"
               placeholder="Enter Hcp"
               onChange={this.onChange}
             />
@@ -82,7 +82,7 @@ class ChangeHcpForm extends Component {
               </div>
             </Message>
           ) : (
-              <Button onClick={this.onSubmit} color="orange">
+              <Button onClick={this.onSubmit} color="yellow">
                 Set Hcp
             </Button>
             )}

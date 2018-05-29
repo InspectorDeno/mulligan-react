@@ -5,7 +5,9 @@ import {
   WEATHER_DATA_FAILED
 } from "../types";
 
-// Thunk
+// ---------------- ACTIONS -----------------
+
+// ---------------- GET WEATHER -----------------
 export const getWeatherBegin = () => ({
   type: WEATHER_DATA_REQUESTED
 });
@@ -20,7 +22,8 @@ export const getWeatherError = error => ({
   errors: error
 });
 
-
+// ---------------- ACTION CREATORS -----------------
+// ---------------- GET WEATHER -----------------
 export function getWeather() {
   return dispatch => {
     dispatch(getWeatherBegin());

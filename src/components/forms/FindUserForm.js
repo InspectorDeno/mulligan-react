@@ -3,7 +3,6 @@ import { Form, Button, Message } from "semantic-ui-react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import InlineError from "../messages/InlineError";
-// import * as actions from "../../actions/errorAction"
 
 class FindUserForm extends Component {
   state = {
@@ -78,7 +77,7 @@ class FindUserForm extends Component {
           />
         </Form.Field>
 
-        <Button color="orange" onClick={this.onSubmit}>
+        <Button color="yellow" onClick={this.onSubmit}>
           Search for user
         </Button>
       </Form>

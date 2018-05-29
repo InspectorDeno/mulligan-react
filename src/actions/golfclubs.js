@@ -5,7 +5,9 @@ import {
   GOLFCLUB_DATA_FAILED
 } from "../types";
 
-// Thunk
+// ---------------- ACTIONS -----------------
+
+// ---------------- GET GOLFCLUBS -----------------
 export const getGolfClubBegin = () => ({
   type: GOLFCLUB_DATA_REQUESTED
 });
@@ -20,6 +22,7 @@ export const getGolfClubError = error => ({
   payload: error.response.data.error
 });
 
+// ---------------- ACTION CREATORS -----------------
 export function getGolfClub(clubName) {
   return dispatch => {
     dispatch(getGolfClubBegin());

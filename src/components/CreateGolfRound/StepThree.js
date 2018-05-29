@@ -1,3 +1,4 @@
+/*eslint-disable*/
 import React, { Component } from 'react';
 import { Field, FieldArray, formValueSelector } from "redux-form";
 import PropTypes from 'prop-types';
@@ -7,8 +8,7 @@ import { List, Dropdown, Button, Form, Divider, Message, Segment, Icon, Label } 
 import InlineError from "../messages/InlineError"
 import { getFriends } from "../../actions/users";
 
-// Class component
-
+// Options for dropdowns
 const golfTeesOptions = [
     { key: "white", value: "White", text: "White", label: { empty: true, circular: true } },
     { key: "yellow", value: "Yellow", text: "Yellow", label: { color: "yellow", empty: true, circular: true } },
@@ -24,6 +24,7 @@ const hcpRoundOptions = [
     { key: "no", value: false, text: "No" },
 ];
 
+// Third page in Create Golf Round where we select or create players
 class StepThree extends Component {
     constructor(props) {
         super(props);
@@ -40,7 +41,7 @@ class StepThree extends Component {
         }
     }
 
-    // Kallas från multiselectorn när vi lägger till eller tar bort (lilla xet)
+    // Called when adding friend from dropdown list
     handleChange = (data, fields) => {
         const friendPlayers = [];
         data.value.forEach(user => {
@@ -52,10 +53,11 @@ class StepThree extends Component {
                 playerTee: theFriend.gender === "male" ? "Yellow" : "Red",
                 hcpRound: false
             }
+            // Add friend to redux form fieldarray
             friendPlayers.push(player);
 
+            // Makes sure that the friend is added to the round form
             if (friendPlayers.length > this.state.values.length) {
-                // console.log("Lagt till vän");
                 fields.push(player);
             }
         });
@@ -72,9 +74,9 @@ class StepThree extends Component {
         }
     }
 
+    // Render input fields
     renderInput = ({ input, label, type, meta, index }) => (
         <div>
-            {/* {<p>{JSON.stringify(meta, 2, 0)}</p>} */}
             <label htmlFor={input.name}><b>{label}</b></label>
             {meta.touched && meta.error && <InlineError text={meta.error} />}
             <div>
@@ -88,6 +90,7 @@ class StepThree extends Component {
         </div>
     )
 
+    // Render dropdown component
     renderSelect = ({ input, label, options, meta, index }) => (
         <div>
             <label htmlFor={input.name}><b>{label}</b></label>
@@ -96,7 +99,6 @@ class StepThree extends Component {
                 <Dropdown
                     {...input}
                     fluid
-                    floating
                     selection
                     disabled={index === 0}
                     placeholder={label}
@@ -110,7 +112,7 @@ class StepThree extends Component {
         </div>
     )
 
-    // Friends Select Dropdown
+    // Render Friends Select Dropdown
     renderFriendsSelect = ({ input, label, options, loading }) => {
         const { values } = this.state;
         return (
@@ -139,6 +141,7 @@ class StepThree extends Component {
         )
     };
 
+    // Render List of player objects
     renderPlayers = ({ fields, meta, friends }) => (
         <List style={{ maxWidth: "100%" }}>
             <List.Item>
@@ -168,11 +171,11 @@ class StepThree extends Component {
                     ><Icon name="plus" /
                         >Add New Player
                         </Button>
-                    {/* {meta.error && <InlineError text={meta.error} style={{ float: "right" }} />} */}
                 </div>
             </List.Item>
             {meta.error && <Message size="small" negative header={meta.error} />}
             <Divider />
+
             <div style={{ display: "flex", flexWrap: "wrap" }}>
                 {fields.map((player, index) => (
                     <Segment compact style={{ margin: "10px" }}>
@@ -245,7 +248,7 @@ class StepThree extends Component {
             </div>
         );
     }
-};
+}
 
 StepThree.propTypes = {
     dispatch: PropTypes.func.isRequired,
@@ -256,12 +259,10 @@ StepThree.defaultProps = {
     friendData: []
 }
 
-const selector = formValueSelector('createGolfRound')
 function mapStateToProps(state) {
     return {
         friendData: state.user.friends,
-        submittedPlayers: selector(state, "golfplayers")
-    };
+    }
 }
 
 export default connect(mapStateToProps)(StepThree);

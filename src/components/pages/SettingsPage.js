@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Divider, Container, Header, Segment, Icon } from "semantic-ui-react";
+import { Divider, Container, Header, Segment } from "semantic-ui-react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import ChangeHcpForm from "../forms/ChangeHcpForm";

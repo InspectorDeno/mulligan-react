@@ -26,6 +26,9 @@ import {
   CHANGE_PASSWORD_BEGIN,
   CHANGE_PASSWORD_SUCCESS
 } from "../types";
+
+// ---------------- ACTIONS -----------------
+
 // ----------------CHANGE PASSWORD-----------------
 export const changePasswordBegin = () => ({
   type: CHANGE_PASSWORD_BEGIN
@@ -69,8 +72,9 @@ export const setHcpBegin = hcp => ({
   hcp
 });
 
-export const setHcpSuccess = () => ({
-  type: SET_HCP_SUCCESS
+export const setHcpSuccess = userData => ({
+  type: SET_HCP_SUCCESS,
+  payload: userData
 });
 export const setHcpError = error => ({
   type: SET_HCP_FAILED,
@@ -144,14 +148,16 @@ export const getScorecardsError = error => ({
   errors: error
 });
 
-// ********************************** API CALLS **********************************
+
+// ---------------- ACTION CREATORS -----------------
+// ---------------- SIGN UP -----------------
 export const signup = data => dispatch =>
   api.user.signup(data).then(user => {
     localStorage.mulliganJWT = user.token;
     dispatch(userLoggedIn(user));
   });
 
-// For changing password
+// ---------------- CHANGE PASSWORD -----------------
 export function changePassword(newPassword) {
   return dispatch => {
     dispatch(changePasswordBegin());
@@ -160,7 +166,8 @@ export function changePassword(newPassword) {
       .then(() => dispatch(changePasswordSuccess()));
   };
 }
-// For finding a user in the database
+
+// ---------------- FIND USERS -----------------
 export function findUser(user) {
   return dispatch => {
     dispatch(findUserBegin());
@@ -173,7 +180,7 @@ export function findUser(user) {
   };
 }
 
-// For fetching friends
+// ---------------- GET FRIENDS -----------------
 export function getFriends() {
   return dispatch => {
     dispatch(getFriendsBegin());
@@ -188,7 +195,7 @@ export function getFriends() {
   };
 }
 
-// For fetching pending friends
+// ---------------- GET PENDING FRIENDS -----------------
 export function getPending() {
   return dispatch => {
     dispatch(getPendingBegin());
@@ -201,14 +208,16 @@ export function getPending() {
   };
 }
 
+// ---------------- UPDATE HCP -----------------
 export const setHcp = hcp => dispatch => {
   dispatch(setHcpBegin());
   api.user.setHcp(hcp).then(updatedUser => {
     localStorage.mulliganJWT = updatedUser.token;
-    dispatch(setHcpSuccess());
+    dispatch(setHcpSuccess(updatedUser));
   });
 };
 
+// ---------------- RESPOND TO FRIEND REQUEST -----------------
 export const respondFriendRequest = (friend, response) => dispatch => {
   dispatch(respondFriendRequestBegin());
   api.user.respondFriendship(friend, response).then(respondData => {
@@ -217,8 +226,10 @@ export const respondFriendRequest = (friend, response) => dispatch => {
   });
 };
 
+// ---------------- SHOW SET HCP MODAL -----------------
 export const shownModal = () => dispatch => dispatch(setShowCompleteSignup());
 
+// ---------------- ADD SCORECARD -----------------
 export function addScorecard(data) {
   return dispatch => {
     dispatch(addScorecardBegin());
@@ -230,6 +241,8 @@ export function addScorecard(data) {
       });
   };
 }
+
+// ---------------- GET SCORECARDS -----------------
 export function getScorecards() {
   return dispatch => {
     dispatch(getScorecardsBegin());
@@ -239,7 +252,6 @@ export function getScorecards() {
       .catch(err => {
         console.log("err");
         console.log(err);
-        // dispatch(getScorecardsError(err));
       });
   };
 }

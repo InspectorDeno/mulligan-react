@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from "redux-form";
-import { Message, Form, Label, Popup } from 'semantic-ui-react';
+import { Form, Label } from 'semantic-ui-react';
 import Datetime from "react-datetime";
 import moment from "moment";
 import "./dateTime.css";
 
+// Render DateTime component
 const renderDate = ({ input, meta }) => (
     <div style={{ display: "flex", justifyContent: "center" }}>
         <div>
@@ -21,7 +22,6 @@ const renderDate = ({ input, meta }) => (
                     input.onChange(param);
                 }}
             />
-            {/* <span>{JSON.stringify(meta, 0, 2)}</span> */}
         </div>
     </div>
 );
@@ -31,6 +31,7 @@ renderDate.propTypes = {
     meta: PropTypes.shape({}).isRequired,
 }
 
+// First page in Create Golf Round where we select time and date of golf round
 const StepTwo = () => (
     <div>
         <Form error>

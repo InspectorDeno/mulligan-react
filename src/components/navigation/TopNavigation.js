@@ -22,7 +22,7 @@ const TopNavigation = ({ user, logout }) => (
       {!user.confirmed && <ConfirmEmailMessage />}
 
       <Container>
-        <Menu.Item header name="menuIcon" as={Link} to="/dashboard">
+        <Menu.Item header name="menuIcon" as={Link} to="/dashboard" style={{ fontSize: "1.2em" }}>
           Mulligan
         </Menu.Item>
         {/* <Menu.Item name="home" as={Link} to="/dashboard">
@@ -61,7 +61,10 @@ const TopNavigation = ({ user, logout }) => (
           </Dropdown>
         </Menu.Menu>
         <Menu.Item>
-          HCP: {user.hcp.value}
+          <div style={{ display: "flex" }}>
+            <div> Hcp: </div>
+            <div style={{ color: "#fbbd08", fontSize: "1.1em", lineHeight: "0.9em", marginLeft: "2px" }}>{user.hcp.value}</div>
+          </div>
         </Menu.Item>
       </Container>
     </Menu>

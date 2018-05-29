@@ -70,7 +70,9 @@ class ForgotPasswordForm extends Component {
               type="password"
               name="password"
               id="password"
-              placeholder="Your new password"
+              icon="lock"
+              iconPosition="left"
+              placeholder="Your New Password"
               value={data.password}
               onChange={this.onChange}
             />
@@ -86,7 +88,9 @@ class ForgotPasswordForm extends Component {
               type="password"
               name="confirmPassword"
               id="confirmPassword"
-              placeholder="Repeat new password"
+              icon="lock"
+              iconPosition="left"
+              placeholder="Repeat New Password"
               value={data.confirmPassword}
               onChange={this.onChange}
             />
@@ -101,7 +105,7 @@ class ForgotPasswordForm extends Component {
               </div>
             </Message>
           ) : (
-              <Button onClick={this.onSubmit} color="orange">
+              <Button onClick={this.onSubmit} color="yellow">
                 Change Password
             </Button>
             )}

@@ -97,7 +97,7 @@ class FriendsPage extends Component {
     return (
       <div>
         <this.PageHeader />
-        <Container>
+        <Container style={{ marginBottom: "60px" }}>
           <Segment.Group horizontal raised style={{ background: "#f3f4f5" }}>
             <Segment>
               <Header>Find Mulligan Users</Header>

@@ -62,7 +62,7 @@ export default function user(state = initialState, action = {}) {
     case SET_HCP_BEGIN:
       return { ...state, loading: true };
     case SET_HCP_SUCCESS:
-      return { ...state, loading: false };
+      return action.payload;
     case SET_HCP_FAILED:
       return { ...state, loading: false, errors: action.errors };
 

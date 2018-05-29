@@ -14,26 +14,24 @@ const DefaultMenu = () => (
     style={{ background: "#1e002d" }}
   >
     <Container style={{ margin: 10 }}>
-      <Menu.Item header name="Home" as={Link} to="/dashboard">
+      <Menu.Item header name="Home" as={Link} to="/dashboard" style={{ fontSize: "1.2em" }}>
         Mulligan
       </Menu.Item>
-      <Menu.Item name="Spela golf" as={Link} to="/dashboard">
-        About us
-      </Menu.Item>
-
       <Menu.Menu position="right">
         <Menu.Item>
-          <Button inverted color="orange" as={Link} to="/login">
-            Log in
+          <Button.Group>
+            <Button inverted color="orange" as={Link} to="/login">
+              Log in
           </Button>
-          <Button
-            as={Link}
-            to="/signup"
-            color="orange"
-            style={{ marginLeft: "0.5em" }}
-          >
-            Sign up
+            <Button
+              as={Link}
+              to="/signup"
+              color="orange"
+              style={{ marginLeft: "0.5em" }}
+            >
+              Sign up
           </Button>
+          </Button.Group>
         </Menu.Item>
       </Menu.Menu>
     </Container>

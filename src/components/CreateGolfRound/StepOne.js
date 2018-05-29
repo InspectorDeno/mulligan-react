@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Field } from "redux-form";
-import { Dropdown, Message, Label } from 'semantic-ui-react';
+import { Dropdown, Label } from 'semantic-ui-react';
 import { getGolfClub } from "../../actions/golfclubs";
 
+// Hard coded golf courses to choose from 
 const golfClubs = [
     "Linköpings Golfklubb",
     "Landeryds Golfklubb",
@@ -12,12 +13,12 @@ const golfClubs = [
     "Vårdsbergs Golfklubb"
 ];
 
+// First page in Create Golf Round where we select golf course
 class StepOne extends Component {
 
-    renderSelect = field => (
+    // Render Dropdown component
+    renderDropdown = field => (
         <div>
-            {/* <pre>{JSON.stringify(field.meta, 0, 2)}</pre> */}
-
             <Dropdown
                 {...field.input}
                 selection
@@ -34,7 +35,6 @@ class StepOne extends Component {
         </div>
     );
 
-
     render() {
         const { loading, error } = this.props
         return (
@@ -44,7 +44,7 @@ class StepOne extends Component {
                     <div>
                         <Field
                             name="golfclub"
-                            component={this.renderSelect}
+                            component={this.renderDropdown}
                             placeholder="Select Golf Course"
                             loading={loading}
                             options={golfClubs.map(val => ({

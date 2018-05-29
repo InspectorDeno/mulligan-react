@@ -109,7 +109,6 @@ class CreateGolfRoundModal extends Component {
               worse += 1;
               break;
             case 3:
-              tbogies += 1;
               break;
             case 2:
               dbogies += 1;
@@ -252,8 +251,7 @@ class CreateGolfRoundModal extends Component {
                 onClick={this.nextPage}
                 disabled={!anyTouched || invalid || golfclubError || loading}
               >
-                {" "}
-                Next{" "}
+                Next
               </Button>
             )}
             {page === 2 && (

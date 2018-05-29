@@ -28,7 +28,7 @@ class GolfroundObject extends Component {
                             {data.stats.map(player => (
                                 <div>
                                     {player.player === user.username &&
-                                        <Segment circular inverted color="yellow" style={{ width: "45px", height: "45px", padding: 0, fontSize: "20px" }}>
+                                        <Segment circular inverted style={{ background: "#fbbd08", width: "45px", height: "45px", padding: 0, fontSize: "20px" }}>
                                             {player.scores.netScore}
                                         </Segment>
                                     }

@@ -5,7 +5,9 @@ import {
   FRIEND_REQUEST_FAILED
 } from "../types";
 
-// Thunk
+// ---------------- ACTIONS -----------------
+
+// ---------------- ADD FRIEND -----------------
 export const getAddFriendBegin = () => ({
   type: FRIEND_REQUEST_SENT
 });
@@ -20,6 +22,7 @@ export const getAddFriendError = error => ({
   errors: error.response.data.errors
 });
 
+// ---------------- ACTION CREATORS -----------------
 export function addFriend(friend) {
   return dispatch => {
     dispatch(getAddFriendBegin());

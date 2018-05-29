@@ -1,11 +1,10 @@
 import React from "react";
-import { Menu, Container, Segment, Button, Icon } from "semantic-ui-react";
-import { Link } from "react-router-dom";
+import { Container, Segment, Button, Icon } from "semantic-ui-react";
 
 // Should just be visibile for authenticated users
 
 const Footer = () => (
-    <div style={{ marginTop: "5em", boxShadow: "0 0 11px 0" }}>
+    <div style={{ marginTop: "2em", boxShadow: "0 0 11px 0" }}>
         <Segment
             inverted
             attached="top, bottom"
@@ -16,8 +15,10 @@ const Footer = () => (
             <Container>
                 <div style={{ display: "flex", justifyContent: "space-between" }}>
                     <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
-                        Mulligan
-                        Mulligan
+                        <Segment basic style={{ color: "white" }}>
+                            <Icon name="copyright" />
+                            2018 Dennis och Per Design / Mulligan Golf
+                        </Segment>
                     </div>
                     <div>
                         <Button

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Loader } from "semantic-ui-react";
+import { Loader, Dimmer, Segment } from "semantic-ui-react";
 import { sortBy } from "underscore";
 import { getScorecards } from "../../actions/users";
 import GolfroundObject from "./GolfroundObject";
@@ -22,24 +22,26 @@ class GolfroundsList extends Component {
     return (
       <div style={{ width: "100%", marginTop: "40px" }}>
         {loading ? (
-          <Loader active indeterminate>
-            Fetching Scorecards...{" "}
-          </Loader>
+          <Dimmer.Dimmable as={Segment} basic style={{ height: "165px" }}>
+            <Loader active indeterminate>
+              Fetching Scorecards...{" "}
+            </Loader>
+          </Dimmer.Dimmable>
         ) : (
-          <div
-            style={{
-              display: "flex",
-              flexWrap: "wrap",
-              justifyContent: "space-between"
-            }}
-          >
-            {rounds.length > 0
-              ? rounds.map(data => (
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                justifyContent: "space-between"
+              }}
+            >
+              {rounds.length > 0
+                ? rounds.map(data => (
                   <GolfroundObject data={data} error={error} />
                 ))
-              : "You haven't registered any golf rounds yet"}
-          </div>
-        )}
+                : "You haven't registered any golf rounds yet"}
+            </div>
+          )}
       </div>
     );
   }

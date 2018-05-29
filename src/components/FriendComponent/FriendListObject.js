@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Button, Feed, Message } from "semantic-ui-react";
+import { Button, Feed, Message, Icon } from "semantic-ui-react";
 
 const RenderPendingContent = ({ pending, onRespond }) => {
   if (pending.message) {
@@ -68,11 +68,8 @@ export const FriendListObject = ({ friend }) => (
     <Feed.Content>
       <Feed.Summary>
         {friend.username}
-        <Button floated="right" size="tiny">
-          Invite
-        </Button>
-        <Button floated="right" size="tiny">
-          Remove
+        <Button floated="right" size="tiny" inverted color="red" icon>
+          <Icon name="user x" />
         </Button>
       </Feed.Summary>
       <Feed.Extra>Hcp: {friend.hcp}</Feed.Extra>
