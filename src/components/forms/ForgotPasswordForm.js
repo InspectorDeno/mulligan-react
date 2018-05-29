@@ -62,7 +62,7 @@ class ForgotPasswordForm extends Component {
             onChange={this.onChange}
           />
         </Form.Field>
-        <Button fluid primary>
+        <Button fluid color="orange">
           Restore password
         </Button>
       </Form>
